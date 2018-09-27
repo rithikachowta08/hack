@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import fire from "../../config/fire";
 import Header from "../../layout/Header/Header";
-
+import "./Home.css";
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -43,8 +43,9 @@ class Home extends Component {
   };
   render() {
     return (
-      <div>
+      <Fragment>
         <Header />
+        <div className="illustration" />
         {/* <input
               value={this.state.email}
               onChange={this.handleChange}
@@ -65,7 +66,7 @@ class Home extends Component {
               id="exampleInputPassword1"
               placeholder="Password"
             /> */}
-      </div>
+      </Fragment>
     );
   }
 }

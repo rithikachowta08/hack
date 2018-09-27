@@ -1,0 +1,18 @@
+@import "../../variable.css";
+
+button {
+  color: black;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--accent-color);
+  border: none;
+  padding: 10px;
+  margin-right: 10px;
+  display: inline;
+  border-radius: 4px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+button:hover {
+  background-color: white;
+  cursor: pointer;
+}

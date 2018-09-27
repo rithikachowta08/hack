@@ -1,16 +1,33 @@
+@import "../../variable.css";
+
 header {
-  position: relative;
-  background-color: black;
-  padding: 5px;
+  width: 100%;
+  z-index: 1;
+  position: fixed;
+  background-color: var(--dark-color);
+  padding: 0.6%;
 }
 
 h1 {
-  margin: 0;
+  margin: 0px 5px;
+  font-weight: 400;
   color: white;
-  font-family: "Libre Baskerville", serif;
+  display: inline;
+  vertical-align: middle;
 }
 
 img {
-  width: 20px;
-  height: 20px;
+  width: 3%;
+  height: 3%;
+  vertical-align: middle;
+}
+
+.btn-container {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  margin-right: 20px;
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+  vertical-align: middle;
 }
