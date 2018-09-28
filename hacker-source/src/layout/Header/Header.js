@@ -2,15 +2,12 @@ import React from "react";
 import Button from "../Button/Button";
 import "./Header.css";
 
-const Header = () => {
+const Header = props => {
   return (
     <header className="header">
       <img src="../../../assets/logo.png" alt="logo" />
       <h1>YML.CODE</h1>
-      <div className="btn-container">
-        <Button>Login</Button>
-        <Button>Signup</Button>
-      </div>
+      {props.logout ? <Button click={props.logout}>Logout</Button> : ""}
     </header>
   );
 };

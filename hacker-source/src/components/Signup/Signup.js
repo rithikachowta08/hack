@@ -20,16 +20,24 @@ class Login extends Component {
 
   signup = e => {
     e.preventDefault();
-    fire
-      .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(u => {})
-      .then(u => {
-        console.log(u);
-      })
-      .catch(error => {
-        console.log(error);
+    if (this.state.password === this.state.confirmedPassword) {
+      fire
+        .auth()
+        .createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .then(u => {})
+        .then(u => {
+          console.log(u);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } else {
+      console.log("Passwords dont match");
+      this.setState({
+        password: "",
+        confirmedPassword: ""
       });
+    }
   };
 
   render() {

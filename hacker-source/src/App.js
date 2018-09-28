@@ -30,7 +30,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.user ? <AdminDashboard /> : <LandingPage />}
+        {this.state.user ? <AdminDashboard loggedIn="true" /> : <LandingPage />}
       </div>
     );
   }

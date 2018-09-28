@@ -1,6 +1,5 @@
 @import "../../variable.css";
 
-
 header {
   width: 100%;
   z-index: 1;
@@ -23,11 +22,8 @@ img {
   vertical-align: middle;
 }
 
-.btn-container {
-  display: inline-block;
+header button {
   position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translate3d(-30%, -50%, 0);
-  vertical-align: middle;
+  right: 2%;
+  top: 30%;
 }
