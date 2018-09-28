@@ -4,8 +4,9 @@ import "./Button.css";
 const Button = props => {
   return (
     <button
-      onClick={() => {
-        props.click(props.param);
+      onClick={e => {
+        if (props.param) props.click(props.param);
+        else props.click(e);
       }}
     >
       {props.children}

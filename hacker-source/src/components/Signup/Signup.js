@@ -9,7 +9,8 @@ class Login extends Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      confirmedPassword: ""
     };
   }
 
@@ -44,22 +45,28 @@ class Login extends Component {
             />
           </h2>
           <Input
+            name="email"
+            type="email"
             value={this.state.email}
             change={this.handleChange}
             placeholder="Email"
           />
 
           <Input
+            name="password"
+            type="password"
             value={this.state.password}
             change={this.handleChange}
             placeholder="Password"
           />
           <Input
-            value={this.state.password}
+            name="confirmedPassword"
+            type="password"
+            value={this.state.confirmedPassword}
             change={this.handleChange}
             placeholder="Confirm password"
           />
-          <Button>Submit</Button>
+          <Button click={this.signup}>Submit</Button>
         </div>
       </div>
     );

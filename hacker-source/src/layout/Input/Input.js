@@ -11,9 +11,10 @@ const inputStyle = {
 const Input = props => {
   return (
     <input
+      name={props.name}
       style={inputStyle}
       value={props.value}
-      type="text"
+      type={props.type}
       onChange={props.change}
       placeholder={props.placeholder}
     />

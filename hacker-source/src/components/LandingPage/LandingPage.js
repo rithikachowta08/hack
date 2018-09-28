@@ -15,7 +15,7 @@ class LandingPage extends Component {
   }
 
   displayModal = modalName => {
-    console.log(modalName);
+    // console.log(modalName);
     this.setState({
       [modalName]: true
     });

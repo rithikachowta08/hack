@@ -45,16 +45,19 @@ class Login extends Component {
           <Input
             value={this.state.email}
             change={this.handleChange}
+            name="email"
             placeholder="Email"
           />
 
           <Input
             value={this.state.password}
             change={this.handleChange}
+            name="password"
+            type="password"
             placeholder="Password"
           />
 
-          <Button>Submit</Button>
+          <Button click={this.login}>Submit</Button>
         </div>
       </div>
     );
