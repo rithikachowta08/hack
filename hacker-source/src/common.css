@@ -1,0 +1,19 @@
+/* commonly used styles through the project */
+
+/* main headings */
+
+h1 {
+  color: white;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 3%;
+}
+
+/* subheadings */
+
+h2 {
+  color: white;
+  font-weight: 100;
+  margin: 3%;
+  display: block;
+}

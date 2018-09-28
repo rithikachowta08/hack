@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import fire from "./config/fire";
 import "./App.css";
-import Home from "./components/Home/Home";
+import LandingPage from "./components/LandingPage/LandingPage";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 
 class App extends Component {
@@ -11,12 +11,14 @@ class App extends Component {
       user: {}
     };
   }
+
   componentDidMount() {
     this.authListener();
   }
+
   authListener() {
     fire.auth().onAuthStateChanged(user => {
-      console.log(user);
+      // console.log(user);
       if (user) {
         this.setState({ user });
       } else {
@@ -28,7 +30,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.user ? <AdminDashboard /> : <Home />}
+        {this.state.user ? <AdminDashboard /> : <LandingPage />}
       </div>
     );
   }

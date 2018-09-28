@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import fire from "../../config/fire";
 
 class AdminDashboard extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   logout = () => {
     fire.auth().signOut();
   };

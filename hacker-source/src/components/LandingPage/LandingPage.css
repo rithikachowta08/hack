@@ -1,0 +1,97 @@
+@import "../../variable.css";
+@import "../../common.css";
+
+.landing-page-container {
+  position: relative;
+  background: url("https://storage.googleapis.com/codeavengers.appspot.com/cloud/assets/landing-01.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.landing-page-container::before {
+  content: "";
+  background: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.landing-page-content {
+  font-weight: 100;
+  z-index: 1;
+  width: 90%;
+  font-size: 2em;
+  color: white;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.features {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-cell {
+  flex-basis: 30%;
+  padding: 4% 2%;
+  margin: 0% 2%;
+}
+
+.flex-cell:nth-child(1) img {
+  display: block;
+  margin: 0 auto;
+  width: 40%;
+  height: 40%;
+}
+
+.flex-cell:nth-child(2) img {
+  display: block;
+  margin: 0 auto;
+  width: 29%;
+  height: 29%;
+}
+
+.flex-cell:nth-child(3) img {
+  display: block;
+  margin: 0 auto;
+  width: 55%;
+  height: 55%;
+}
+
+.landing-page-content button {
+  z-index: 2;
+  position: relative;
+  color: white;
+  background: transparent;
+  width: 10%;
+  transition: color 0.5s ease-in-out;
+}
+
+.landing-page-content button::before {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1%;
+  height: 100%;
+  background: var(--accent-color);
+  transition: width 0.5s ease-in-out;
+}
+.landing-page-content button:hover {
+  background: transparent;
+  color: black;
+}
+.landing-page-content button:hover::before {
+  width: 100%;
+}
