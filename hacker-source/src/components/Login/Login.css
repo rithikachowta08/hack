@@ -1,7 +1,7 @@
 @import "../../common.css";
 
 .modal {
-  z-index: 3;
+  /* z-index: 3; */
   width: 40%;
   height: 40%;
   position: absolute;

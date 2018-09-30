@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import Header from "../../layout/Header/Header";
 import "./LandingPage.css";
 import Button from "../../layout/Button/Button";
@@ -37,7 +37,7 @@ class LandingPage extends Component {
 
   render() {
     return (
-      <div className="landing-page-container">
+      <Fragment>
         <Header loggedIn="false" />
         <div className="landing-page-content">
           <h1>Welcome to YML Code Console</h1>
@@ -69,7 +69,7 @@ class LandingPage extends Component {
         ) : (
           ""
         )}
-      </div>
+      </Fragment>
     );
   }
 }

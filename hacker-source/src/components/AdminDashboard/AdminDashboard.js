@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import fire from "../../config/fire";
 import Header from "../../layout/Header/Header";
 import "./AdminDashboard.css";
@@ -10,10 +10,12 @@ class AdminDashboard extends Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         <Header logout={this.logout} />
-        <h1>Welcome to Admin Dashboard</h1>
-      </div>
+        <div className="dashboard-content">
+          <h1 className="welcome">Welcome to Admin Dashboard</h1>
+        </div>
+      </Fragment>
     );
   }
 }
