@@ -18,7 +18,7 @@ class App extends Component {
 
   authListener() {
     fire.auth().onAuthStateChanged(user => {
-      console.log(user);
+      // console.log(user);
       if (user) {
         this.setState({ user });
       } else {
@@ -30,7 +30,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.state.user ? <AdminDashboard loggedIn="true" /> : <LandingPage />}
+        {this.state.user ? (
+          <AdminDashboard loggedIn="true" userId={this.state.user.uid} />
+        ) : (
+          <LandingPage />
+        )}
       </div>
     );
   }

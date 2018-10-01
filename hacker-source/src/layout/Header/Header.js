@@ -7,7 +7,7 @@ const Header = props => {
     <header className="header">
       <img src="../../../assets/logo.png" alt="logo" />
       <h1>YML.CODE</h1>
-      {props.logout ? <Button click={props.logout}>Logout</Button> : ""}
+      {props.logout ? <Button click={props.logout}>Logout</Button> : null}
     </header>
   );
 };

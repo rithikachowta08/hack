@@ -1,12 +1,12 @@
 @import "../../common.css";
+@import "../../variable.css";
 
 .welcome {
   margin: 0;
-  color: blue;
+  color: black;
 }
 
 .dashboard-content {
   height: 100%;
-  /* z-index: -1; */
-  border: 1px solid red;
+  background-color: var(--light-color);
 }

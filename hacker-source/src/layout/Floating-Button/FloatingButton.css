@@ -1,0 +1,21 @@
+@import "../../variable.css";
+
+.f-btn {
+  font-weight: 800;
+  position: fixed;
+  bottom: 3%;
+  font-size: 1.5em;
+  line-height: -1em;
+  right: 2%;
+  width: 4%;
+  height: 8%;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  color: white;
+  transition: transform 0.5s ease-in-out;
+}
+
+.f-btn:hover {
+  background-color: var(--accent-color);
+  transform: translate3d(0, -5px, 0);
+}

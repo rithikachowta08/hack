@@ -38,7 +38,7 @@ class LandingPage extends Component {
   render() {
     return (
       <Fragment>
-        <Header loggedIn="false" />
+        <Header />
         <div className="landing-page-content">
           <h1>Welcome to YML Code Console</h1>
           <div className="features">
