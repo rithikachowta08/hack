@@ -7,5 +7,13 @@ const config = {
   storageBucket: "hackerrank-clone.appspot.com",
   messagingSenderId: "858602915236"
 };
+
 const fire = firebase.initializeApp(config);
+// Initialize Cloud Firestore through Firebase
+export const db = fire.firestore();
+
+// Disable deprecated features
+db.settings({
+  timestampsInSnapshots: true
+});
 export default fire;
