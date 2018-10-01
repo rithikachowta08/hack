@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BrowserRouter } from "react-router-dom";
 import fire from "./config/fire";
 import "./App.css";
 import LandingPage from "./components/LandingPage/LandingPage";
@@ -29,13 +30,15 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        {this.state.user ? (
-          <AdminDashboard loggedIn="true" userId={this.state.user.uid} />
-        ) : (
-          <LandingPage />
-        )}
-      </div>
+      <BrowserRouter>
+        <div className="App">
+          {this.state.user ? (
+            <AdminDashboard loggedIn="true" userId={this.state.user.uid} />
+          ) : (
+            <LandingPage />
+          )}
+        </div>
+      </BrowserRouter>
     );
   }
 }

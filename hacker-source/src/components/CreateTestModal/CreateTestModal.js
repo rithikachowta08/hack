@@ -1,7 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, Link } from "react";
 import Button from "../../layout/Button/Button";
 import "./CreateTestModal.css";
 import Input from "../../layout/Input/Input";
+import { Route } from "react-router-dom";
+import AdminDashboard from "../AdminDashboard/AdminDashboard";
 
 class CreateTestModal extends Component {
   constructor(props) {
@@ -65,7 +67,10 @@ class CreateTestModal extends Component {
             <option value="10plus">>10 yrs experience</option>
           </select>
           <br />
+          {/* <Link to="/dashboard"> */}
           <Button click={this.login}>Create</Button>
+          {/* </Link> */}
+          <Route path="/dashboard" exact Component={AdminDashboard} />
         </div>
       </div>
     );

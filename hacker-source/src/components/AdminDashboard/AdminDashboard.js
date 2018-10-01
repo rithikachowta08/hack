@@ -63,20 +63,22 @@ class AdminDashboard extends Component {
           <h2>Tests</h2>
           {this.state.tests ? (
             <table className="table-header">
-              <tr>
-                <th>Name</th>
-                <th>Date created</th>
-                <th>Profile</th>
-                <th>Status</th>
-              </tr>
-              {this.state.tests.map((test, index) => (
-                <tr key={`test${index}`}>
-                  <td>{test.name}</td>
-                  <td>{test.date}</td>
-                  <td>{test.profile}</td>
-                  <td>{test.status}</td>
+              <tbody>
+                <tr>
+                  <th>Name</th>
+                  <th>Date created</th>
+                  <th>Profile</th>
+                  <th>Status</th>
                 </tr>
-              ))}
+                {this.state.tests.map((test, index) => (
+                  <tr key={`test${index}`}>
+                    <td>{test.name}</td>
+                    <td>{test.date}</td>
+                    <td>{test.profile}</td>
+                    <td>{test.status}</td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           ) : (
             <Spinner />
