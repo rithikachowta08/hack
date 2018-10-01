@@ -10,7 +10,7 @@ class AdminDashboard extends Component {
     super(props);
     this.database = fire.database().ref();
     this.state = {
-      tests: []
+      tests: null
     };
   }
 
@@ -39,7 +39,11 @@ class AdminDashboard extends Component {
         <Header logout={this.logout} />
         <div className="dashboard-content">
           <ul className="tests-container" />
-          {/* {this.state.test===[]?null:} */}
+          {this.state.tests
+            ? this.state.tests.map((test, index) => (
+                <li key={`test${index}`}>{test}</li>
+              ))
+            : null}
           <FloatingButton />
         </div>
       </Fragment>
