@@ -39,7 +39,7 @@ class LandingPage extends Component {
     return (
       <Fragment>
         <Header />
-        <div className="landing-page-content">
+        <div className="content-wrapper">
           <h1>Welcome to YML Code Console</h1>
           <div className="features">
             <div className="flex-cell">
@@ -56,14 +56,16 @@ class LandingPage extends Component {
             </div>
           </div>
           <h2>Get started</h2>
-          <Button click={this.displayModal} param="displayLogin">
+          <Button class="slide" click={this.displayModal} param="displayLogin">
             Login
           </Button>
-          <Button click={this.displayModal} param="displaySignup">
+          <Button click={this.displayModal} class="slide" param="displaySignup">
             Signup
           </Button>
         </div>
-        {this.state.displayLogin ? <Login closeFunc={this.removeModal} /> : ""}
+        {this.state.displayLogin ? (
+          <Login closeFunc={this.removeModal} />
+        ) : null}
         {this.state.displaySignup ? (
           <Signup closeFunc={this.removeModal} />
         ) : (

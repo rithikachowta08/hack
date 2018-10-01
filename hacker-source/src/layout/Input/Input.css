@@ -1,0 +1,12 @@
+input {
+  display: block;
+  color: white;
+  margin: 0 auto;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid white;
+  width: 40%;
+  padding: 10px;
+  margin-bottom: 2%;
+  outline: none;
+}

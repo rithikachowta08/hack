@@ -1,0 +1,19 @@
+@import "../../common.css";
+
+.big-modal {
+  z-index: 3;
+  width: 80%;
+  height: 80vh;
+}
+
+.big-modal img {
+  top: -100px;
+}
+
+p {
+  color: white;
+  display: inline-block;
+}
+select {
+  margin-left: 20px;
+}

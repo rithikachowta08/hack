@@ -19,6 +19,10 @@ class Login extends Component {
 
   login = e => {
     e.preventDefault();
+    var code = e.keyCode || e.which;
+    if (code && code !== 13) {
+      return;
+    }
     fire
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
@@ -39,7 +43,7 @@ class Login extends Component {
             <img
               src="https://cdn1.iconfinder.com/data/icons/customicondesign-mini-lightcolour-png/48/Close.png"
               alt="close-btn"
-              onClick={this.props.closeFunc}
+              onClick={() => this.props.closeFunc("displayLogin")}
             />
           </h2>
           <Input
@@ -55,6 +59,7 @@ class Login extends Component {
             name="password"
             type="password"
             placeholder="Password"
+            onKeyUp={this.login}
           />
 
           <Button click={this.login}>Submit</Button>

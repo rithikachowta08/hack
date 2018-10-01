@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import fire from "../../config/fire";
-import "./Signup.css";
+import "../Login/Login.css";
 import Button from "../../layout/Button/Button";
 import Input from "../../layout/Input/Input";
 
@@ -20,6 +20,10 @@ class Login extends Component {
 
   signup = e => {
     e.preventDefault();
+    var code = e.keyCode || e.which;
+    if (code && code !== 13) {
+      return;
+    }
     if (this.state.password === this.state.confirmedPassword) {
       fire
         .auth()
@@ -49,7 +53,7 @@ class Login extends Component {
             <img
               src="https://cdn1.iconfinder.com/data/icons/customicondesign-mini-lightcolour-png/48/Close.png"
               alt="close-btn"
-              onClick={this.props.closeFunc}
+              onClick={() => this.props.closeFunc("displaySignup")}
             />
           </h2>
           <Input
@@ -73,6 +77,7 @@ class Login extends Component {
             value={this.state.confirmedPassword}
             change={this.handleChange}
             placeholder="Confirm password"
+            onKeyUp={this.signup}
           />
           <Button click={this.signup}>Submit</Button>
         </div>

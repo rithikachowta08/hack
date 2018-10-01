@@ -1,16 +1,42 @@
 @import "../../common.css";
 @import "../../variable.css";
 
-.welcome {
-  margin: 0;
-  color: black;
+.content-wrapper {
+  padding: 2% 0;
 }
 
-.dashboard-content {
-  height: 100%;
-  background-color: var(--light-color);
+table {
+  position: relative;
+  border-collapse: collapse;
+  margin: 0 auto;
+  padding: 0;
+  width: 80%;
+  color: #cccccc;
 }
 
-ul {
-  margin: 0;
+td,
+th {
+  text-align: center;
+  padding: 20px;
+  text-transform: capitalize;
+}
+
+h2 {
+  margin: 0px 0px 30px 0;
+  color: white;
+  font-size: 3em;
+}
+
+tr:nth-child(1) {
+  color: var(--accent-color);
+}
+
+tr:nth-child(odd) {
+  background-color: rgba(10, 10, 10, 0.9);
+  /* background-color: rgba(10, 10, 10, 0.7); */
+}
+
+tr:nth-child(even) {
+  /* background-color: rgba(40, 40, 40, 0.7); */
+  background-color: rgba(40, 40, 40, 0.9);
 }

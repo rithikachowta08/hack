@@ -1,25 +1,5 @@
 @import "../../common.css";
 
-.modal {
-  /* z-index: 3; */
-  width: 40%;
-  height: 40%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate3d(-50%, -50%, 0);
-  background: rgba(0, 0, 0, 0.95);
-}
-
-.wrapper {
-  text-align: center;
-  width: 90%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate3d(-50%, -50%, 0);
-}
-
 .wrapper button {
   width: 20%;
   margin-top: 3%;
@@ -32,9 +12,9 @@
 
 .wrapper img {
   position: absolute;
-  top: -95%;
+  top: -10px;
   border: none;
-  right: -5%;
+  right: -2%;
   width: 25px;
   height: 25px;
 }

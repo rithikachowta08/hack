@@ -18,3 +18,39 @@ h2 {
   margin: 3%;
   display: block;
 }
+
+/* body styles */
+
+.content-wrapper {
+  text-align: center;
+  padding: 3%;
+  height: 100%;
+  /* background-color: #eeeeee; */
+  position: relative; /* image background */
+  background: url("https://storage.googleapis.com/codeavengers.appspot.com/cloud/assets/landing-01.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* modal styles */
+
+.modal {
+  width: 40%;
+  height: 40%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  background: rgba(0, 0, 0, 0.95);
+}
+
+.wrapper {
+  text-align: center;
+  width: 90%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  box-sizing: content-box;
+}

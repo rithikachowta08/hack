@@ -1,7 +1,7 @@
 @import "../../variable.css";
 @import "../../common.css";
 
-.landing-page-content {
+.content-wrapper {
   padding-top: 3%;
   text-align: center;
   position: relative;
@@ -14,7 +14,7 @@
   z-index: 0;
 }
 
-.landing-page-content::before {
+.content-wrapper::before {
   z-index: -1;
   content: "";
   background: rgba(0, 0, 0, 0.7);
@@ -57,34 +57,4 @@
   margin: 0 auto;
   width: 55%;
   height: 55%;
-}
-
-.landing-page-content button {
-  z-index: 0;
-  position: relative;
-  color: white;
-  background: transparent;
-  width: 10%;
-  transition: color 0.5s ease-in-out;
-}
-
-.landing-page-content button::before {
-  z-index: -1;
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1%;
-  height: 100%;
-  background: var(--accent-color);
-  transition: width 0.5s ease-in-out;
-}
-
-.landing-page-content button:hover {
-  background: transparent;
-  color: black;
-}
-
-.landing-page-content button:hover::before {
-  width: 100%;
 }
