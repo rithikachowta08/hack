@@ -20,12 +20,16 @@ class AdminDashboard extends Component {
 
   componentDidMount() {
     console.log(this.props.userId);
+    let arr = [];
     db.collection("tests")
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           console.log(`${doc.data().name},${doc.data().status}`);
+          arr.push(doc.data().name);
         });
+        this.setState({ tests: arr });
+        console.log(this.state);
       });
   }
 
