@@ -11,9 +11,19 @@
 }
 
 p {
-  color: white;
+  color: #999999;
   display: inline-block;
 }
+
 select {
+  background: transparent;
+  color: #999999;
   margin-left: 20px;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid white;
+}
+
+option {
+  color: black;
 }
