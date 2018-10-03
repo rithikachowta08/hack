@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import handleChange from "../../config/inputChangeHandler";
 import Button from "../../layout/Button/Button";
 import "./CreateTestModal.css";
 import Input from "../../layout/Input/Input";
@@ -9,6 +8,11 @@ class CreateTestModal extends Component {
     super(props);
     this.state = {};
   }
+
+  // handle input field change
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
   // render create test modal
   render() {
@@ -25,28 +29,28 @@ class CreateTestModal extends Component {
           </h2>
           <Input
             value={this.state.name}
-            change={handleChange}
+            change={this.handleChange}
             name="name"
             placeholder="Test name"
           />
 
           <Input
             value={this.state.jobProfile}
-            change={handleChange}
+            change={this.handleChange}
             name="jobProfile"
             placeholder="Job profile"
           />
 
           <Input
             value={this.state.duration}
-            change={handleChange}
+            change={this.handleChange}
             name="Duration"
             placeholder="Duration (mins)"
           />
 
           <Input
             value={this.state.questionCount}
-            change={handleChange}
+            change={this.handleChange}
             name="questionCount"
             placeholder="No. of questions"
           />

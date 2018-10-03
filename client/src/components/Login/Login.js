@@ -5,7 +5,6 @@ import fire from "../../config/fire";
 import "./Login.css";
 import Button from "../../layout/Button/Button";
 import Input from "../../layout/Input/Input";
-import handleChange from "../../config/inputChangeHandler";
 import AdminDashboard from "../AdminDashboard/AdminDashboard";
 
 class Login extends Component {
@@ -16,6 +15,11 @@ class Login extends Component {
       password: ""
     };
   }
+
+  // handle input field change
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
   // set client side cookie
   setCookie = (cname, cvalue, extime) => {
@@ -95,14 +99,14 @@ class Login extends Component {
           </h2>
           <Input
             value={this.state.email}
-            change={handleChange}
+            change={this.handleChange}
             name="email"
             placeholder="Email"
           />
 
           <Input
             value={this.state.password}
-            change={handleChange}
+            change={this.handleChange}
             name="password"
             type="password"
             placeholder="Password"

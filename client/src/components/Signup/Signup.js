@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import fire from "../../config/fire";
 import "../Login/Login.css";
-import handleChange from "../../config/inputChangeHandler";
 import Button from "../../layout/Button/Button";
 import Input from "../../layout/Input/Input";
 
@@ -14,6 +13,11 @@ class Signup extends Component {
       confirmedPassword: ""
     };
   }
+
+  // handle input field change
+  handleChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
 
   // submit button click handler
   signup = e => {
@@ -59,7 +63,7 @@ class Signup extends Component {
             name="email"
             type="email"
             value={this.state.email}
-            change={handleChange}
+            change={this.handleChange}
             placeholder="Email"
           />
 
@@ -67,14 +71,14 @@ class Signup extends Component {
             name="password"
             type="password"
             value={this.state.password}
-            change={handleChange}
+            change={this.handleChange}
             placeholder="Password"
           />
           <Input
             name="confirmedPassword"
             type="password"
             value={this.state.confirmedPassword}
-            change={handleChange}
+            change={this.handleChange}
             placeholder="Confirm password"
             onKeyUp={this.signup}
           />
