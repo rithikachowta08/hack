@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
 import axios from "axios";
 import fire from "../../config/fire";
 import "./Login.css";
 import Button from "../../layout/Button/Button";
 import Input from "../../layout/Input/Input";
-import AdminDashboard from "../AdminDashboard/AdminDashboard";
 
 class Login extends Component {
   constructor(props) {
@@ -56,28 +54,19 @@ class Login extends Component {
     if (code && code !== 13) {
       return;
     }
-    this.setCookie("csrfToken", "test", 7);
     fire
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(u => {
-        // console.log(u);
-        return fire
+        fire
           .auth()
           .currentUser.getIdToken()
-          .then(idToken => {
-            const csrfToken = this.getCookie("csrfToken");
-            // window.location.assign("/dashboard");
-            // return postIdTokenToSessionLogin(
-            //   "http://localhost:4000/sessionLogin",
-            //   idToken,
-            //   csrfToken
-            // );
-            const data = {
-              idToken: idToken,
-              csrfToken: csrfToken
-            };
-            return axios.post("/sessionLogin", data);
+          .then(userId => {
+            return axios
+              .post("/sessionLogin", { userId })
+              .then(response =>
+                localStorage.setItem("jwt", response.data.token)
+              );
           });
       })
       .catch(error => {
@@ -113,7 +102,6 @@ class Login extends Component {
             onKeyUp={this.login}
           />
           <Button click={this.login}>Submit</Button>
-          {/* <Route path="/dashboard" exact component={AdminDashboard} /> */}
         </div>
       </div>
     );

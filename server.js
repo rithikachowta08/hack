@@ -1,76 +1,72 @@
-const admin = require("firebase-admin");
 const bodyParser = require("body-parser");
 const express = require("express");
+const request = require("request");
+const jwt = require("jsonwebtoken");
 const app = express();
-const serviceAccount = require("./service-act-key.json");
 const port = process.env.PORT || 5000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://hackerrank-clone.firebaseio.com"
-});
-
-app.post("/sessionLogin", (req, res) => {
-  console.log("session login");
-  // Get the ID token passed and the CSRF token.
-  console.log(req.body.idToken);
-  console.log(req.body.csrfToken);
-  const idToken = req.body.idToken.toString();
-  const csrfToken = req.body.csrfToken.toString();
-  // console.log(req.headers.csrfToken);
-  //  Guard against CSRF attacks.
-  // if (csrfToken !== req.header.csrfToken) {
-  //   res.status(401).send("UNAUTHORIZED REQUEST!");
-  //   return;
-  // }
-  // Set session expiration to 5 days.
-  const expiresIn = 60 * 60 * 24 * 5 * 1000;
-  // Create the session cookie. This will also verify the ID token in the process.
-  // The session cookie will have the same claims as the ID token.
-  // To only allow session cookie setting on recent sign-in, auth_time in ID token
-  // can be checked to ensure user was recently signed in before creating a session cookie.
-  admin
-    .auth()
-    .createSessionCookie(idToken, { expiresIn })
-    .then(
-      sessionCookie => {
-        // Set cookie policy for session cookie.
-        const options = { maxAge: expiresIn, httpOnly: true, secure: true };
-        res.cookie("session", sessionCookie, options);
-        res.set("Access-Control-Allow-Origin", "*");
-        res.end(JSON.stringify({ status: "success" }));
-      },
-      error => {
-        console.log(error);
-        res.status(401).send("UNAUTHORIZED REQUEST!");
+callJdoodle = () => {
+  request(
+    {
+      url: "https://api.jdoodle.com/execute",
+      method: "POST",
+      json: {
+        clientId: "eaf5d02e0106c43d533594b300366743",
+        clientSecret:
+          "6faab0531e48a67cedc676a7baeb1bfae1e30f8abdd8510c593a94a97c6fceeb",
+        script: "print('hello')",
+        language: "python3",
+        versionIndex: "0"
       }
-    );
+    },
+    function(error, response, body) {
+      if (!error && response.statusCode === 200) {
+        console.log(body);
+        res.send(body);
+      }
+    }
+  );
+};
+
+// Get auth header value
+verifyToken = (req, res, next) => {
+  const bearerHeader = req.headers["authorization"];
+  if (typeof bearerHeader !== "undefined") {
+    const bearer = bearerHeader.split(" ");
+    const bearerToken = bearer[1];
+    req.token = bearerToken;
+    next();
+  } else {
+    res.sendStatus(403);
+  }
+};
+
+// login endpoint - grant jwt to client
+app.post("/sessionLogin", (req, res) => {
+  console.log("session login endpoint hit");
+  jwt.sign({ userId: req.body.userId }, "hacker-secret", (err, token) => {
+    res.json({ token });
+    if (err) {
+      res.send({ errorMsg: err });
+    }
+  });
 });
 
-// Whenever a user is accessing restricted content that requires authentication.
-app.get("/dashboard", (req, res) => {
-  console.log("here");
-  const sessionCookie = req.cookies.session || "";
-  // Verify the session cookie. In this case an additional check is added to detect
-  // if the user's Firebase session was revoked, user deleted/disabled, etc.
-  admin
-    .auth()
-    .verifySessionCookie(sessionCookie, true /** checkRevoked */)
-    .then(decodedClaims => {
-      serveContentForUser("/profile", req, res, decodedClaims);
-    })
-    .catch(error => {
-      // Session cookie is unavailable or invalid. Force user to login.
-      res.redirect("/login");
-    });
-});
-
-app.post("/sessionLogout", (req, res) => {
-  res.clearCookie("session");
-  res.redirect("/login");
+app.post("/dashboard", verifyToken, (req, res) => {
+  jwt.verify(req.token, "hacker-secret", (err, autoData) => {
+    if (err) {
+      res.sendStatus(403);
+      res.json({ msg: "forbidden", status: 403 });
+    } else {
+      res.json({
+        message: "jwt working",
+        authData: autoData
+      });
+    }
+  });
 });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
