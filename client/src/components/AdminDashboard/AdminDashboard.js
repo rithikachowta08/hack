@@ -4,6 +4,7 @@ import "firebase/firestore";
 import Header from "../../layout/Header/Header";
 import "./AdminDashboard.css";
 import Button from "../../layout/Button/Button";
+import { logout } from "../../config/functions";
 import Spinner from "../../layout/Spinner/Spinner";
 import CreateTestModal from "../../components/CreateTestModal/CreateTestModal";
 
@@ -16,13 +17,6 @@ class AdminDashboard extends Component {
       displayCreateModal: false
     };
   }
-
-  //logout button click handler
-
-  logout = () => {
-    fire.auth().signOut();
-    window.location.assign("/");
-  };
 
   // create new test button click handler
 
@@ -57,44 +51,17 @@ class AdminDashboard extends Component {
         });
         this.setState({ tests: arr });
       });
-    //       var headers = {
-    //         "Content-Type": "application/json"
-    //       };
-    //       const data = {
-    //         clientId: "eaf5d02e0106c43d533594b300366743",
-    //         clientSecret:
-    //           "6faab0531e48a67cedc676a7baeb1bfae1e30f8abdd8510c593a94a97c6fceeb",
-    //         script: "print('hello')",
-    //         language: "python3",
-    //         versionIndex: "0"
-    //       };
-
-    //   axios  //api jdoodle doesnt allow cross origin
-    //     .post("https://api.jdoodle.com/execute", data, { headers: headers })
-    //     .then(function(response) {
-    //       console.log(response);
-    //     })
-    //     .catch(e => console.log(e));
-    // });
-
-    //   axios   // jsonplaceholder allows cross origin requests
-    //     .get("http://jsonplaceholder.typicode.com/posts/1")
-    //     .then(function(response) {
-    //       console.log(response);
-    //     })
-    //     .catch(e => console.log(e));
-    // });
-    // }
   }
 
   // render modal when displayCreateModal flag true and render spinner while getting test details
+
   render() {
     return (
       <Fragment>
         {this.state.displayCreateModal ? (
           <CreateTestModal closeFunc={this.removeModal} />
         ) : null}
-        <Header logout={this.logout} />
+        <Header logout={logout} />
         <div className="content-wrapper">
           <h2>Tests</h2>
           {this.state.tests ? (

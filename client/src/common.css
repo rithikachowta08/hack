@@ -54,3 +54,7 @@ h2 {
   transform: translate3d(-50%, -50%, 0);
   box-sizing: content-box;
 }
+
+i:hover {
+  cursor: pointer;
+}

@@ -2,13 +2,15 @@ const bodyParser = require("body-parser");
 const express = require("express");
 const request = require("request");
 const jwt = require("jsonwebtoken");
+const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 5000;
 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-callJdoodle = () => {
+callJdoodleApi = () => {
   request(
     {
       url: "https://api.jdoodle.com/execute",
@@ -31,7 +33,7 @@ callJdoodle = () => {
   );
 };
 
-// Get auth header value
+// Extract jwt from auth field in header
 verifyToken = (req, res, next) => {
   const bearerHeader = req.headers["authorization"];
   if (typeof bearerHeader !== "undefined") {
@@ -45,8 +47,9 @@ verifyToken = (req, res, next) => {
 };
 
 // login endpoint - grant jwt to client
-app.post("/sessionLogin", (req, res) => {
-  console.log("session login endpoint hit");
+
+app.post("/login", (req, res) => {
+  console.log("login endpoint hit");
   jwt.sign({ userId: req.body.userId }, "hacker-secret", (err, token) => {
     res.json({ token });
     if (err) {
@@ -55,18 +58,22 @@ app.post("/sessionLogin", (req, res) => {
   });
 });
 
-app.post("/dashboard", verifyToken, (req, res) => {
-  jwt.verify(req.token, "hacker-secret", (err, autoData) => {
-    if (err) {
-      res.sendStatus(403);
-      res.json({ msg: "forbidden", status: 403 });
-    } else {
-      res.json({
-        message: "jwt working",
-        authData: autoData
-      });
-    }
-  });
-});
+// protected route to dashboard
+
+// app.post("/dashboard", verifyToken, (req, res) => {
+//   console.log("call to dashboard");
+//   jwt.verify(req.token, "hacker-secret", (err, autoData) => {
+//     if (err) {
+//       res.sendStatus(403);
+//       res.json({ msg: "forbidden" });
+//     } else {
+//       res.sendStatus(200);
+//       res.json({
+//         message: "authorized",
+//         authData: autoData
+//       });
+//     }
+//   });
+// });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

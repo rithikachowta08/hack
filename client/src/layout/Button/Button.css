@@ -1,7 +1,7 @@
 @import "../../variable.css";
 
 button {
-  color: black;
+  color: white;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: var(--accent-color);
   border: none;
@@ -13,6 +13,7 @@ button {
 }
 
 button:hover {
+  color: black;
   background-color: white;
   cursor: pointer;
 }

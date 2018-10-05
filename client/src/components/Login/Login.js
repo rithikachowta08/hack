@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+// import { Redirect } from "react-router-dom";
 import axios from "axios";
 import fire from "../../config/fire";
 import "./Login.css";
@@ -15,39 +16,13 @@ class Login extends Component {
   }
 
   // handle input field change
+
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  // set client side cookie
-  setCookie = (cname, cvalue, extime) => {
-    cvalue = encodeURIComponent(cvalue);
-    let expires = "";
-    if (extime) {
-      const d = new Date();
-      d.setTime(d.getTime() + extime * 1000);
-      expires = `expires=${d.toGMTString()}`;
-    }
-    document.cookie = `${cname}=${cvalue};path=/;${expires}`;
-  };
+  // call fire.auth to validate email/password, call server.js endpoint to get jwt and get route to dashboard
 
-  // get cookie by name
-  getCookie = cname => {
-    const name = `${cname}=`;
-    const ca = document.cookie.split(";");
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
-      while (c.charAt(0) === " ") {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) === 0) {
-        return decodeURIComponent(c.substring(name.length, c.length));
-      }
-    }
-    return "";
-  };
-
-  // submit button click handler
   login = e => {
     e.preventDefault();
     var code = e.keyCode || e.which;
@@ -62,11 +37,10 @@ class Login extends Component {
           .auth()
           .currentUser.getIdToken()
           .then(userId => {
-            return axios
-              .post("/sessionLogin", { userId })
-              .then(response =>
-                localStorage.setItem("jwt", response.data.token)
-              );
+            return axios.post("/login", { userId }).then(response => {
+              localStorage.setItem("jwt", response.data.token);
+              window.location.assign("/dashboard");
+            });
           });
       })
       .catch(error => {
@@ -80,10 +54,9 @@ class Login extends Component {
         <div className="wrapper">
           <h2>
             Login
-            <img
-              src="https://cdn1.iconfinder.com/data/icons/customicondesign-mini-lightcolour-png/48/Close.png"
-              alt="close-btn"
-              onClick={() => this.props.closeFunc("displayLogin")}
+            <i
+              className="fa fa-times-circle"
+              onClick={() => this.props.closeFunc("displayCreateModal")}
             />
           </h2>
           <Input
@@ -101,6 +74,7 @@ class Login extends Component {
             placeholder="Password"
             onKeyUp={this.login}
           />
+
           <Button click={this.login}>Submit</Button>
         </div>
       </div>
@@ -109,3 +83,22 @@ class Login extends Component {
 }
 
 export default Login;
+
+// request to api from react
+
+// const data = {
+//   clientId: "eaf5d02e0106c43d533594b300366743",
+//   clientSecret:
+//     "6faab0531e48a67cedc676a7baeb1bfae1e30f8abdd8510c593a94a97c6fceeb",
+//   script: "print('hello')",
+//   language: "python3",
+//   versionIndex: "0"
+// };
+// axios
+//   .post("https://api.jdoodle.com/execute", data)
+//   .then(response => {
+//     console.log(response);
+//   })
+//   .catch(err => {
+//     console.log(err);
+//   });

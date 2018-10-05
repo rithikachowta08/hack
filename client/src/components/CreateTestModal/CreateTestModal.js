@@ -21,9 +21,8 @@ class CreateTestModal extends Component {
         <div className="wrapper">
           <h2>
             Create Test
-            <img
-              src="https://cdn1.iconfinder.com/data/icons/customicondesign-mini-lightcolour-png/48/Close.png"
-              alt="close-btn"
+            <i
+              className="fa fa-times-circle"
               onClick={() => this.props.closeFunc("displayCreateModal")}
             />
           </h2>

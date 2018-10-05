@@ -1,0 +1,58 @@
+@import "../../variable.css";
+
+.content-wrapper.content-overlay {
+  position: relative;
+  background: none;
+  background-color: var(--light-color);
+  color: var(--light-grey);
+}
+
+.test-header {
+  text-align: left;
+  padding-left: 15px;
+}
+.test-header button {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+}
+
+.navigator ul {
+  text-align: left;
+  padding: 0;
+  position: absolute;
+  left: 0;
+  top: 30%;
+}
+
+.navigator ul li {
+  color: white;
+  width: 80%;
+  margin-bottom: 6%;
+  padding: 10px 30px 10px 10px;
+  display: block;
+  list-style-type: none;
+  background-color: var(--accent-color);
+  transform: translateX(-80%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.navigator ul li:hover {
+  cursor: pointer;
+  transform: translateX(0%);
+}
+
+.overlay {
+  background: rgba(153, 153, 153, 0.5);
+  min-height: 700px;
+  position: absolute;
+  top: 10%;
+  width: 100%;
+}
+
+.list-view {
+  position: absolute;
+  top: 2%;
+  left: 15%;
+  width: 70%;
+}

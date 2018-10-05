@@ -1,0 +1,19 @@
+@import "../../variable.css";
+
+.list-item {
+  list-style-type: none;
+  text-align: left;
+  width: 70%;
+  margin-bottom: 5px;
+  background-color: var(--light-color);
+  color: white;
+  padding: 10px;
+}
+
+.details {
+  display: flex;
+}
+
+.details span {
+  flex-basis: 30%;
+}

@@ -2,12 +2,15 @@
 
 .big-modal {
   z-index: 3;
-  width: 80%;
-  height: 80vh;
+  width: 50%;
+  height: 60vh;
 }
 
-.big-modal img {
-  top: -100px;
+.big-modal i {
+  position: absolute;
+  top: -50px;
+  right: 0;
+  font-size: 0.7em;
 }
 
 p {
