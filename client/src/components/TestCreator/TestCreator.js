@@ -31,6 +31,7 @@ class TestCreator extends Component {
                   <span>Linked Lists</span>
                   <span>Points: 20</span>
                   <span>Difficulty: Medium</span>
+                  <i class="fa fa-plus-circle" />
                 </div>
               </ListItem>
               <ListItem>
@@ -39,6 +40,7 @@ class TestCreator extends Component {
                   <span>Graphs</span>
                   <span>Points: 20</span>
                   <span>Difficulty: Easy</span>
+                  <i class="fa fa-plus-circle" />
                 </div>
               </ListItem>
               <ListItem>
@@ -47,6 +49,7 @@ class TestCreator extends Component {
                   <span>Arrays</span>
                   <span>Points: 30</span>
                   <span>Difficulty: Medium</span>
+                  <i class="fa fa-plus-circle" />
                 </div>
               </ListItem>
               <ListItem>
@@ -55,8 +58,16 @@ class TestCreator extends Component {
                   <span>Algorithm design</span>
                   <span>Points: 40</span>
                   <span>Difficulty: Hard</span>
+                  <i class="fa fa-plus-circle" />
                 </div>
               </ListItem>
+            </div>
+            <div className="test-preview">
+              <p>Preview</p>
+              <ListItem>Subsegment sum</ListItem>
+              <ListItem>K perfect matchings</ListItem>
+              <ListItem>Graph coloring</ListItem>
+              <ListItem>Safe Partition</ListItem>
             </div>
           </div>
         </div>

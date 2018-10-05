@@ -1,6 +1,7 @@
 @import "../../variable.css";
 
 .list-item {
+  position: relative;
   list-style-type: none;
   text-align: left;
   width: 70%;
@@ -16,4 +17,11 @@
 
 .details span {
   flex-basis: 30%;
+}
+
+.list-item i {
+  position: absolute;
+  top: 40%;
+  right: 3%;
+  font-size: 2em;
 }
