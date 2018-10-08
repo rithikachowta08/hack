@@ -58,10 +58,16 @@ class LandingPage extends Component {
             </div>
           </div>
           <h2>Get started</h2>
-          <Button class="slide" click={this.displayModal} param="displayLogin">
+          <Button
+            class="slide"
+            click={this.displayModal.bind(this, "displayLogin")}
+          >
             Login
           </Button>
-          <Button click={this.displayModal} class="slide" param="displaySignup">
+          <Button
+            click={this.displayModal.bind(this, "displaySignup")}
+            class="slide"
+          >
             Signup
           </Button>
         </div>
