@@ -2,6 +2,7 @@
 
 .content-wrapper.content-overlay {
   position: relative;
+  padding: 0;
   background: none;
   background-color: var(--light-color);
   color: var(--light-grey);
@@ -9,7 +10,7 @@
 
 .test-header {
   text-align: left;
-  padding-left: 15px;
+  padding: 10px 0px 0px 15px;
 }
 
 .test-header button {
@@ -45,7 +46,7 @@
 
 .overlay {
   background: rgba(153, 153, 153, 0.5);
-  min-height: 700px;
+  min-height: 800px;
   position: absolute;
   top: 10%;
   width: 100%;
@@ -69,4 +70,26 @@
   width: 60%;
   font-size: 2em;
   text-align: left;
+}
+
+.send-invites {
+  text-align: center;
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.send-invites h2 {
+  font-size: 2em;
+  color: #999999;
+  font-weight: 400;
+}
+
+.send-invites button {
+  display: block;
+  position: absolute;
+  bottom: -20%;
+  left: 50%;
+  transform: translateX(-50%);
 }

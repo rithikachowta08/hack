@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 // import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { loginUser } from "../../actions/authActions";
 import axios from "axios";
 import fire from "../../config/fire";
 import "./Login.css";
@@ -37,10 +39,8 @@ class Login extends Component {
           .auth()
           .currentUser.getIdToken()
           .then(userId => {
-            return axios.post("/login", { userId }).then(response => {
-              localStorage.setItem("jwt", response.data.token);
-              window.location.assign("/dashboard");
-            });
+            this.props.loginUser(userId);
+            window.location.assign("/dashboard");
           });
       })
       .catch(error => {
@@ -82,8 +82,6 @@ class Login extends Component {
   }
 }
 
-export default Login;
-
 // request to api from react
 
 // const data = {
@@ -102,3 +100,12 @@ export default Login;
 //   .catch(err => {
 //     console.log(err);
 //   });
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { loginUser }
+)(Login);

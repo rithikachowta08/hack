@@ -7,7 +7,6 @@ h1 {
   text-transform: uppercase;
   display: block;
   margin: 0;
-  /* margin-bottom: 3%; */
 }
 
 /* subheadings */
@@ -25,8 +24,7 @@ h2 {
   text-align: center;
   padding: 3%;
   height: 100%;
-  /* background-color: #eeeeee; */
-  position: relative; /* image background */
+  position: relative;
   background: url("https://storage.googleapis.com/codeavengers.appspot.com/cloud/assets/landing-01.jpg");
   background-position: center;
   background-size: cover;
@@ -46,6 +44,8 @@ h2 {
 }
 
 .wrapper {
+  /* overflow: hidden; */
+
   text-align: center;
   width: 90%;
   position: absolute;

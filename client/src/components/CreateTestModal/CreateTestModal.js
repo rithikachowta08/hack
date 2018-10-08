@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 import Button from "../../layout/Button/Button";
 import "./CreateTestModal.css";
 import Input from "../../layout/Input/Input";
@@ -12,6 +13,11 @@ class CreateTestModal extends Component {
   // handle input field change
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
+  };
+
+  // redirect to editor
+  redirect = () => {
+    window.location.assign("/test/name/edit");
   };
 
   // render create test modal
@@ -63,7 +69,7 @@ class CreateTestModal extends Component {
             <option value="10plus">>10 yrs experience</option>
           </select>
           <br />
-          <Button>Create</Button>
+          <Button click={this.redirect}>Create</Button>
         </div>
       </div>
     );

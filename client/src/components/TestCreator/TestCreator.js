@@ -6,7 +6,21 @@ import ListItem from "../../layout/ListItem/ListItem";
 import "./TestCreator.css";
 
 class TestCreator extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = { addedQuestions: [], mailingList: [] };
+    this.selectedQuestions = [];
+  }
+
+  addQuestion = q => {
+    this.selectedQuestions.push(q);
+    this.setState({ addedQuestions: this.selectedQuestions });
+  };
+
+  sendMail = () => {
+    console.log(ReactDOM.findDOMNode(this.refs.mailingList).value);
+  };
+
   render() {
     return (
       <Fragment>
@@ -14,13 +28,12 @@ class TestCreator extends Component {
         <div className="content-wrapper content-overlay">
           <div className="test-header">
             Test name > Active tab
-            <Button>Next</Button>
+            <Button>Publish</Button>
           </div>
           <div className="overlay">
             <div className="navigator">
               <ul>
                 <li>Library</li>
-                <li>Custom questions</li>
                 <li>My questions</li>
               </ul>
             </div>
@@ -31,7 +44,10 @@ class TestCreator extends Component {
                   <span>Linked Lists</span>
                   <span>Points: 20</span>
                   <span>Difficulty: Medium</span>
-                  <i class="fa fa-plus-circle" />
+                  <i
+                    className="fa fa-plus-circle"
+                    onClick={this.addQuestion.bind(this, "Safe partition")}
+                  />
                 </div>
               </ListItem>
               <ListItem>
@@ -40,7 +56,10 @@ class TestCreator extends Component {
                   <span>Graphs</span>
                   <span>Points: 20</span>
                   <span>Difficulty: Easy</span>
-                  <i class="fa fa-plus-circle" />
+                  <i
+                    className="fa fa-plus-circle"
+                    onClick={this.addQuestion.bind(this, "Graph coloring")}
+                  />
                 </div>
               </ListItem>
               <ListItem>
@@ -49,7 +68,10 @@ class TestCreator extends Component {
                   <span>Arrays</span>
                   <span>Points: 30</span>
                   <span>Difficulty: Medium</span>
-                  <i class="fa fa-plus-circle" />
+                  <i
+                    className="fa fa-plus-circle"
+                    onClick={this.addQuestion.bind(this, "Subsegment sum")}
+                  />
                 </div>
               </ListItem>
               <ListItem>
@@ -58,16 +80,31 @@ class TestCreator extends Component {
                   <span>Algorithm design</span>
                   <span>Points: 40</span>
                   <span>Difficulty: Hard</span>
-                  <i class="fa fa-plus-circle" />
+                  <i
+                    className="fa fa-plus-circle"
+                    onClick={this.addQuestion.bind(this, "K perfect matchings")}
+                  />
                 </div>
               </ListItem>
             </div>
             <div className="test-preview">
               <p>Preview</p>
-              <ListItem>Subsegment sum</ListItem>
-              <ListItem>K perfect matchings</ListItem>
-              <ListItem>Graph coloring</ListItem>
-              <ListItem>Safe Partition</ListItem>
+              {this.state.addedQuestions.map((item, index) => (
+                <ListItem key={index}>{item}</ListItem>
+              ))}
+            </div>
+            <div className="send-invites">
+              <h2>Send invites to candidates</h2>
+              <textarea
+                name="emails"
+                id="emails"
+                cols="30"
+                rows="10"
+                ref="mailingList"
+                placeholder="Emails IDs"
+                value={this.state.mailingList}
+              />
+              <Button click={this.sendMail}>Send</Button>
             </div>
           </div>
         </div>

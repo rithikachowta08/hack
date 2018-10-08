@@ -4,4 +4,5 @@ import fire from "./fire";
 export const logout = () => {
   fire.auth().signOut();
   window.location.assign("/");
+  localStorage.removeItem("jwtToken");
 };

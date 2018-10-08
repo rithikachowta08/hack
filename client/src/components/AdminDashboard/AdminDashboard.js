@@ -89,8 +89,7 @@ class AdminDashboard extends Component {
           <Button
             title="Create test"
             class="float"
-            click={this.displayModal}
-            param="displayCreateModal"
+            click={this.displayModal.bind(this, "displayCreateModal")}
           >
             +
           </Button>

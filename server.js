@@ -1,14 +1,15 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 const request = require("request");
-const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 5000;
+const api = require("./api/routes");
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use("/api", api);
 
 callJdoodleApi = () => {
   request(
@@ -32,48 +33,5 @@ callJdoodleApi = () => {
     }
   );
 };
-
-// Extract jwt from auth field in header
-verifyToken = (req, res, next) => {
-  const bearerHeader = req.headers["authorization"];
-  if (typeof bearerHeader !== "undefined") {
-    const bearer = bearerHeader.split(" ");
-    const bearerToken = bearer[1];
-    req.token = bearerToken;
-    next();
-  } else {
-    res.sendStatus(403);
-  }
-};
-
-// login endpoint - grant jwt to client
-
-app.post("/login", (req, res) => {
-  console.log("login endpoint hit");
-  jwt.sign({ userId: req.body.userId }, "hacker-secret", (err, token) => {
-    res.json({ token });
-    if (err) {
-      res.send({ errorMsg: err });
-    }
-  });
-});
-
-// protected route to dashboard
-
-// app.post("/dashboard", verifyToken, (req, res) => {
-//   console.log("call to dashboard");
-//   jwt.verify(req.token, "hacker-secret", (err, autoData) => {
-//     if (err) {
-//       res.sendStatus(403);
-//       res.json({ msg: "forbidden" });
-//     } else {
-//       res.sendStatus(200);
-//       res.json({
-//         message: "authorized",
-//         authData: autoData
-//       });
-//     }
-//   });
-// });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
