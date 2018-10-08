@@ -12,6 +12,7 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import * as routes from "./config/routes";
 import TestCreator from "./components/TestCreator/TestCreator";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
+import AnswerTest from "./components/AnswerTest/AnswerTest";
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -58,6 +59,7 @@ class App extends Component {
             <Switch>
               <Route path={routes.LANDING} exact component={LandingPage} />
               <Route path={routes.DASHBOARD} exact component={AdminDashboard} />
+              <Route path={routes.ANSWER_TEST} exact component={AnswerTest} />
               <Route path={routes.TEST_EDITOR} exact component={TestCreator} />
             </Switch>
           </div>

@@ -1,5 +1,6 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
+var smtpTransport = require("nodemailer-smtp-transport");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 
@@ -43,31 +44,6 @@ router.post("/dashboard", verifyToken, (req, res) => {
         message: "authorized",
         authData: autoData
       });
-    }
-  });
-});
-
-router.post("/send-mail", (req, res) => {
-  let transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "yml.code@gmail.com",
-      pass: "ymlcode123"
-    }
-  });
-
-  let mailOptions = {
-    from: "yml.code@gmail.com",
-    to: req.body.mailList,
-    subject: "Sending Email using Node.js",
-    text: "That was easy!"
-  };
-
-  transporter.sendMail(mailOptions, function(error, info) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
     }
   });
 });

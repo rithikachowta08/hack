@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from "react";
 import { logout } from "../../config/functions";
+import ReactDOM from "react-dom";
 import Header from "../../layout/Header/Header";
 import Button from "../../layout/Button/Button";
 import ListItem from "../../layout/ListItem/ListItem";
+import axios from "axios";
 import "./TestCreator.css";
 
 class TestCreator extends Component {
@@ -15,10 +17,6 @@ class TestCreator extends Component {
   addQuestion = q => {
     this.selectedQuestions.push(q);
     this.setState({ addedQuestions: this.selectedQuestions });
-  };
-
-  sendMail = () => {
-    console.log(ReactDOM.findDOMNode(this.refs.mailingList).value);
   };
 
   render() {
@@ -93,7 +91,7 @@ class TestCreator extends Component {
                 <ListItem key={index}>{item}</ListItem>
               ))}
             </div>
-            <div className="send-invites">
+            {/* <div className="send-invites">
               <h2>Send invites to candidates</h2>
               <textarea
                 name="emails"
@@ -102,10 +100,9 @@ class TestCreator extends Component {
                 rows="10"
                 ref="mailingList"
                 placeholder="Emails IDs"
-                value={this.state.mailingList}
               />
               <Button click={this.sendMail}>Send</Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </Fragment>
