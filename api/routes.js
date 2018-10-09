@@ -1,6 +1,4 @@
 const express = require("express");
-const nodemailer = require("nodemailer");
-var smtpTransport = require("nodemailer-smtp-transport");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 

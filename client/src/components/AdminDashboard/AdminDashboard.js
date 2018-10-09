@@ -1,8 +1,9 @@
 import React, { Component, Fragment } from "react";
-import fire, { db } from "../../config/fire";
-import "firebase/firestore";
 import Header from "../../layout/Header/Header";
 import "./AdminDashboard.css";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { fetchTests } from "../../actions/testActions";
 import Button from "../../layout/Button/Button";
 import { logout } from "../../config/functions";
 import Spinner from "../../layout/Spinner/Spinner";
@@ -11,7 +12,6 @@ import CreateTestModal from "../../components/CreateTestModal/CreateTestModal";
 class AdminDashboard extends Component {
   constructor(props) {
     super(props);
-    this.database = fire.database().ref();
     this.state = {
       tests: null,
       displayCreateModal: false
@@ -35,27 +35,46 @@ class AdminDashboard extends Component {
   };
 
   // update state with test details from database
+
   componentDidMount() {
-    let arr = [];
-    db.collection("tests")
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          let data = doc.data();
-          arr.push({
-            name: data.name,
-            status: data.status,
-            profile: data.profile,
-            date: data.date
-          });
-        });
-        this.setState({ tests: arr });
-      });
+    this.props.fetchTests();
+  }
+
+  // update tests to ui when it is received in props
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.testList !== prevState.testList) {
+      return { tests: nextProps.testList };
+    } else return null;
   }
 
   // render modal when displayCreateModal flag true and render spinner while getting test details
 
   render() {
+    let testItems =
+      this.state.tests.length !== 0 ? (
+        <table className="table-header">
+          <tbody>
+            <tr>
+              <th>Name</th>
+              <th>Date created</th>
+              <th>Profile</th>
+              <th>Status</th>
+            </tr>
+            {this.state.tests.map((test, index) => (
+              <tr key={`test${index}`}>
+                <td>{test.name}</td>
+                <td>{test.date}</td>
+                <td>{test.profile}</td>
+                <td>{test.status}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <Spinner />
+      );
+
     return (
       <Fragment>
         {this.state.displayCreateModal ? (
@@ -64,28 +83,7 @@ class AdminDashboard extends Component {
         <Header logout={logout} />
         <div className="content-wrapper">
           <h2>Tests</h2>
-          {this.state.tests ? (
-            <table className="table-header">
-              <tbody>
-                <tr>
-                  <th>Name</th>
-                  <th>Date created</th>
-                  <th>Profile</th>
-                  <th>Status</th>
-                </tr>
-                {this.state.tests.map((test, index) => (
-                  <tr key={`test${index}`}>
-                    <td>{test.name}</td>
-                    <td>{test.date}</td>
-                    <td>{test.profile}</td>
-                    <td>{test.status}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : (
-            <Spinner />
-          )}
+          {testItems}
           <Button
             title="Create test"
             class="float"
@@ -99,18 +97,13 @@ class AdminDashboard extends Component {
   }
 }
 
-export default AdminDashboard;
+const mapStateToProps = state => ({
+  testList: state.tests.testList
+});
 
-// adding data
-// db.collection("users")
-//   .add({
-//     first: "Ada",
-//     last: "Lovelace",
-//     born: 1815
-//   })
-//   .then(function(docRef) {
-//     console.log("Document written with ID: ", docRef.id);
-//   })
-//   .catch(function(error) {
-//     console.error("Error adding document: ", error);
-//   });
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { fetchTests }
+  )(AdminDashboard)
+);

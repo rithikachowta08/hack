@@ -1,26 +1,33 @@
 import React, { Component, Fragment } from "react";
 import { logout } from "../../config/functions";
-import ReactDOM from "react-dom";
 import Header from "../../layout/Header/Header";
 import Button from "../../layout/Button/Button";
 import Spinner from "../../layout/Spinner/Spinner";
 import ListItem from "../../layout/ListItem/ListItem";
-import axios from "axios";
-import fire, { db } from "../../config/fire";
+import { db } from "../../config/fire";
 import "firebase/firestore";
 import "./TestCreator.css";
 
 class TestCreator extends Component {
   constructor(props) {
-    console.log(props);
+    // console.log(props);
     super(props);
     this.state = { addedQuestions: [], libraryQuestions: [] };
     this.selectedQuestions = [];
   }
 
-  addQuestion = q => {
-    this.selectedQuestions.push(q);
+  addQuestion = (qname, qid) => {
+    this.selectedQuestions.push({ qname, qid });
     this.setState({ addedQuestions: this.selectedQuestions });
+  };
+
+  publishTest = () => {
+    let arr = this.selectedQuestions.map(item => item.qid);
+    db.collection("tests")
+      .doc("GpTTiOf0S3pj2H9i2u9i")
+      .update({
+        questions: arr
+      });
   };
 
   componentDidMount() {
@@ -31,6 +38,7 @@ class TestCreator extends Component {
         querySnapshot.forEach(doc => {
           let data = doc.data();
           questions.push({
+            id: doc.id,
             name: data.name,
             category: data.category,
             difficulty: data.difficulty,
@@ -43,11 +51,15 @@ class TestCreator extends Component {
   }
 
   render() {
+    let spinnerStyle = {
+      top: "100%"
+    };
+
     let previewList = this.state.addedQuestions.map((item, index) => (
-      <ListItem key={index}>{item}</ListItem>
+      <ListItem key={index}>{item.qname}</ListItem>
     ));
     let questionItems = this.state.libraryQuestions.map((item, index) => (
-      <ListItem key={index}>
+      <ListItem key={item.id}>
         <h3>{item.name}</h3>
         <div className="details">
           <span>{item.category}</span>
@@ -55,7 +67,7 @@ class TestCreator extends Component {
           <span>Difficulty: {item.difficulty}</span>
           <i
             className="fa fa-plus-circle"
-            onClick={this.addQuestion.bind(this, item.name)}
+            onClick={this.addQuestion.bind(this, item.name, item.id)}
           />
         </div>
       </ListItem>
@@ -66,8 +78,8 @@ class TestCreator extends Component {
         <Header logout={logout} />
         <div className="content-wrapper content-overlay">
           <div className="test-header">
-            {this.props.testName}
-            <Button>Publish</Button>
+            <p>{this.props.testName}</p>
+            <Button click={this.publishTest}>Publish</Button>
           </div>
           <div className="overlay">
             <div className="navigator">
@@ -76,7 +88,13 @@ class TestCreator extends Component {
                 <li>My questions</li>
               </ul>
             </div>
-            <div className="list-view">{questionItems}</div>
+            <div className="list-view">
+              {questionItems.length !== 0 ? (
+                questionItems
+              ) : (
+                <Spinner style={spinnerStyle} />
+              )}
+            </div>
             <div className="test-preview">
               <p>Preview</p>
               {previewList}

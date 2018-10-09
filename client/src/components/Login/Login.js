@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-// import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
-import axios from "axios";
 import fire from "../../config/fire";
+import { withRouter } from "react-router-dom";
 import "./Login.css";
 import Button from "../../layout/Button/Button";
 import Input from "../../layout/Input/Input";
@@ -40,7 +39,7 @@ class Login extends Component {
           .currentUser.getIdToken()
           .then(userId => {
             this.props.loginUser(userId);
-            window.location.assign("/dashboard");
+            this.props.history.push("/dashboard");
           });
       })
       .catch(error => {
@@ -105,7 +104,9 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { loginUser }
-)(Login);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { loginUser }
+  )(Login)
+);

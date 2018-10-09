@@ -2,8 +2,6 @@ import React, { Component, Fragment } from "react";
 import Header from "../../layout/Header/Header";
 import { logout } from "../../config/functions";
 import Button from "../../layout/Button/Button";
-import ListItem from "../../layout/ListItem/ListItem";
-import axios from "axios";
 
 class AnswerTest extends Component {
   constructor(props) {

@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { Switch, BrowserRouter, Route } from "react-router-dom";
-import fire from "./config/fire";
 import { Provider } from "react-redux";
 import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./config/authToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import "./App.css";
-import PrivateRoute from "./config/PrivateRoute";
 import LandingPage from "./components/LandingPage/LandingPage";
 import * as routes from "./config/routes";
 import TestCreator from "./components/TestCreator/TestCreator";
@@ -36,11 +34,6 @@ if (localStorage.jwtToken) {
 }
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    // this.state = {};
-  }
-
   componentDidMount() {
     // this.authListener();
   }

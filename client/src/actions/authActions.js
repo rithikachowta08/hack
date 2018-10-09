@@ -5,7 +5,6 @@ import { SET_CURRENT_USER } from "./types";
 
 // Login - Get User Token
 export const loginUser = userId => dispatch => {
-  console.log("inside login action");
   axios
     .post("/api/login", { userId })
     .then(res => {
@@ -26,7 +25,6 @@ export const loginUser = userId => dispatch => {
 
 // Set logged in user
 export const setCurrentUser = decoded => {
-  console.log("inside set cur user");
   return {
     type: SET_CURRENT_USER,
     payload: decoded

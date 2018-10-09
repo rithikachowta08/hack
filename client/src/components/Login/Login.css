@@ -6,17 +6,13 @@
 }
 
 .wrapper h2 {
-  position: relative;
+  /* position: relative; */
   font-size: 3em;
 }
 
-.warpper i {
+h2 i {
   position: absolute;
   top: -50px;
-  right: -2%;
-  font-size: 0.7em;
-}
-
-.wrapper img:hover {
-  cursor: pointer;
+  right: -20px;
+  font-size: 0.3em;
 }

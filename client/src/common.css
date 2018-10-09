@@ -44,8 +44,7 @@ h2 {
 }
 
 .wrapper {
-  /* overflow: hidden; */
-
+  overflow: hidden;
   text-align: center;
   width: 90%;
   position: absolute;
@@ -57,4 +56,26 @@ h2 {
 
 i:hover {
   cursor: pointer;
+}
+
+input[type="submit"] {
+  width: 10%;
+  color: white;
+  font-family: "Segoe UI" sans-serif;
+  background-color: var(--accent-color);
+  border: none;
+  padding: 10px;
+  display: inline-block;
+  border-radius: 4px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+input[type="submit"]:hover {
+  color: black;
+  background-color: white;
+  cursor: pointer;
+}
+
+input[type="submit"]:focus {
+  outline: none;
 }

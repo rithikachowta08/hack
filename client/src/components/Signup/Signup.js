@@ -48,12 +48,16 @@ class Signup extends Component {
 
   //render signup modal
   render() {
+    let iconStyle = {
+      top: "-20px"
+    };
     return (
       <div className="modal">
         <div className="wrapper">
           <h2>
             Sign up
             <i
+              style={iconStyle}
               className="fa fa-times-circle"
               onClick={() => this.props.closeFunc("displayCreateModal")}
             />
