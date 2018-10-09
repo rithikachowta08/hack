@@ -1,6 +1,8 @@
 // firebase configuration
 
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/firestore";
+
 const config = {
   apiKey: "AIzaSyCJTN3T70KXisG0On6W44uBjsqQmz-YWJA",
   authDomain: "hackerrank-clone.firebaseapp.com",
