@@ -45,6 +45,7 @@
 }
 
 .overlay {
+  text-transform: capitalize;
   background: rgba(153, 153, 153, 0.5);
   min-height: 800px;
   position: absolute;

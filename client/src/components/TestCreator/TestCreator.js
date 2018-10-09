@@ -3,14 +3,18 @@ import { logout } from "../../config/functions";
 import ReactDOM from "react-dom";
 import Header from "../../layout/Header/Header";
 import Button from "../../layout/Button/Button";
+import Spinner from "../../layout/Spinner/Spinner";
 import ListItem from "../../layout/ListItem/ListItem";
 import axios from "axios";
+import fire, { db } from "../../config/fire";
+import "firebase/firestore";
 import "./TestCreator.css";
 
 class TestCreator extends Component {
   constructor(props) {
+    console.log(props);
     super(props);
-    this.state = { addedQuestions: [], mailingList: [] };
+    this.state = { addedQuestions: [], libraryQuestions: [] };
     this.selectedQuestions = [];
   }
 
@@ -19,13 +23,50 @@ class TestCreator extends Component {
     this.setState({ addedQuestions: this.selectedQuestions });
   };
 
+  componentDidMount() {
+    let questions = [];
+    db.collection("questions")
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          let data = doc.data();
+          questions.push({
+            name: data.name,
+            category: data.category,
+            difficulty: data.difficulty,
+            points: data.points,
+            descriptions: data.description
+          });
+        });
+        this.setState({ libraryQuestions: questions });
+      });
+  }
+
   render() {
+    let previewList = this.state.addedQuestions.map((item, index) => (
+      <ListItem key={index}>{item}</ListItem>
+    ));
+    let questionItems = this.state.libraryQuestions.map((item, index) => (
+      <ListItem key={index}>
+        <h3>{item.name}</h3>
+        <div className="details">
+          <span>{item.category}</span>
+          <span>Points: {item.points}</span>
+          <span>Difficulty: {item.difficulty}</span>
+          <i
+            className="fa fa-plus-circle"
+            onClick={this.addQuestion.bind(this, item.name)}
+          />
+        </div>
+      </ListItem>
+    ));
+
     return (
       <Fragment>
         <Header logout={logout} />
         <div className="content-wrapper content-overlay">
           <div className="test-header">
-            Test name > Active tab
+            {this.props.testName}
             <Button>Publish</Button>
           </div>
           <div className="overlay">
@@ -35,61 +76,10 @@ class TestCreator extends Component {
                 <li>My questions</li>
               </ul>
             </div>
-            <div className="list-view">
-              <ListItem>
-                <h3>Safe Partition</h3>
-                <div className="details">
-                  <span>Linked Lists</span>
-                  <span>Points: 20</span>
-                  <span>Difficulty: Medium</span>
-                  <i
-                    className="fa fa-plus-circle"
-                    onClick={this.addQuestion.bind(this, "Safe partition")}
-                  />
-                </div>
-              </ListItem>
-              <ListItem>
-                <h3>Graph coloring</h3>
-                <div className="details">
-                  <span>Graphs</span>
-                  <span>Points: 20</span>
-                  <span>Difficulty: Easy</span>
-                  <i
-                    className="fa fa-plus-circle"
-                    onClick={this.addQuestion.bind(this, "Graph coloring")}
-                  />
-                </div>
-              </ListItem>
-              <ListItem>
-                <h3>Subsegment sum </h3>
-                <div className="details">
-                  <span>Arrays</span>
-                  <span>Points: 30</span>
-                  <span>Difficulty: Medium</span>
-                  <i
-                    className="fa fa-plus-circle"
-                    onClick={this.addQuestion.bind(this, "Subsegment sum")}
-                  />
-                </div>
-              </ListItem>
-              <ListItem>
-                <h3>K perfect matchings</h3>
-                <div className="details">
-                  <span>Algorithm design</span>
-                  <span>Points: 40</span>
-                  <span>Difficulty: Hard</span>
-                  <i
-                    className="fa fa-plus-circle"
-                    onClick={this.addQuestion.bind(this, "K perfect matchings")}
-                  />
-                </div>
-              </ListItem>
-            </div>
+            <div className="list-view">{questionItems}</div>
             <div className="test-preview">
               <p>Preview</p>
-              {this.state.addedQuestions.map((item, index) => (
-                <ListItem key={index}>{item}</ListItem>
-              ))}
+              {previewList}
             </div>
             {/* <div className="send-invites">
               <h2>Send invites to candidates</h2>

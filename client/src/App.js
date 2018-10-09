@@ -60,7 +60,10 @@ class App extends Component {
               <Route path={routes.LANDING} exact component={LandingPage} />
               <Route path={routes.DASHBOARD} exact component={AdminDashboard} />
               <Route path={routes.ANSWER_TEST} exact component={AnswerTest} />
-              <Route path={routes.TEST_EDITOR} exact component={TestCreator} />
+              <Route
+                path={routes.TEST_EDITOR}
+                render={() => <TestCreator testName="current-test" />}
+              />
             </Switch>
           </div>
         </BrowserRouter>
