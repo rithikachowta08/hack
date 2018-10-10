@@ -10,6 +10,7 @@
     "http": "0.0.0",
     "jsonwebtoken": "^8.3.0",
     "jwt-decode": "^2.2.0",
+    "node-cmd": "^3.0.0",
     "nodemailer": "^4.6.8",
     "nodemailer-smtp-transport": "^2.7.4",
     "react-redux": "^5.0.7",
