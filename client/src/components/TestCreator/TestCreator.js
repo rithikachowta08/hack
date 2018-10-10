@@ -5,21 +5,27 @@ import Button from "../../layout/Button/Button";
 import Spinner from "../../layout/Spinner/Spinner";
 import ListItem from "../../layout/ListItem/ListItem";
 import { db } from "../../config/fire";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { addQuestions } from "../../actions/testActions";
 import "firebase/firestore";
 import "./TestCreator.css";
 
 class TestCreator extends Component {
   constructor(props) {
-    // console.log(props);
     super(props);
     this.state = { addedQuestions: [], libraryQuestions: [] };
     this.selectedQuestions = [];
   }
 
+  // update list of selected questions
+
   addQuestion = (qname, qid) => {
     this.selectedQuestions.push({ qname, qid });
     this.setState({ addedQuestions: this.selectedQuestions });
   };
+
+  // update db and dispatch action to update store
 
   publishTest = () => {
     let arr = this.selectedQuestions.map(item => item.qid);
@@ -28,7 +34,10 @@ class TestCreator extends Component {
       .update({
         questions: arr
       });
+    this.props.addQuestions(arr);
   };
+
+  // display list of questions available in database
 
   componentDidMount() {
     let questions = [];
@@ -51,10 +60,6 @@ class TestCreator extends Component {
   }
 
   render() {
-    let spinnerStyle = {
-      top: "100%"
-    };
-
     let previewList = this.state.addedQuestions.map((item, index) => (
       <ListItem key={index}>{item.qname}</ListItem>
     ));
@@ -89,11 +94,7 @@ class TestCreator extends Component {
               </ul>
             </div>
             <div className="list-view">
-              {questionItems.length !== 0 ? (
-                questionItems
-              ) : (
-                <Spinner style={spinnerStyle} />
-              )}
+              {questionItems.length !== 0 ? questionItems : <Spinner />}
             </div>
             <div className="test-preview">
               <p>Preview</p>
@@ -118,4 +119,13 @@ class TestCreator extends Component {
   }
 }
 
-export default TestCreator;
+const mapStateToProps = state => ({
+  testList: state.tests.testList
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { addQuestions }
+  )(TestCreator)
+);

@@ -1,8 +1,8 @@
-@import "../../variable.css";
 .loader {
-  position: relative;
+  position: fixed;
   left: 50%;
-  top: 25%;
+  top: 50%;
+  transform: translate(-50%, -50%);
   border: 10px solid #f3f3f3;
   border-top: 16px solid var(--accent-color);
   border-radius: 50%;

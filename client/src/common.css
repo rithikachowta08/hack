@@ -23,7 +23,7 @@ h2 {
 .content-wrapper {
   text-align: center;
   padding: 3%;
-  height: 100%;
+  /* height: 100%; */
   position: relative;
   background: url("https://storage.googleapis.com/codeavengers.appspot.com/cloud/assets/landing-01.jpg");
   background-position: center;

@@ -1,8 +1,6 @@
-@import "../../variable.css";
-
 .content-wrapper.content-overlay {
   position: relative;
-  min-height: 700px;
+  overflow: hidden;
   padding: 0;
   background: none;
   background-color: var(--light-color);
@@ -48,7 +46,7 @@
 .overlay {
   text-transform: capitalize;
   background: rgba(153, 153, 153, 0.5);
-  min-height: 600px;
+  min-height: 700px;
   position: absolute;
   top: 10%;
   width: 100%;
@@ -56,12 +54,15 @@
 
 .list-view {
   position: absolute;
-  top: 2%;
+  top: 8%;
   left: 15%;
   width: 70%;
 }
 
 .test-preview {
+  min-height: 650px;
+  border-left: 1px solid var(--light-grey);
+  padding-left: 2%;
   position: absolute;
   top: 2%;
   right: 0;
@@ -74,7 +75,7 @@
   text-align: left;
 }
 
-.send-invites {
+/* .send-invites {
   text-align: center;
   position: absolute;
   bottom: 10%;
@@ -94,4 +95,4 @@
   bottom: -20%;
   left: 50%;
   transform: translateX(-50%);
-}
+} */

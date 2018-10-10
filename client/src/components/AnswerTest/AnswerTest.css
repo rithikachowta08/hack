@@ -1,0 +1,19 @@
+.test-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.flex-item {
+  flex-basis: 25%;
+  align-self: center;
+}
+
+aside {
+  padding: 10px;
+  float: left;
+  background: var(--light-color);
+}
+
+aside h3 {
+}

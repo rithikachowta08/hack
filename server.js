@@ -20,7 +20,7 @@ app.post("/execute", (req, res) => {
   fs.writeFile(filepath, fileContent, err => {
     if (err) throw err;
     console.log("The file was succesfully saved!");
-    cmd.get("python user-script.py", function(data, err, stderr) {
+    cmd.get("python user-script.py", function(err, data, stderr) {
       if (!err) {
         console.log("data from python script " + data);
       } else {
