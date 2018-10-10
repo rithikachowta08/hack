@@ -42,7 +42,6 @@ function asyncAction(questionId) {
       .doc(questionId)
       .get()
       .then(querySnapshot => {
-        console.log(querySnapshot.data());
         return resolve(querySnapshot.data());
       })
       .catch(err => reject(err));
@@ -50,20 +49,20 @@ function asyncAction(questionId) {
 }
 
 export const addQuestions = arr => dispatch => {
-  var promises = [];
+  let promises = [];
   for (let i in arr) {
     promises.push(asyncAction(arr[i]));
   }
 
   Promise.all(promises).then(
-    function AcceptHandler(results) {
-      console.log(results);
+    results => {
       dispatch({
         type: actionTypes.ADD_QUESTIONS,
         payload: results
       });
+      return "all okay";
     },
-    function ErrorHandler(error) {
+    error => {
       console.log(error);
     }
   );

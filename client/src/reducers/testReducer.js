@@ -18,7 +18,6 @@ export default function(state = initialState, action) {
       };
 
     case actionTypes.ADD_QUESTIONS:
-      console.log(action.payload[0]);
       return {
         ...state,
         testQuestions: action.payload

@@ -15,5 +15,30 @@ aside {
   background: var(--light-color);
 }
 
+.test-questions {
+  min-height: 680px;
+  width: 15%;
+}
+
+ul {
+  display: flex;
+  text-align: left;
+  flex-direction: column;
+  align-content: space-around;
+}
+
+.question {
+  padding: 2%;
+  display: inline;
+}
+
+.radio-btn {
+  display: inline;
+}
+
+.radio-btn:hover {
+  cursor: pointer;
+}
+
 aside h3 {
 }

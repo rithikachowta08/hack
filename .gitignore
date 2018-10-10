@@ -9,6 +9,8 @@
 # production
 /build
 
+/client/public/ace-builds
+
 # misc
 .DS_Store
 .env.local

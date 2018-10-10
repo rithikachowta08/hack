@@ -35,6 +35,7 @@ class TestCreator extends Component {
         questions: arr
       });
     this.props.addQuestions(arr);
+    this.props.history.push("/test/answer");
   };
 
   // display list of questions available in database
