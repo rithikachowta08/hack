@@ -39,16 +39,6 @@ class AnswerTest extends Component {
     } else return prevState;
   }
 
-  // takes input as template string. prepares data to deliver to api
-
-  preprocessCode = code => {
-    code = code.replace(/(\".*)\n(.*\")/g, "$1\\\\n$2"); //escape new line characters
-    code = code.replace(/\n/g, "\\n"); //replace line breaks with \n
-    code = code.replace(/\s+/g, " ").trim(); // trim white spaces
-    code = code.replace(/"/g, '\\"'); // escape double quotes
-    console.log(code);
-  };
-
   // change language
   setLanguage = e => {
     let index = e.target.selectedIndex;
@@ -59,6 +49,8 @@ class AnswerTest extends Component {
   getDetails = e => {
     this.setState({ highlightedQuestion: e.target.innerText });
   };
+
+  runCode = () => {};
 
   render() {
     // render questions list
@@ -114,7 +106,7 @@ class AnswerTest extends Component {
               </select>
               <CodeEditor language={this.state.language} />
               <br />
-              <Button>Run</Button>
+              <Button click={this.runCode}>Run</Button>
               <Button>Submit</Button>
             </div>
           </div>

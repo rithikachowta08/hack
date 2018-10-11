@@ -2,6 +2,40 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
 
+// takes input as template string. prepares data to deliver to api
+
+preprocessCode = code => {
+  code = code.replace(/(\".*)\n(.*\")/g, "$1\\\\n$2"); //escape new line characters
+  code = code.replace(/\n/g, "\\n"); //replace line breaks with \n
+  code = code.replace(/\s+/g, " ").trim(); // trim white spaces
+  code = code.replace(/"/g, '\\"'); // escape double quotes
+  console.log(code);
+  return code;
+};
+
+callJdoodleApi = userScript => {
+  request(
+    {
+      url: "https://api.jdoodle.com/execute",
+      method: "POST",
+      json: {
+        clientId: "eaf5d02e0106c43d533594b300366743",
+        clientSecret:
+          "6faab0531e48a67cedc676a7baeb1bfae1e30f8abdd8510c593a94a97c6fceeb",
+        script: userScript,
+        language: "c",
+        versionIndex: "0"
+      }
+    },
+    function(error, response, body) {
+      if (!error && response.statusCode === 200) {
+        console.log(body);
+        res.send(body);
+      }
+    }
+  );
+};
+
 // Extract jwt from auth field in header
 
 verifyToken = (req, res, next) => {
@@ -15,6 +49,14 @@ verifyToken = (req, res, next) => {
     res.sendStatus(403);
   }
 };
+
+// login endpoint - grant jwt to client
+
+router.post("/run", (req, res) => {
+  console.log("run endpoint hit");
+  let formattedCode = preprocessCode(req.body.code);
+  callJdoodleApi(formattedCode);
+});
 
 // login endpoint - grant jwt to client
 

@@ -1,5 +1,7 @@
-import React, { Fragment } from "react";
-
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { setCode } from "../../actions/codeActions";
 // Import Brace and the AceEditor Component
 import AceEditor from "react-ace";
 
@@ -12,15 +14,24 @@ import "brace/mode/python";
 // Import a Theme (okadia, github, xcode etc)
 import "brace/theme/pastel_on_dark";
 
-export default class CodeEditor extends React.Component {
+class CodeEditor extends Component {
+  state = {
+    curCode: ""
+  };
+
   onChange = newValue => {
-    // console.log("change", newValue);
+    console.log("change", newValue);
+    console.log(this.props.code);
+    let prevValue = this.props.code ? this.props.code : "";
+    this.props.setCode(prevValue + newValue);
+    this.setState;
   };
 
   render() {
     return (
       <Fragment>
         <AceEditor
+          value={this.props.code}
           mode={this.props.language}
           theme="pastel_on_dark"
           fontSize={16}
@@ -36,3 +47,14 @@ export default class CodeEditor extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  code: state.code.currentCode
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { setCode }
+  )(CodeEditor)
+);
