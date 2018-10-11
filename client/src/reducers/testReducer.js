@@ -23,6 +23,11 @@ export default function(state = initialState, action) {
         testQuestions: action.payload
       };
 
+    case actionTypes.ADD_QUESTION_DETAILS:
+      return {
+        ...state,
+        questionDetails: action.payload
+      };
     default:
       return state;
   }

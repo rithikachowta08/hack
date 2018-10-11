@@ -67,3 +67,10 @@ export const addQuestions = arr => dispatch => {
     }
   );
 };
+
+export const addQuestionDetails = arr => {
+  return {
+    type: actionTypes.ADD_QUESTION_DETAILS,
+    payload: arr
+  };
+};

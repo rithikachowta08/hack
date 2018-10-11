@@ -7,7 +7,7 @@ import ListItem from "../../layout/ListItem/ListItem";
 import { db } from "../../config/fire";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { addQuestions } from "../../actions/testActions";
+import { addQuestions, addQuestionDetails } from "../../actions/testActions";
 import "firebase/firestore";
 import "./TestCreator.css";
 
@@ -49,7 +49,7 @@ class TestCreator extends Component {
     } else return null;
   }
 
-  // display list of questions available in database
+  // get details of all questions available in database and add to store
 
   componentDidMount() {
     let questions = [];
@@ -64,10 +64,15 @@ class TestCreator extends Component {
             category: data.category,
             difficulty: data.difficulty,
             points: data.points,
-            descriptions: data.description
+            descriptions: data.description,
+            input: data.input,
+            output: data.output,
+            sampleInput: data.sampleInput,
+            sampleOutput: data.sampleOutput
           });
         });
         this.setState({ libraryQuestions: questions });
+        this.props.addQuestionDetails(questions);
       });
   }
 
@@ -141,6 +146,6 @@ const mapStateToProps = state => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    { addQuestions }
+    { addQuestions, addQuestionDetails }
   )(TestCreator)
 );

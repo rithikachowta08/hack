@@ -16,7 +16,7 @@ aside {
 }
 
 .test-questions {
-  min-height: 680px;
+  min-height: 830px;
   width: 15%;
 }
 
@@ -30,6 +30,17 @@ ul {
 .question {
   padding: 2%;
   display: inline;
+}
+
+.question:hover {
+  cursor: pointer;
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.question:active {
+  background-color: var(--accent-color);
+  color: white;
 }
 
 .radio-btn {

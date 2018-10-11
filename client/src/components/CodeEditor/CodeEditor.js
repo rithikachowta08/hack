@@ -5,28 +5,27 @@ import AceEditor from "react-ace";
 
 // Import a Mode (language)
 import "brace/mode/java";
+import "brace/mode/javascript";
+import "brace/mode/c_cpp";
+import "brace/mode/python";
 
 // Import a Theme (okadia, github, xcode etc)
-import "brace/theme/github";
+import "brace/theme/pastel_on_dark";
 
 export default class CodeEditor extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-  }
-
   onChange = newValue => {
-    console.log("change", newValue);
+    // console.log("change", newValue);
   };
 
   render() {
     return (
       <Fragment>
         <AceEditor
-          mode="javascript"
-          theme="monokai"
+          mode={this.props.language}
+          theme="pastel_on_dark"
           fontSize={16}
           highlightActiveLine={true}
-          style={{ textTransform: "none" }}
+          style={{ textTransform: "none", width: "800px" }}
           onChange={this.onChange}
           name="code-div"
           editorProps={{
