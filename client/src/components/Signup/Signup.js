@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import fire from "../../config/fire";
+import "firebase/auth";
 import "../Login/Login.css";
 import Button from "../../layout/Button/Button";
 import Input from "../../layout/Input/Input";

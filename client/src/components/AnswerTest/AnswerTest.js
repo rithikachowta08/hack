@@ -3,7 +3,7 @@ import Header from "../../layout/Header/Header";
 import { logout } from "../../config/functions";
 import Button from "../../layout/Button/Button";
 import Timer from "../../layout/Timer/Timer";
-import Spinner from "../../layout/Spinner/Spinner";
+// import Spinner from "../../layout/Spinner/Spinner";
 import CodeEditor from "../../components/CodeEditor/CodeEditor";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -28,18 +28,16 @@ class AnswerTest extends Component {
 
   render() {
     let questions =
-      this.state.q.length !== 0 ? (
-        this.state.q.map(function(question, index) {
-          return (
-            <li className="question" key={index}>
-              {question.name}
-              <input className="radio-btn" type="radio" name="question" />
-            </li>
-          );
-        })
-      ) : (
-        <Spinner />
-      );
+      this.state.q.length !== 0
+        ? this.state.q.map(function(question, index) {
+            return (
+              <li className="question" key={index}>
+                {question.name}
+                <input className="radio-btn" type="radio" name="question" />
+              </li>
+            );
+          })
+        : null;
 
     return (
       <Fragment>
@@ -56,7 +54,21 @@ class AnswerTest extends Component {
               <h3 style={{ fontSize: "2em" }}>Questions</h3>
               <ul>{questions}</ul>
             </aside>
-            <CodeEditor />
+            <div className="middle-section">
+              <select name="languageSelector">
+                <option value="C">C</option>
+                <option value="C++">C++</option>
+                <option value="Java">Java</option>
+                <option value="JavaScript">JavaScript</option>
+                <option value="Python">Python</option>
+                <option value="C#">C#</option>
+                <option value="Ruby">Ruby</option>
+              </select>
+              <CodeEditor />
+              <br />
+              <Button>Run</Button>
+              <Button>Submit</Button>
+            </div>
           </div>
         </div>
       </Fragment>

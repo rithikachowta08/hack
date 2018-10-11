@@ -14,7 +14,11 @@ import "./TestCreator.css";
 class TestCreator extends Component {
   constructor(props) {
     super(props);
-    this.state = { addedQuestions: [], libraryQuestions: [] };
+    this.state = {
+      addedQuestions: [],
+      libraryQuestions: [],
+      activeTest: []
+    };
     this.selectedQuestions = [];
   }
 
@@ -30,13 +34,20 @@ class TestCreator extends Component {
   publishTest = () => {
     let arr = this.selectedQuestions.map(item => item.qid);
     db.collection("tests")
-      .doc("GpTTiOf0S3pj2H9i2u9i")
+      .doc(this.state.activeTest[0])
       .update({
-        questions: arr
+        questions: arr,
+        status: "active"
       });
     this.props.addQuestions(arr);
     this.props.history.push("/test/answer");
   };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.curTest !== prevState.curTest) {
+      return { activeTest: nextProps.curTest };
+    } else return null;
+  }
 
   // display list of questions available in database
 
@@ -61,9 +72,12 @@ class TestCreator extends Component {
   }
 
   render() {
+    let testName =
+      this.state.activeTest.length !== 0 ? this.state.activeTest[1] : null;
     let previewList = this.state.addedQuestions.map((item, index) => (
       <ListItem key={index}>{item.qname}</ListItem>
     ));
+
     let questionItems = this.state.libraryQuestions.map((item, index) => (
       <ListItem key={item.id}>
         <h3>{item.name}</h3>
@@ -84,7 +98,7 @@ class TestCreator extends Component {
         <Header logout={logout} />
         <div className="content-wrapper content-overlay">
           <div className="test-header">
-            <p>{this.props.testName}</p>
+            <p>{testName}</p>
             <Button click={this.publishTest}>Publish</Button>
           </div>
           <div className="overlay">
@@ -121,7 +135,7 @@ class TestCreator extends Component {
 }
 
 const mapStateToProps = state => ({
-  testList: state.tests.testList
+  curTest: state.tests.newTest
 });
 
 export default withRouter(

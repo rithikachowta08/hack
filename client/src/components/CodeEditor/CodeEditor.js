@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 // Import Brace and the AceEditor Component
 import AceEditor from "react-ace";
@@ -20,7 +20,7 @@ export default class CodeEditor extends React.Component {
 
   render() {
     return (
-      <div>
+      <Fragment>
         <AceEditor
           mode="javascript"
           theme="monokai"
@@ -28,12 +28,12 @@ export default class CodeEditor extends React.Component {
           highlightActiveLine={true}
           style={{ textTransform: "none" }}
           onChange={this.onChange}
-          name="UNIQUE_ID_OF_DIV"
+          name="code-div"
           editorProps={{
             $blockScrolling: false
           }}
         />
-      </div>
+      </Fragment>
     );
   }
 }
