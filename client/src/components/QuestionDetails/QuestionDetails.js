@@ -15,7 +15,7 @@ class QuestionDetails extends Component {
         }
       });
 
-      console.log(questionInfo);
+      // console.log(questionInfo);
       return {
         ...prevState,
         questionDetails: nextProps.questions,

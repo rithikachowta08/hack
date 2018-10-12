@@ -3,6 +3,7 @@ import Header from "../../layout/Header/Header";
 import { logout } from "../../config/functions";
 import Button from "../../layout/Button/Button";
 import Timer from "../../layout/Timer/Timer";
+import axios from "axios";
 import CodeEditor from "../../components/CodeEditor/CodeEditor";
 import { connect } from "react-redux";
 import QuestionDetails from "../../components/QuestionDetails/QuestionDetails";
@@ -50,7 +51,15 @@ class AnswerTest extends Component {
     this.setState({ highlightedQuestion: e.target.innerText });
   };
 
-  runCode = () => {};
+  runCode = () => {
+    let data = {
+      body: this.props.code
+    };
+    axios
+      .post("/api/runCode", data)
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+  };
 
   render() {
     // render questions list
@@ -119,7 +128,8 @@ class AnswerTest extends Component {
 const mapStateToProps = state => ({
   ques: state.tests.testQuestions,
   curTest: state.tests.newTest,
-  questions: state.tests.questionDetails
+  questions: state.tests.questionDetails,
+  code: state.code.currentCode
 });
 
 export default withRouter(

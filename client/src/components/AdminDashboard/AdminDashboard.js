@@ -67,6 +67,9 @@ class AdminDashboard extends Component {
                 <td>{test.date}</td>
                 <td>{test.profile}</td>
                 <td>{test.status}</td>
+                <td>
+                  <Button>Answer</Button>
+                </td>
               </tr>
             ))}
           </tbody>

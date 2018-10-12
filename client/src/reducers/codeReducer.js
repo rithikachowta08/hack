@@ -1,7 +1,7 @@
 import * as actionTypes from "../actions/types";
 
 const initialState = {
-  code: ""
+  currentCode: ""
 };
 
 export default function(state = initialState, action) {

@@ -4,15 +4,6 @@ const router = express.Router();
 
 // takes input as template string. prepares data to deliver to api
 
-preprocessCode = code => {
-  code = code.replace(/(\".*)\n(.*\")/g, "$1\\\\n$2"); //escape new line characters
-  code = code.replace(/\n/g, "\\n"); //replace line breaks with \n
-  code = code.replace(/\s+/g, " ").trim(); // trim white spaces
-  code = code.replace(/"/g, '\\"'); // escape double quotes
-  console.log(code);
-  return code;
-};
-
 callJdoodleApi = userScript => {
   request(
     {
@@ -23,6 +14,7 @@ callJdoodleApi = userScript => {
         clientSecret:
           "6faab0531e48a67cedc676a7baeb1bfae1e30f8abdd8510c593a94a97c6fceeb",
         script: userScript,
+        stdin: "3\naaaabccc\naabbcc\nppppmmnnoooopp",
         language: "c",
         versionIndex: "0"
       }
@@ -49,14 +41,6 @@ verifyToken = (req, res, next) => {
     res.sendStatus(403);
   }
 };
-
-// login endpoint - grant jwt to client
-
-router.post("/run", (req, res) => {
-  console.log("run endpoint hit");
-  let formattedCode = preprocessCode(req.body.code);
-  callJdoodleApi(formattedCode);
-});
 
 // login endpoint - grant jwt to client
 

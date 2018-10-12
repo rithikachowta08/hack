@@ -15,16 +15,10 @@ import "brace/mode/python";
 import "brace/theme/pastel_on_dark";
 
 class CodeEditor extends Component {
-  state = {
-    curCode: ""
-  };
+  state = {};
 
   onChange = newValue => {
-    console.log("change", newValue);
-    console.log(this.props.code);
-    let prevValue = this.props.code ? this.props.code : "";
-    this.props.setCode(prevValue + newValue);
-    this.setState;
+    this.props.setCode(newValue);
   };
 
   render() {
@@ -36,7 +30,7 @@ class CodeEditor extends Component {
           theme="pastel_on_dark"
           fontSize={16}
           highlightActiveLine={true}
-          style={{ textTransform: "none", width: "800px" }}
+          style={{ textTransform: "none", width: "500px" }}
           onChange={this.onChange}
           name="code-div"
           editorProps={{
