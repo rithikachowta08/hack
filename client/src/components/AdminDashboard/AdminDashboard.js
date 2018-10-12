@@ -1,9 +1,15 @@
 import React, { Component, Fragment } from "react";
 import Header from "../../layout/Header/Header";
 import "./AdminDashboard.css";
+import { db } from "../../config/fire";
+import "firebase/firestore";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { fetchTests } from "../../actions/testActions";
+import {
+  fetchTests,
+  setCurTest,
+  fetchQuestionDetails
+} from "../../actions/testActions";
 import Button from "../../layout/Button/Button";
 import { logout } from "../../config/functions";
 import Spinner from "../../layout/Spinner/Spinner";
@@ -26,6 +32,14 @@ class AdminDashboard extends Component {
     });
   };
 
+  // redirect to answertest page
+
+  answerTest = e => {
+    console.log(e.target.id);
+    this.props.setCurTest(e.target.id, e.target.name);
+    this.props.history.push("/test/answer");
+  };
+
   // modal close button click handler
 
   removeModal = modalName => {
@@ -38,6 +52,27 @@ class AdminDashboard extends Component {
 
   componentDidMount() {
     this.props.fetchTests();
+    let questions = [];
+    db.collection("questions")
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+          let data = doc.data();
+          questions.push({
+            id: doc.id,
+            name: data.name,
+            category: data.category,
+            difficulty: data.difficulty,
+            points: data.points,
+            descriptions: data.description,
+            input: data.input,
+            output: data.output,
+            sampleInput: data.sampleInput,
+            sampleOutput: data.sampleOutput
+          });
+        });
+        this.props.fetchQuestionDetails(questions);
+      });
   }
 
   // update tests to ui when it is received in props
@@ -60,15 +95,18 @@ class AdminDashboard extends Component {
               <th>Date created</th>
               <th>Profile</th>
               <th>Status</th>
+              <th />
             </tr>
-            {this.state.tests.map((test, index) => (
-              <tr key={`test${index}`}>
+            {this.state.tests.map(test => (
+              <tr key={`${test.id}`}>
                 <td>{test.name}</td>
                 <td>{test.date}</td>
                 <td>{test.profile}</td>
                 <td>{test.status}</td>
                 <td>
-                  <Button>Answer</Button>
+                  <Button name={test.name} id={test.id} click={this.answerTest}>
+                    Answer
+                  </Button>
                 </td>
               </tr>
             ))}
@@ -107,6 +145,6 @@ const mapStateToProps = state => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    { fetchTests }
+    { fetchTests, setCurTest, fetchQuestionDetails }
   )(AdminDashboard)
 );

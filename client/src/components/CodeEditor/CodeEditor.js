@@ -9,16 +9,17 @@ import AceEditor from "react-ace";
 import "brace/mode/java";
 import "brace/mode/javascript";
 import "brace/mode/c_cpp";
+import "brace/mode/php";
 import "brace/mode/python";
-
-// Import a Theme (okadia, github, xcode etc)
-import "brace/theme/pastel_on_dark";
+import "brace/theme/monokai";
 
 class CodeEditor extends Component {
   state = {};
 
   onChange = newValue => {
-    this.props.setCode(newValue);
+    let templateString = `${newValue}`;
+    console.log(templateString);
+    this.props.setCode(templateString);
   };
 
   render() {
@@ -27,10 +28,10 @@ class CodeEditor extends Component {
         <AceEditor
           value={this.props.code}
           mode={this.props.language}
-          theme="pastel_on_dark"
+          theme="monokai"
           fontSize={16}
           highlightActiveLine={true}
-          style={{ textTransform: "none", width: "500px" }}
+          style={{ textTransform: "none", width: "700px" }}
           onChange={this.onChange}
           name="code-div"
           editorProps={{

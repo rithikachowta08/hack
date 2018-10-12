@@ -8,7 +8,6 @@ import CodeEditor from "../../components/CodeEditor/CodeEditor";
 import { connect } from "react-redux";
 import QuestionDetails from "../../components/QuestionDetails/QuestionDetails";
 import { withRouter } from "react-router-dom";
-import { fetchTests } from "../../actions/testActions";
 import "./AnswerTest.css";
 
 class AnswerTest extends Component {
@@ -20,24 +19,33 @@ class AnswerTest extends Component {
       questionDescriptions: [],
       highlightedQuestion: ""
     };
-    this.getDetails.bind(this);
   }
 
   // update testname, questionlist and question details to state when it is received in props
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.ques !== prevState.ques) {
+    let questionList = nextProps.testDetails.map(test => {
+      if (test.id === nextProps.curTest.id) {
+        return test.questions;
+      }
+    });
+
+    if (prevState.questions !== questionList) {
+      console.log(questionList);
       let tempState = {
         ...prevState,
-        q: nextProps.ques,
-        testName: nextProps.curTest[1],
-        questionDescriptions: nextProps.questions,
+        questions: questionList,
+        testName: nextProps.curTest.name,
+        testId: nextProps.curTest.id,
+        questionDetails: nextProps.questionDetails,
         highlightedQuestion: prevState.highlightedQuestion // was accidentally overwriting with data from props
           ? prevState.highlightedQuestion
-          : nextProps.ques[0].name
+          : questionList[0].name
       };
       return tempState;
-    } else return prevState;
+    } else {
+      return prevState;
+    }
   }
 
   // change language
@@ -51,21 +59,50 @@ class AnswerTest extends Component {
     this.setState({ highlightedQuestion: e.target.innerText });
   };
 
+  // get language code to send to api
+  getLanguageCode = language => {
+    switch (language) {
+      case "c_cpp":
+        return "c";
+      case "python":
+        return "python3";
+      case "javascript":
+        return "nodejs";
+      default:
+        return language;
+    }
+  };
+
   runCode = () => {
+    let sampleInput, sampleOutput;
+    this.state.questionDescriptions.map((question, index) => {
+      if (question.name === this.state.highlightedQuestion) {
+        sampleInput = this.state.questionDescriptions[index].sampleInput;
+        sampleOutput = this.state.questionDescriptions[index].sampleOutput;
+      }
+    });
+
+    let languageCode = this.getLanguageCode(this.state.language);
+    console.log(this.props.code);
     let data = {
-      body: this.props.code
+      code: this.props.code,
+      language: languageCode,
+      sampleInput
     };
     axios
-      .post("/api/runCode", data)
-      .then(res => console.log(res))
+      .post("/api/run", data)
+      .then(res => {
+        console.log(res);
+        if (sampleOutput === res.output) console.log("Right!");
+        else console.log("Wrong!");
+      })
       .catch(err => console.log(err));
   };
 
   render() {
-    // render questions list
     let questions =
-      this.state.q.length !== 0
-        ? this.state.q.map((question, index) => {
+      this.state.questions.length !== 0
+        ? this.state.questions.map((question, index) => {
             return (
               <li
                 className="question"
@@ -74,7 +111,7 @@ class AnswerTest extends Component {
                   this.getDetails(e);
                 }}
               >
-                {question.name}
+                {question}
               </li>
             );
           })
@@ -108,9 +145,9 @@ class AnswerTest extends Component {
             <div className="middle-section">
               <select name="languageSelector" onChange={this.setLanguage}>
                 <option value="c_cpp">C</option>
-                <option value="c_cpp">C++</option>
                 <option value="java">Java</option>
-                <option value="javascript">JavaScript</option>
+                <option value="javascript">JavaScript/NodeJS</option>
+                <option value="php">PHP</option>
                 <option value="python">Python</option>
               </select>
               <CodeEditor language={this.state.language} />
@@ -126,15 +163,15 @@ class AnswerTest extends Component {
 }
 
 const mapStateToProps = state => ({
-  ques: state.tests.testQuestions,
-  curTest: state.tests.newTest,
-  questions: state.tests.questionDetails,
-  code: state.code.currentCode
+  curTest: state.tests.currentTest,
+  questionDetails: state.tests.questionDetails,
+  code: state.code.currentCode,
+  testDetails: state.tests.testList
 });
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { fetchTests }
+    null
   )(AnswerTest)
 );

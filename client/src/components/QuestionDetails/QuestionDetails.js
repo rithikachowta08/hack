@@ -10,7 +10,7 @@ class QuestionDetails extends Component {
     if (nextProps.qname !== prevState.curQuestion) {
       let questionInfo;
       nextProps.questions.map((question, index) => {
-        if (question.name == nextProps.qname) {
+        if (question.name === nextProps.qname) {
           questionInfo = nextProps.questions[index];
         }
       });
@@ -60,7 +60,7 @@ class QuestionDetails extends Component {
 }
 
 const mapStateToProps = state => ({
-  questions: state.tests.testQuestions
+  questions: state.tests.questionDetails
 });
 
 export default withRouter(

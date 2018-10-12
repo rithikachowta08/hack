@@ -7,7 +7,7 @@ import ListItem from "../../layout/ListItem/ListItem";
 import { db } from "../../config/fire";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { addQuestions, addQuestionDetails } from "../../actions/testActions";
+import { addQuestions } from "../../actions/testActions";
 import "firebase/firestore";
 import "./TestCreator.css";
 
@@ -24,63 +24,36 @@ class TestCreator extends Component {
 
   // update list of selected questions
 
-  addQuestion = (qname, qid) => {
-    this.selectedQuestions.push({ qname, qid });
+  addQuestion = (name, id) => {
+    this.selectedQuestions.push({ name, id });
     this.setState({ addedQuestions: this.selectedQuestions });
   };
 
   // update db and dispatch action to update store
 
   publishTest = () => {
-    let arr = this.selectedQuestions.map(item => item.qid);
     db.collection("tests")
-      .doc(this.state.activeTest[0])
+      .doc(this.state.activeTest.id)
       .update({
-        questions: arr,
+        questions: this.state.addedQuestions,
         status: "active"
       });
-    this.props.addQuestions(arr);
-    this.props.history.push("/test/answer");
+    this.props.addQuestions(this.state.addedQuestions);
+    this.props.history.push("/dashboard");
   };
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.curTest !== prevState.curTest) {
-      return { activeTest: nextProps.curTest };
-    } else return null;
-  }
 
   // get details of all questions available in database and add to store
 
-  componentDidMount() {
-    let questions = [];
-    db.collection("questions")
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          let data = doc.data();
-          questions.push({
-            id: doc.id,
-            name: data.name,
-            category: data.category,
-            difficulty: data.difficulty,
-            points: data.points,
-            descriptions: data.description,
-            input: data.input,
-            output: data.output,
-            sampleInput: data.sampleInput,
-            sampleOutput: data.sampleOutput
-          });
-        });
-        this.setState({ libraryQuestions: questions });
-        this.props.addQuestionDetails(questions);
-      });
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.questionInfo !== prevState.questionInfo)
+      return { libraryQuestions: nextProps.questionInfo };
   }
 
   render() {
     let testName =
-      this.state.activeTest.length !== 0 ? this.state.activeTest[1] : null;
+      this.state.activeTest.length !== 0 ? this.state.activeTest.name : null;
     let previewList = this.state.addedQuestions.map((item, index) => (
-      <ListItem key={index}>{item.qname}</ListItem>
+      <ListItem key={index}>{item.name}</ListItem>
     ));
 
     let questionItems = this.state.libraryQuestions.map((item, index) => (
@@ -140,12 +113,13 @@ class TestCreator extends Component {
 }
 
 const mapStateToProps = state => ({
-  curTest: state.tests.newTest
+  curTest: state.tests.newTest,
+  questionInfo: state.tests.questionDetails
 });
 
 export default withRouter(
   connect(
     mapStateToProps,
-    { addQuestions, addQuestionDetails }
+    { addQuestions }
   )(TestCreator)
 );

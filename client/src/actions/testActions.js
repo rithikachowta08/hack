@@ -12,14 +12,16 @@ export const fetchTests = () => dispatch => {
       querySnapshot.forEach(doc => {
         let data = doc.data();
         arr.push({
+          id: doc.id,
           name: data.name,
           status: data.status,
           profile: data.profile,
-          date: data.date
+          date: data.date,
+          questions: data.questions
         });
       });
       dispatch({
-        type: actionTypes.SET_TEST_LIST,
+        type: actionTypes.FETCH_TEST_LIST,
         payload: arr
       });
     });
@@ -31,6 +33,15 @@ export const addNewTest = (tName, tid) => {
   return {
     type: actionTypes.CREATE_TEST,
     payload: { name: tName, id: tid }
+  };
+};
+
+//update current test being answered
+
+export const setCurTest = (tid, tName) => {
+  return {
+    type: actionTypes.SET_CURRENT_TEST,
+    payload: { id: tid, name: tName }
   };
 };
 
@@ -68,9 +79,9 @@ export const addQuestions = arr => dispatch => {
   );
 };
 
-export const addQuestionDetails = arr => {
+export const fetchQuestionDetails = arr => {
   return {
-    type: actionTypes.ADD_QUESTION_DETAILS,
+    type: actionTypes.FETCH_QUESTION_DETAILS,
     payload: arr
   };
 };

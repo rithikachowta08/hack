@@ -29,7 +29,7 @@ class CreateTestModal extends Component {
       (today.getMonth() + 1) +
       "/" +
       today.getFullYear();
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 4; i++) {
       details[e.target[i].name] = e.target[i].value;
     }
     db.collection("tests")
@@ -73,13 +73,6 @@ class CreateTestModal extends Component {
               change={this.handleChange}
               name="duration"
               placeholder="Duration (mins)"
-            />
-
-            <Input
-              value={this.state.questionCount}
-              change={this.handleChange}
-              name="questionCount"
-              placeholder="No. of questions"
             />
 
             <p>Experience: </p>
