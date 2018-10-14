@@ -17,7 +17,7 @@ class TestCreator extends Component {
     this.state = {
       addedQuestions: [],
       libraryQuestions: [],
-      activeTest: []
+      activeTest: null
     };
     this.selectedQuestions = [];
   }
@@ -46,12 +46,14 @@ class TestCreator extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.questionInfo !== prevState.questionInfo)
-      return { libraryQuestions: nextProps.questionInfo };
+      return {
+        libraryQuestions: nextProps.questionInfo,
+        activeTest: nextProps.curTest
+      };
   }
 
   render() {
-    let testName =
-      this.state.activeTest.length !== 0 ? this.state.activeTest.name : null;
+    let testName = this.state.activeTest ? this.state.activeTest.name : null;
     let previewList = this.state.addedQuestions.map((item, index) => (
       <ListItem key={index}>{item.name}</ListItem>
     ));

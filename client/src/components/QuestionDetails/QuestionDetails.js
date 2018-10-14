@@ -7,18 +7,15 @@ class QuestionDetails extends Component {
   state = { curQuestion: "", curQuestionInfo: {} };
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    var questionInfo;
+    nextProps.questionDetails.map(question => {
+      if (question.name === nextProps.qname) {
+        questionInfo = question;
+      }
+    });
     if (nextProps.qname !== prevState.curQuestion) {
-      let questionInfo;
-      nextProps.questions.map((question, index) => {
-        if (question.name === nextProps.qname) {
-          questionInfo = nextProps.questions[index];
-        }
-      });
-
-      // console.log(questionInfo);
       return {
         ...prevState,
-        questionDetails: nextProps.questions,
         curQuestion: nextProps.qname,
         curQuestionInfo: questionInfo
       };
@@ -26,32 +23,35 @@ class QuestionDetails extends Component {
   }
 
   render() {
-    let questionInfo = this.state.curQuestionInfo
-      ? this.state.curQuestionInfo
-      : "";
     let details =
-      this.state.questionInfo !== {} ? (
+      this.state.curQuestionInfo !== {} ? (
         <div className="info">
-          <h2>{questionInfo.name}</h2>
+          <h2>{this.state.curQuestionInfo.name}</h2>
           <div className="subheading">
-            <div>{questionInfo.category}</div>
-            <div>{questionInfo.difficulty}</div>
-            <div>{questionInfo.points} points</div>
+            <div>{this.state.curQuestionInfo.category}</div>
+            <div>{this.state.curQuestionInfo.difficulty}</div>
+            <div>{this.state.curQuestionInfo.points} points</div>
           </div>
 
-          <div className="quesDetails">{questionInfo.description}</div>
+          <div className="quesDetails">
+            {this.state.curQuestionInfo.description}
+          </div>
 
           <h5>Input:</h5>
-          <div className="input">{questionInfo.input}</div>
+          <div className="input">{this.state.curQuestionInfo.input}</div>
 
           <h5>Output:</h5>
 
-          <div className="output">{questionInfo.output}</div>
+          <div className="output">{this.state.curQuestionInfo.output}</div>
 
           <h5>Sample input:</h5>
-          <div className="sampleInput">{questionInfo.sampleInput}</div>
+          <div className="sampleInput">
+            {this.state.curQuestionInfo.sampleInput}
+          </div>
           <h5>Sample output:</h5>
-          <div className="sampleOutput">{questionInfo.sampleOutput}</div>
+          <div className="sampleOutput">
+            {this.state.curQuestionInfo.sampleOutput}
+          </div>
         </div>
       ) : null;
 
@@ -60,7 +60,9 @@ class QuestionDetails extends Component {
 }
 
 const mapStateToProps = state => ({
-  questions: state.tests.questionDetails
+  curTest: state.tests.currentTest,
+  questionDetails: state.tests.questionDetails,
+  testDetails: state.tests.testList
 });
 
 export default withRouter(

@@ -35,7 +35,6 @@ class AdminDashboard extends Component {
   // redirect to answertest page
 
   answerTest = e => {
-    console.log(e.target.id);
     this.props.setCurTest(e.target.id, e.target.name);
     this.props.history.push("/test/answer");
   };

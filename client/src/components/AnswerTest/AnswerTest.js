@@ -14,9 +14,7 @@ class AnswerTest extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      q: [],
       language: "c_cpp",
-      questionDescriptions: [],
       highlightedQuestion: ""
     };
   }
@@ -24,14 +22,14 @@ class AnswerTest extends Component {
   // update testname, questionlist and question details to state when it is received in props
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    let questionList = nextProps.testDetails.map(test => {
+    let questionList;
+    nextProps.testDetails.map(test => {
       if (test.id === nextProps.curTest.id) {
-        return test.questions;
+        questionList = test.questions;
       }
     });
 
     if (prevState.questions !== questionList) {
-      console.log(questionList);
       let tempState = {
         ...prevState,
         questions: questionList,
@@ -75,10 +73,10 @@ class AnswerTest extends Component {
 
   runCode = () => {
     let sampleInput, sampleOutput;
-    this.state.questionDescriptions.map((question, index) => {
+    this.state.questions.map(question => {
       if (question.name === this.state.highlightedQuestion) {
-        sampleInput = this.state.questionDescriptions[index].sampleInput;
-        sampleOutput = this.state.questionDescriptions[index].sampleOutput;
+        sampleInput = question.sampleInput;
+        sampleOutput = question.sampleOutput;
       }
     });
 
@@ -102,26 +100,20 @@ class AnswerTest extends Component {
   render() {
     let questions =
       this.state.questions.length !== 0
-        ? this.state.questions.map((question, index) => {
+        ? this.state.questions.map(item => {
             return (
               <li
                 className="question"
-                key={index}
+                key={item.id}
                 onClick={e => {
                   this.getDetails(e);
                 }}
               >
-                {question}
+                {item.name}
               </li>
             );
           })
         : null;
-
-    // render details of highlighted question
-    let currentQuestion =
-      this.state.questionDescriptions.length !== 0 ? (
-        <QuestionDetails qname={this.state.highlightedQuestion} />
-      ) : null;
 
     // render current test name
     let testName = this.state.testName ? this.state.testName : null;
@@ -141,7 +133,8 @@ class AnswerTest extends Component {
               <h3 style={{ fontSize: "2em" }}>Questions</h3>
               <ul>{questions}</ul>
             </aside>
-            {currentQuestion}
+            <QuestionDetails qname={this.state.highlightedQuestion} />
+
             <div className="middle-section">
               <select name="languageSelector" onChange={this.setLanguage}>
                 <option value="c_cpp">C</option>
