@@ -1,7 +1,8 @@
 import * as actionTypes from "../actions/types";
 
 const initialState = {
-  currentCode: ""
+  currentCode: "",
+  curQuestionInfo: {}
 };
 
 export default function(state = initialState, action) {
@@ -11,6 +12,13 @@ export default function(state = initialState, action) {
         ...state,
         currentCode: action.payload
       };
+
+    case actionTypes.SET_CURRENT_QUESTION:
+      return {
+        ...state,
+        curQuestionInfo: action.payload
+      };
+
     default:
       return state;
   }

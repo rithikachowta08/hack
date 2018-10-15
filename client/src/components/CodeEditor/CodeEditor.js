@@ -31,7 +31,7 @@ class CodeEditor extends Component {
           theme="monokai"
           fontSize={16}
           highlightActiveLine={true}
-          style={{ textTransform: "none", width: "700px" }}
+          style={{ textTransform: "none", width: "700px", height: "700px" }}
           onChange={this.onChange}
           name="code-div"
           editorProps={{
