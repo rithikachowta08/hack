@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import { setCode } from "../../actions/codeActions";
 import Header from "../../layout/Header/Header";
 import { logout } from "../../config/functions";
 import Button from "../../layout/Button/Button";
@@ -6,6 +7,8 @@ import Timer from "../../layout/Timer/Timer";
 import axios from "axios";
 import CodeEditor from "../../components/CodeEditor/CodeEditor";
 import { connect } from "react-redux";
+import { db } from "../../config/fire";
+import "firebase/firestore";
 import QuestionDetails from "../../components/QuestionDetails/QuestionDetails";
 import { withRouter } from "react-router-dom";
 import "./AnswerTest.css";
@@ -16,6 +19,7 @@ class AnswerTest extends Component {
     this.state = {
       language: "c_cpp",
       highlightedQuestion: "",
+      currentScore: 0,
       minutes: 0,
       result: ""
     };
@@ -58,7 +62,8 @@ class AnswerTest extends Component {
 
   // get question details
   getDetails = e => {
-    this.setState({ highlightedQuestion: e.target.innerText });
+    this.props.setCode("");
+    this.setState({ highlightedQuestion: e.target.innerText, result: "" });
   };
 
   // get language code to send to api
@@ -93,9 +98,26 @@ class AnswerTest extends Component {
       .catch(err => console.log(err));
   };
 
-  submitCode = () => {};
+  submitCode = () => {
+    this.runCode();
+    //push results to db
+    db.collection("codes")
+      .update({})
+      .then(docRef => {});
+    //update score
+  };
 
   submitAll = () => {};
+
+  componentDidMount() {
+    //initalize doc in collection
+    db.collection("codes")
+      .add({})
+      .then(docRef => {
+        // details.docID = docRef.id;
+      });
+  }
+
   render() {
     let questions =
       this.state.questions.length !== 0
@@ -169,6 +191,6 @@ const mapStateToProps = state => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    null
+    { setCode }
   )(AnswerTest)
 );
