@@ -36,7 +36,6 @@ class TestCreator extends Component {
       .doc(this.state.activeTest.id)
       .update({
         questions: this.state.addedQuestions,
-        status: "active"
       });
     this.props.addQuestions(this.state.addedQuestions);
     this.props.history.push("/dashboard");
