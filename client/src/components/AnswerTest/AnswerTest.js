@@ -48,6 +48,7 @@ class AnswerTest extends Component {
           ? prevState.highlightedQuestion
           : questionList[0].name
       };
+
       return tempState;
     } else {
       return prevState;
@@ -92,31 +93,42 @@ class AnswerTest extends Component {
         let op = this.props.curQuestion.sampleOutput.replace(/\\n/g, "\n");
         op = op.replace(/\"/g, "");
         console.log(op);
-        if (op === res.data.body.output) this.setState({ result: "Passed!" });
-        else this.setState({ result: "Failed!" });
+        if (op === res.data.body.output) {
+          if (this.state.result !== "Passed!")
+            this.setState({
+              result: "Passed!",
+              currentScore:
+                this.state.currentScore + this.props.curQuestion.points
+            });
+        } else this.setState({ result: "Failed!" });
       })
       .catch(err => console.log(err));
   };
 
   submitCode = () => {
     this.runCode();
-    //push results to db
-    db.collection("codes")
-      .update({})
-      .then(docRef => {});
-    //update score
+    //create document if it doesnt exist
+    if (!this.state.docId) {
+      db.collection("codes")
+        .add({
+          candidateName: "Rithika Chowta",
+          testId: this.state.testId,
+          score: this.state.currentScore
+        })
+        .then(docRef => {
+          this.setState({ docId: docRef.id });
+        });
+    } else {
+      //update score
+      db.collection("codes")
+        .doc(this.state.docId)
+        .update({ score: this.state.currentScore });
+    }
   };
 
-  submitAll = () => {};
-
-  componentDidMount() {
-    //initalize doc in collection
-    db.collection("codes")
-      .add({})
-      .then(docRef => {
-        // details.docID = docRef.id;
-      });
-  }
+  finishTest = () => {
+    this.props.history.push("/");
+  };
 
   render() {
     let questions =
@@ -150,8 +162,12 @@ class AnswerTest extends Component {
               minutes={this.state.minutes}
               seconds={"00"}
             />
-            <p className="flex-item"> Candidate name</p>
-            <Button className="flex-item">Submit all and finish</Button>
+            <p className="flex-item">
+              {this.props.candidateName ? this.props.candidateName : null}
+            </p>
+            <Button className="flex-item" click={this.finishTest}>
+              Finish test
+            </Button>
           </div>
           <div className="overlay">
             <aside className="test-questions">
@@ -170,7 +186,7 @@ class AnswerTest extends Component {
               <CodeEditor language={this.state.language} />
               <br />
               <Button click={this.runCode}>Run</Button>
-              <Button>Submit</Button>
+              <Button click={this.submitCode}>Submit</Button>
               <div className="result">{this.state.result}</div>
             </div>
           </div>
