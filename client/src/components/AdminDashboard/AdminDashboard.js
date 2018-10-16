@@ -63,7 +63,7 @@ class AdminDashboard extends Component {
             category: data.category,
             difficulty: data.difficulty,
             points: data.points,
-            descriptions: data.description,
+            description: data.description,
             input: data.input,
             output: data.output,
             sampleInput: data.sampleInput,

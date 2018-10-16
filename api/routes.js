@@ -50,6 +50,9 @@ router.post("/dashboard", verifyToken, (req, res) => {
 // run user submitted code
 router.post("/run", (req, res) => {
   console.log("run endpoint hit");
+  let ip = req.body.sampleInput.replace(/\\n/g, "\n");
+  ip = ip.replace(/\"/g, "");
+  console.log(ip);
   request(
     {
       url: "https://api.jdoodle.com/execute",
@@ -59,7 +62,7 @@ router.post("/run", (req, res) => {
         clientSecret:
           "6faab0531e48a67cedc676a7baeb1bfae1e30f8abdd8510c593a94a97c6fceeb",
         script: req.body.code,
-        stdin: req.body.sampleInput,
+        stdin: ip,
         language: req.body.language,
         versionIndex: "0"
       }

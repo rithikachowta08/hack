@@ -15,6 +15,7 @@ export const fetchTests = () => dispatch => {
           id: doc.id,
           name: data.name,
           status: data.status,
+          duration: data.duration,
           profile: data.profile,
           date: data.date,
           questions: data.questions
@@ -47,10 +48,10 @@ export const setCurTest = (tid, tName) => {
 
 // add questions of newly created test to store
 
-function asyncAction(questionId) {
+function asyncAction(questionItem) {
   return new Promise(function(resolve, reject) {
     db.collection("questions")
-      .doc(questionId)
+      .doc(questionItem.id)
       .get()
       .then(querySnapshot => {
         return resolve(querySnapshot.data());

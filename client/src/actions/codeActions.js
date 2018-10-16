@@ -6,3 +6,10 @@ export const setCode = code => {
     payload: code
   };
 };
+
+export const setCurQuestion = question => {
+  return {
+    type: actionTypes.SET_CURRENT_QUESTION,
+    payload: question
+  };
+};

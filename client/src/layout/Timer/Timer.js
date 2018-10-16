@@ -5,10 +5,20 @@ class Timer extends React.Component {
     super(props);
     this.state = {
       minutes: this.props.minutes,
-      seconds: this.props.seconds,
-      isStarted: true
+      seconds: "00",
+      isStarted: false
     };
   }
+
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (prevState.minutes !== nextProps.minutes) {
+  //     return {
+  //       minutes: nextProps.minutes,
+  //       seconds: nextProps.seconds,
+  //       isStarted: true
+  //     };
+  //   }
+  // }
 
   tick = () => {
     let newMinutes = this.state.minutes,
@@ -48,10 +58,5 @@ class Timer extends React.Component {
     );
   }
 }
-
-Timer.defaultProps = {
-  minutes: 60,
-  seconds: "00"
-};
 
 export default Timer;

@@ -15,6 +15,7 @@ class TestCreator extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      points: 0,
       addedQuestions: [],
       libraryQuestions: [],
       activeTest: null
@@ -24,9 +25,12 @@ class TestCreator extends Component {
 
   // update list of selected questions
 
-  addQuestion = (name, id) => {
+  addQuestion = (name, id, pts) => {
     this.selectedQuestions.push({ name, id });
-    this.setState({ addedQuestions: this.selectedQuestions });
+    this.setState({
+      addedQuestions: this.selectedQuestions,
+      points: this.state.points + pts
+    });
   };
 
   // update db and dispatch action to update store
@@ -35,6 +39,7 @@ class TestCreator extends Component {
     db.collection("tests")
       .doc(this.state.activeTest.id)
       .update({
+        totalPoints: this.state.points,
         questions: this.state.addedQuestions,
       });
     this.props.addQuestions(this.state.addedQuestions);
@@ -66,7 +71,12 @@ class TestCreator extends Component {
           <span>Difficulty: {item.difficulty}</span>
           <i
             className="fa fa-plus-circle"
-            onClick={this.addQuestion.bind(this, item.name, item.id)}
+            onClick={this.addQuestion.bind(
+              this,
+              item.name,
+              item.id,
+              item.points
+            )}
           />
         </div>
       </ListItem>
@@ -93,6 +103,7 @@ class TestCreator extends Component {
             <div className="test-preview">
               <p>Preview</p>
               {previewList}
+              <h5>Total points: {this.state.points}</h5>
             </div>
             {/* <div className="send-invites">
               <h2>Send invites to candidates</h2>
