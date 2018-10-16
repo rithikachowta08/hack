@@ -50,7 +50,7 @@ class LandingPage extends Component {
             </div>
             <div className="flex-cell">
               <img src="../../../assets/code.png" alt="score" />
-              Vast library of programming questions
+              Library of challenging programming questions
             </div>
             <div className="flex-cell">
               <img src="../../../assets/people.png" alt="score" />

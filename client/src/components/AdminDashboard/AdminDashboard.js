@@ -4,7 +4,7 @@ import "./AdminDashboard.css";
 import { db } from "../../config/fire";
 import "firebase/firestore";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Redirect } from "react-router-dom";
 import {
   fetchTests,
   setCurTest,
@@ -20,7 +20,8 @@ class AdminDashboard extends Component {
     super(props);
     this.state = {
       tests: null,
-      displayCreateModal: false
+      displayCreateModal: false,
+      redirect: false
     };
   }
 
@@ -45,6 +46,10 @@ class AdminDashboard extends Component {
     this.setState({
       [modalName]: false
     });
+  };
+
+  viewScores = testId => {
+    this.setState({ redirect: true, testId });
   };
 
   // update state with test details from database
@@ -94,7 +99,7 @@ class AdminDashboard extends Component {
               <th>Date created</th>
               <th>Profile</th>
               <th>Status</th>
-              <th />
+              <th>Actions</th>
             </tr>
             {this.state.tests.map(test => (
               <tr key={`${test.id}`}>
@@ -105,6 +110,13 @@ class AdminDashboard extends Component {
                 <td>
                   <Button name={test.name} id={test.id} click={this.answerTest}>
                     Answer
+                  </Button>
+                  <Button
+                    name={test.name}
+                    id={test.id}
+                    click={this.viewScores.bind(this, test.id)}
+                  >
+                    View scores
                   </Button>
                 </td>
               </tr>
@@ -132,6 +144,14 @@ class AdminDashboard extends Component {
             +
           </Button>
         </div>
+        {this.state.redirect ? (
+          <Redirect
+            to={{
+              pathname: "/test/scores",
+              testId: this.state.testId
+            }}
+          />
+        ) : null}{" "}
       </Fragment>
     );
   }

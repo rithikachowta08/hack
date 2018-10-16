@@ -40,7 +40,7 @@ class TestCreator extends Component {
       .doc(this.state.activeTest.id)
       .update({
         totalPoints: this.state.points,
-        questions: this.state.addedQuestions,
+        questions: this.state.addedQuestions
       });
     this.props.addQuestions(this.state.addedQuestions);
     this.props.history.push("/dashboard");

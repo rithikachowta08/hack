@@ -10,16 +10,6 @@ class Timer extends React.Component {
     };
   }
 
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (prevState.minutes !== nextProps.minutes) {
-  //     return {
-  //       minutes: nextProps.minutes,
-  //       seconds: nextProps.seconds,
-  //       isStarted: true
-  //     };
-  //   }
-  // }
-
   tick = () => {
     let newMinutes = this.state.minutes,
       newSeconds = this.state.seconds - 1;
@@ -27,8 +17,7 @@ class Timer extends React.Component {
     if (newSeconds < 0) {
       newMinutes--;
       if (newMinutes < 0) {
-        this.reset();
-        return;
+        window.location.assign("/");
       }
       newSeconds = 59;
     }
