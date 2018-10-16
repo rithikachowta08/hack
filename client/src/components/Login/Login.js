@@ -34,7 +34,7 @@ class Login extends Component {
     fire
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then(u => {
+      .then(() => {
         fire
           .auth()
           .currentUser.getIdToken()
@@ -81,25 +81,6 @@ class Login extends Component {
     );
   }
 }
-
-// request to api from react
-
-// const data = {
-//   clientId: "eaf5d02e0106c43d533594b300366743",
-//   clientSecret:
-//     "6faab0531e48a67cedc676a7baeb1bfae1e30f8abdd8510c593a94a97c6fceeb",
-//   script: "print('hello')",
-//   language: "python3",
-//   versionIndex: "0"
-// };
-// axios
-//   .post("https://api.jdoodle.com/execute", data)
-//   .then(response => {
-//     console.log(response);
-//   })
-//   .catch(err => {
-//     console.log(err);
-//   });
 
 const mapStateToProps = state => ({
   auth: state.auth

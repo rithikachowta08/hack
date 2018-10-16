@@ -44,7 +44,7 @@ ul {
   cursor: pointer;
 }
 
-select {
+.middle-section select {
   display: block;
   margin: 0 auto;
   margin-bottom: 2%;

@@ -1,5 +1,3 @@
-@import "../../common.css";
-
 .big-modal {
   z-index: 3;
   width: 50%;
@@ -8,8 +6,8 @@
 
 .big-modal i {
   position: absolute;
-  top: -50px;
-  right: 0;
+  top: 0px;
+  right: 20px;
   font-size: 0.7em;
 }
 

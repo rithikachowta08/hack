@@ -14,6 +14,7 @@ import Button from "../../layout/Button/Button";
 import { logout } from "../../config/functions";
 import Spinner from "../../layout/Spinner/Spinner";
 import CreateTestModal from "../../components/CreateTestModal/CreateTestModal";
+import CandidateDetails from "../CandidateDetails/CandidateDetails";
 
 class AdminDashboard extends Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class AdminDashboard extends Component {
     this.state = {
       tests: null,
       displayCreateModal: false,
+      displayAnswerModal: false,
       redirect: false
     };
   }
@@ -37,7 +39,7 @@ class AdminDashboard extends Component {
 
   answerTest = e => {
     this.props.setCurTest(e.target.id, e.target.name);
-    this.props.history.push("/test/answer");
+    this.displayModal("displayAnswerModal");
   };
 
   // modal close button click handler
@@ -134,6 +136,9 @@ class AdminDashboard extends Component {
         ) : null}
         <Header logout={logout} />
         <div className="content-wrapper">
+          {this.state.displayAnswerModal ? (
+            <CandidateDetails closeFunc={this.removeModal} />
+          ) : null}
           <h2>Tests</h2>
           {testItems}
           <Button

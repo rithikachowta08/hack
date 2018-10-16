@@ -13,3 +13,10 @@ export const setCurQuestion = question => {
     payload: question
   };
 };
+
+export const setCurCandidate = (name, email) => {
+  return {
+    type: actionTypes.SET_CURRENT_CANDIDATE,
+    payload: { name, email }
+  };
+};

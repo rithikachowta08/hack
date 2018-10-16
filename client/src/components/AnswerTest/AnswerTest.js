@@ -111,7 +111,8 @@ class AnswerTest extends Component {
     if (!this.state.docId) {
       db.collection("codes")
         .add({
-          candidateName: "Rithika Chowta",
+          candidateName: this.props.currentCandidate.name,
+          email: this.props.currentCandidate.email,
           testId: this.state.testId,
           score: this.state.currentScore
         })
@@ -163,7 +164,9 @@ class AnswerTest extends Component {
               seconds={"00"}
             />
             <p className="flex-item">
-              {this.props.candidateName ? this.props.candidateName : null}
+              {this.props.currentCandidate
+                ? this.props.currentCandidate.name
+                : null}
             </p>
             <Button className="flex-item" click={this.finishTest}>
               Finish test
@@ -201,6 +204,7 @@ const mapStateToProps = state => ({
   questionDetails: state.tests.questionDetails,
   code: state.code.currentCode,
   curQuestion: state.code.curQuestionInfo,
+  currentCandidate: state.code.curCandidate,
   testDetails: state.tests.testList
 });
 

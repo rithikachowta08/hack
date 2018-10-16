@@ -23,7 +23,6 @@ h2 {
 .content-wrapper {
   text-align: center;
   padding: 3%;
-  /* height: 100%; */
   position: relative;
   background: url("https://storage.googleapis.com/codeavengers.appspot.com/cloud/assets/landing-01.jpg");
   background-position: center;
@@ -41,6 +40,7 @@ h2 {
   left: 50%;
   transform: translate3d(-50%, -50%, 0);
   background: rgba(0, 0, 0, 0.95);
+  border: 1px solid #cccccc;
 }
 
 .wrapper {
@@ -56,6 +56,10 @@ h2 {
 
 i:hover {
   cursor: pointer;
+}
+
+.no-capitalize {
+  text-transform: none;
 }
 
 input[type="submit"] {

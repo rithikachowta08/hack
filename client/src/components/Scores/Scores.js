@@ -28,7 +28,6 @@ class Scores extends Component {
       .collection("codes")
       .where("testId", "==", this.props.location.testId);
     query.get().then(querySnapshot => {
-      console.log(querySnapshot);
       querySnapshot.forEach(doc => {
         let data = doc.data();
         scores.push(data);
@@ -46,11 +45,13 @@ class Scores extends Component {
           <tbody>
             <tr>
               <th>Name</th>
+              <th>Email</th>
               <th>Score</th>
             </tr>
             {this.state.scores.map(score => (
               <tr key={`${score.id}`}>
                 <td>{score.candidateName}</td>
+                <td className="no-capitalize">{score.email}</td>
                 <td>{score.score}</td>
               </tr>
             ))}

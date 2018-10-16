@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { loginUser } from "../../actions/authActions";
 import fire from "../../config/fire";
 import "firebase/auth";
 import "../Login/Login.css";
@@ -33,7 +36,13 @@ class Signup extends Component {
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then(u => {})
         .then(u => {
-          console.log(u);
+          fire
+            .auth()
+            .currentUser.getIdToken()
+            .then(userId => {
+              this.props.loginUser(userId);
+              this.props.history.push("/dashboard");
+            });
         })
         .catch(error => {
           console.log(error);
@@ -89,4 +98,13 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { loginUser }
+  )(Signup)
+);
