@@ -4,6 +4,7 @@ import "./Button.css";
 const Button = props => {
   return (
     <button
+      style={props.style}
       title={props.title}
       name={props.name}
       id={props.id}

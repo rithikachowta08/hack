@@ -7,7 +7,7 @@ import setAuthToken from "./config/authToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import "./App.css";
 import LandingPage from "./components/LandingPage/LandingPage";
-import * as routes from "./config/routes";
+import * as routes from "./config/constants";
 import TestCreator from "./components/TestCreator/TestCreator";
 import AdminDashboard from "./components/AdminDashboard/AdminDashboard";
 import AnswerTest from "./components/AnswerTest/AnswerTest";

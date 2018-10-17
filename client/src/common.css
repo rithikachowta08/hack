@@ -83,3 +83,8 @@ input[type="submit"]:hover {
 input[type="submit"]:focus {
   outline: none;
 }
+
+@font-face {
+  font-family: "yml-font";
+  src: url("sailec.otf");
+}

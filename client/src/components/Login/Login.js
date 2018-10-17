@@ -35,13 +35,9 @@ class Login extends Component {
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => {
-        fire
-          .auth()
-          .currentUser.getIdToken()
-          .then(userId => {
-            this.props.loginUser(userId);
-            this.props.history.push("/dashboard");
-          });
+        let user = fire.auth().currentUser;
+        this.props.loginUser(user.uid);
+        this.props.history.push("/dashboard");
       })
       .catch(error => {
         console.log(error);

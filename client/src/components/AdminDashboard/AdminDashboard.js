@@ -11,7 +11,11 @@ import {
   fetchQuestionDetails
 } from "../../actions/testActions";
 import Button from "../../layout/Button/Button";
+import AdminElement from "../../layout/AdminElement";
+import PublicElement from "../../layout/PublicElement";
 import { logout } from "../../config/functions";
+import { ADMINID } from "../../config/constants";
+
 import Spinner from "../../layout/Spinner/Spinner";
 import CreateTestModal from "../../components/CreateTestModal/CreateTestModal";
 import CandidateDetails from "../CandidateDetails/CandidateDetails";
@@ -21,6 +25,7 @@ class AdminDashboard extends Component {
     super(props);
     this.state = {
       tests: null,
+      userid: false,
       displayCreateModal: false,
       displayAnswerModal: false,
       redirect: false
@@ -57,6 +62,8 @@ class AdminDashboard extends Component {
   // update state with test details from database
 
   componentDidMount() {
+    console.log(ADMINID);
+
     this.props.fetchTests();
     let questions = [];
     db.collection("questions")
@@ -85,7 +92,7 @@ class AdminDashboard extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.testList !== prevState.testList) {
-      return { tests: nextProps.testList };
+      return { tests: nextProps.testList, userid: nextProps.userid };
     } else return null;
   }
 
@@ -100,7 +107,6 @@ class AdminDashboard extends Component {
               <th>Name</th>
               <th>Date created</th>
               <th>Profile</th>
-              <th>Status</th>
               <th>Actions</th>
             </tr>
             {this.state.tests.map(test => (
@@ -108,18 +114,27 @@ class AdminDashboard extends Component {
                 <td>{test.name}</td>
                 <td>{test.date}</td>
                 <td>{test.profile}</td>
-                <td>{test.status}</td>
                 <td>
-                  <Button name={test.name} id={test.id} click={this.answerTest}>
-                    Answer
-                  </Button>
-                  <Button
-                    name={test.name}
-                    id={test.id}
-                    click={this.viewScores.bind(this, test.id)}
-                  >
-                    View scores
-                  </Button>
+                  <PublicElement userId={this.state.userid}>
+                    <Button
+                      name={test.name}
+                      id={test.id}
+                      style={{ marginRight: "0px" }}
+                      click={this.answerTest}
+                    >
+                      Answer
+                    </Button>
+                  </PublicElement>
+                  <AdminElement userId={this.state.userid}>
+                    <Button
+                      style={{ marginRight: "0px" }}
+                      name={test.name}
+                      id={test.id}
+                      click={this.viewScores.bind(this, test.id)}
+                    >
+                      View scores
+                    </Button>
+                  </AdminElement>
                 </td>
               </tr>
             ))}
@@ -141,13 +156,15 @@ class AdminDashboard extends Component {
           ) : null}
           <h2>Tests</h2>
           {testItems}
-          <Button
-            title="Create test"
-            class="float"
-            click={this.displayModal.bind(this, "displayCreateModal")}
-          >
-            +
-          </Button>
+          <AdminElement userId={this.state.userid}>
+            <Button
+              title="Create test"
+              class="float"
+              click={this.displayModal.bind(this, "displayCreateModal")}
+            >
+              +
+            </Button>
+          </AdminElement>
         </div>
         {this.state.redirect ? (
           <Redirect
@@ -163,7 +180,8 @@ class AdminDashboard extends Component {
 }
 
 const mapStateToProps = state => ({
-  testList: state.tests.testList
+  testList: state.tests.testList,
+  userid: state.auth.user.userId
 });
 
 export default withRouter(

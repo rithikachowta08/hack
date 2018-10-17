@@ -59,7 +59,13 @@ class TestCreator extends Component {
   render() {
     let testName = this.state.activeTest ? this.state.activeTest.name : null;
     let previewList = this.state.addedQuestions.map((item, index) => (
-      <ListItem key={index}>{item.name}</ListItem>
+      <ListItem key={index}>
+        <i
+          className="fa fa-minus-circle"
+          onClick={this.removeQuestion.bind(this, item.id, item.points)}
+        />
+        {item.name}
+      </ListItem>
     ));
 
     let questionItems = this.state.libraryQuestions.map((item, index) => (
