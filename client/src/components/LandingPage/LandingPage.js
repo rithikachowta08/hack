@@ -42,34 +42,36 @@ class LandingPage extends Component {
       <Fragment>
         <Header />
         <div className="content-wrapper">
-          <h1>Welcome to YML Code Console</h1>
-          <div className="features">
-            <div className="flex-cell">
-              <img src="../../../assets/score.png" alt="score" />
-              Automated reliable scoring
+          <div className="inner-wrapper">
+            <h1>Welcome to YML Code Console</h1>
+            <div className="features">
+              <div className="flex-cell">
+                <img src="../../../assets/score.png" alt="score" />
+                Automated reliable scoring
+              </div>
+              <div className="flex-cell">
+                <img src="../../../assets/code.png" alt="score" />
+                Library of challenging programming questions
+              </div>
+              <div className="flex-cell">
+                <img src="../../../assets/people.png" alt="score" />
+                Easy candidate management
+              </div>
             </div>
-            <div className="flex-cell">
-              <img src="../../../assets/code.png" alt="score" />
-              Library of challenging programming questions
-            </div>
-            <div className="flex-cell">
-              <img src="../../../assets/people.png" alt="score" />
-              Easy candidate management
-            </div>
+            <h2>Get started</h2>
+            <Button
+              class="slide"
+              click={this.displayModal.bind(this, "displayLogin")}
+            >
+              Login
+            </Button>
+            <Button
+              click={this.displayModal.bind(this, "displaySignup")}
+              class="slide"
+            >
+              Signup
+            </Button>
           </div>
-          <h2>Get started</h2>
-          <Button
-            class="slide"
-            click={this.displayModal.bind(this, "displayLogin")}
-          >
-            Login
-          </Button>
-          <Button
-            click={this.displayModal.bind(this, "displaySignup")}
-            class="slide"
-          >
-            Signup
-          </Button>
         </div>
         {this.state.displayLogin ? (
           <Login closeFunc={this.removeModal} />

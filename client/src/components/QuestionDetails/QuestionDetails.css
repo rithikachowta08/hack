@@ -32,10 +32,8 @@
   flex-basis: 60%;
 }
 
-/* @media (min-width: 1000px) {
+@media (max-width: 1200px) {
   .info {
-    width: 20%;
-    transform: scale(0.8);
-    margin: 0;
+    width: 70%;
   }
-} */
+}

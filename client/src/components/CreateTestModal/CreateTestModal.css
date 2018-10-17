@@ -28,3 +28,17 @@ select {
 option {
   color: black;
 }
+
+@media (max-width: 1200px) {
+  .big-modal {
+    height: 70vh;
+  }
+}
+
+@media (max-width: 576px) {
+  .big-modal {
+    height: 60vh;
+    font-size: 0.8em;
+    width: 80%;
+  }
+}
