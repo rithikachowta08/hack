@@ -23,6 +23,12 @@ class Login extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.auth.isAuthenticated) {
+      nextProps.history.push("/dashboard");
+    }
+  }
+
   // call fire.auth to validate email/password, call server.js endpoint to get jwt and get route to dashboard
 
   login = e => {
@@ -37,7 +43,6 @@ class Login extends Component {
       .then(() => {
         let user = fire.auth().currentUser;
         this.props.loginUser(user.uid);
-        this.props.history.push("/dashboard");
       })
       .catch(error => {
         console.log(error);

@@ -62,8 +62,6 @@ class AdminDashboard extends Component {
   // update state with test details from database
 
   componentDidMount() {
-    console.log(ADMINID);
-
     this.props.fetchTests();
     let questions = [];
     db.collection("questions")

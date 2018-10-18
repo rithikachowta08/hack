@@ -1,1 +1,0 @@
-print("hello world! it's rithi")

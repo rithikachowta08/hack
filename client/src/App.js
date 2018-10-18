@@ -5,6 +5,7 @@ import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./config/authToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
+import PrivateRoute from "./config/PrivateRoute";
 import "./App.css";
 import LandingPage from "./components/LandingPage/LandingPage";
 import * as routes from "./config/constants";
@@ -35,15 +36,7 @@ if (localStorage.jwtToken) {
 }
 
 class App extends Component {
-  componentDidMount() {
-    // this.authListener();
-  }
-
-  authListener() {
-    // fire.auth().onAuthStateChanged(user => {
-    //   this.setState({ user });
-    // });
-  }
+  componentDidMount() {}
 
   render() {
     return (
@@ -52,10 +45,26 @@ class App extends Component {
           <div className="App">
             <Switch>
               <Route path={routes.LANDING} exact component={LandingPage} />
-              <Route path={routes.DASHBOARD} exact component={AdminDashboard} />
-              <Route path={routes.ANSWER_TEST} exact component={AnswerTest} />
-              <Route path={routes.TEST_EDITOR} exact component={TestCreator} />
-              <Route path={routes.TEST_SCORES} exact component={Scores} />
+              <PrivateRoute
+                path={routes.DASHBOARD}
+                exact
+                component={AdminDashboard}
+              />
+              <PrivateRoute
+                path={routes.ANSWER_TEST}
+                exact
+                component={AnswerTest}
+              />
+              <PrivateRoute
+                path={routes.TEST_EDITOR}
+                exact
+                component={TestCreator}
+              />
+              <PrivateRoute
+                path={routes.TEST_SCORES}
+                exact
+                component={Scores}
+              />
             </Switch>
           </div>
         </BrowserRouter>
