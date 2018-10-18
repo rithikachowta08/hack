@@ -10,6 +10,7 @@ class Timer extends React.Component {
     };
   }
 
+  // countdown - go to dashboard when countdown finishes
   tick = () => {
     let newMinutes = this.state.minutes,
       newSeconds = this.state.seconds - 1;
@@ -17,7 +18,7 @@ class Timer extends React.Component {
     if (newSeconds < 0) {
       newMinutes--;
       if (newMinutes < 0) {
-        window.location.assign("/");
+        window.location.assign("/dashboard");
       }
       newSeconds = 59;
     }
