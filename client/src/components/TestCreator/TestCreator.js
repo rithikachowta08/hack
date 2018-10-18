@@ -109,9 +109,4 @@ const mapStateToProps = state => ({
   questionInfo: state.tests.questionDetails
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    null
-  )(TestCreator)
-);
+export default withRouter(connect(mapStateToProps)(TestCreator));

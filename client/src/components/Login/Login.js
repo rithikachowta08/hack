@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
+import { setAlert } from "../../actions/alertActions";
 import fire from "../../config/fire";
 import "firebase/auth";
 import { withRouter } from "react-router-dom";
@@ -13,7 +14,9 @@ class Login extends Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      alertMessage: "",
+      iconClass: ""
     };
   }
 
@@ -37,15 +40,21 @@ class Login extends Component {
     if (code && code !== 13) {
       return;
     }
+    this.props.setAlert("Logging you in...", null);
     fire
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => {
         let user = fire.auth().currentUser;
         this.props.loginUser(user.uid, user.email);
+        this.props.setAlert("");
       })
       .catch(error => {
         console.log(error);
+        this.props.setAlert(error.message, "error.png");
+        setTimeout(() => {
+          this.props.setAlert("");
+        }, 2000);
       });
   };
 
@@ -90,6 +99,6 @@ const mapStateToProps = state => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    { loginUser }
+    { loginUser, setAlert }
   )(Login)
 );

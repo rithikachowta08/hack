@@ -9,22 +9,25 @@ export const fetchTests = () => dispatch => {
   db.collection("tests")
     .get()
     .then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        let data = doc.data();
-        arr.push({
-          id: doc.id,
-          name: data.name,
-          status: data.status,
-          duration: data.duration,
-          profile: data.profile,
-          date: data.date,
-          questions: data.questions
+      if (querySnapshot.docs.length === 0) arr = "nodata";
+      else {
+        querySnapshot.forEach(doc => {
+          let data = doc.data();
+          arr.push({
+            id: doc.id,
+            name: data.name,
+            status: data.status,
+            duration: data.duration,
+            profile: data.profile,
+            date: data.date,
+            questions: data.questions
+          });
         });
-      });
-      dispatch({
-        type: actionTypes.FETCH_TEST_LIST,
-        payload: arr
-      });
+        dispatch({
+          type: actionTypes.FETCH_TEST_LIST,
+          payload: arr
+        });
+      }
     });
 };
 

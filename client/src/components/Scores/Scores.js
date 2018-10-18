@@ -30,17 +30,23 @@ class Scores extends Component {
       .collection("codes")
       .where("testId", "==", this.props.location.testId);
     query.get().then(querySnapshot => {
-      querySnapshot.forEach(doc => {
-        let data = doc.data();
-        scores.push(data);
-      });
-      this.setState({ scores });
+      if (querySnapshot.docs.length === 0) this.setState({ scores: "nodata" });
+      else {
+        querySnapshot.forEach(doc => {
+          let data = doc.data();
+          scores.push(data);
+        });
+        this.setState({ scores });
+      }
     });
   }
 
   render() {
-    let scores =
-      this.state.scores.length !== 0 ? (
+    let scores;
+    if (this.state.scores === "nodata") {
+      scores = <p>Nothing to show!</p>;
+    } else if (this.state.scores.length !== 0) {
+      scores = (
         <table className="table-header">
           <tbody>
             <tr>
@@ -55,9 +61,10 @@ class Scores extends Component {
             ))}
           </tbody>
         </table>
-      ) : (
-        <Spinner />
       );
+    } else {
+      scores = <Spinner />;
+    }
 
     return (
       <Fragment>

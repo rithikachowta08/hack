@@ -95,8 +95,11 @@ class AdminDashboard extends Component {
   // render modal when displayCreateModal flag true and render spinner while getting test details
 
   render() {
-    let testItems =
-      this.state.tests.length !== 0 ? (
+    let testItems;
+    if (this.state.tests === "nodata") {
+      testItems = <p>Nothing to show!</p>;
+    } else if (this.state.tests.length !== 0) {
+      testItems = (
         <table className="table-header">
           <tbody>
             <tr>
@@ -136,10 +139,10 @@ class AdminDashboard extends Component {
             ))}
           </tbody>
         </table>
-      ) : (
-        <Spinner />
       );
-
+    } else {
+      testItems = <Spinner />;
+    }
     return (
       <Fragment>
         {this.state.displayCreateModal ? (

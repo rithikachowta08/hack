@@ -6,7 +6,6 @@ const router = express.Router();
 
 // run user submitted code
 router.post("/run", (req, res) => {
-  console.log("run endpoint hit");
   let ip = req.body.sampleInput.replace(/\\n/g, "\n");
   ip = ip.replace(/\"/g, "");
   console.log(ip);
@@ -35,8 +34,8 @@ router.post("/run", (req, res) => {
 
 // python execution
 router.post("/execute", (req, res) => {
-  var fileContent = req.body.script;
-  var filepath = "user-script.py";
+  let fileContent = req.body.script;
+  let filepath = "user-script.py";
 
   fs.writeFile(filepath, fileContent, err => {
     if (err) throw err;

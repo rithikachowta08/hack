@@ -1,4 +1,7 @@
 import React, { Component, Fragment } from "react";
+import Alert from "../../layout/Alert";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import Header from "../../layout/Header/Header";
 import "./LandingPage.css";
 import Button from "../../layout/Button/Button";
@@ -33,6 +36,12 @@ class LandingPage extends Component {
   render() {
     return (
       <Fragment>
+        {this.props.alert.message ? (
+          <Alert
+            message={this.props.alert.message}
+            icon={this.props.alert.icon}
+          />
+        ) : null}
         <Header />
         <div className="content-wrapper">
           <div className="inner-wrapper">
@@ -77,4 +86,8 @@ class LandingPage extends Component {
   }
 }
 
-export default LandingPage;
+const mapStateToProps = state => ({
+  alert: state.alert.alert
+});
+
+export default withRouter(connect(mapStateToProps)(LandingPage));

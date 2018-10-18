@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
+import { setAlert } from "../../actions/alertActions";
+
 import fire from "../../config/fire";
 import "firebase/auth";
 import "../Login/Login.css";
@@ -32,19 +34,27 @@ class Signup extends Component {
       return;
     }
     if (this.state.password === this.state.confirmedPassword) {
+      this.props.setAlert("Signing you up...", null);
       fire
         .auth()
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then(() => {
           let user = fire.auth().currentUser;
           this.props.loginUser(user.uid, user.email);
+          this.props.setAlert("", null);
           this.props.history.push("/dashboard");
         })
         .catch(error => {
-          console.log(error);
+          this.props.setAlert(error.message, "error.png");
+          setTimeout(() => {
+            this.props.setAlert("");
+          }, 2000);
         });
     } else {
-      alert("Passwords dont match");
+      this.props.setAlert("Passwords don't match", "error.png");
+      setTimeout(() => {
+        this.props.setAlert("");
+      }, 2000);
       this.setState({
         password: "",
         confirmedPassword: ""
@@ -101,6 +111,6 @@ const mapStateToProps = state => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    { loginUser }
+    { loginUser, setAlert }
   )(Signup)
 );

@@ -1,5 +1,8 @@
 import React, { Component, Fragment } from "react";
+import Alert from "../../layout/Alert";
 import { setCode } from "../../actions/codeActions";
+import { setAlert } from "../../actions/alertActions";
+
 import Header from "../../layout/Header/Header";
 import { logout } from "../../config/functions";
 import Button from "../../layout/Button/Button";
@@ -21,7 +24,7 @@ class AnswerTest extends Component {
       highlightedQuestion: "",
       currentScore: 0,
       minutes: 0,
-      result: ""
+      submitted: false
     };
   }
 
@@ -66,7 +69,10 @@ class AnswerTest extends Component {
 
   getDetails = e => {
     this.props.setCode("");
-    this.setState({ highlightedQuestion: e.target.innerText, result: "" });
+    this.setState({
+      highlightedQuestion: e.target.innerText,
+      submitted: false
+    });
   };
 
   // get language code to send to api
@@ -90,27 +96,37 @@ class AnswerTest extends Component {
       language: languageCode,
       sampleInput: this.props.curQuestion.sampleInput
     };
+    this.props.setAlert("Running code...");
     axios
       .post("/api/run", data)
       .then(res => {
         console.log(res.data.body.output);
         let op = this.props.curQuestion.sampleOutput.replace(/\\n/g, "\n");
         op = op.replace(/\"/g, "");
-        console.log(op);
         if (op === res.data.body.output) {
-          if (this.state.result !== "Passed!")
-            this.setState({
-              result: "Passed!",
-              currentScore:
-                this.state.currentScore + this.props.curQuestion.points
-            });
-        } else this.setState({ result: "Failed!" });
+          this.props.setAlert("Passed!", "/checked.png");
+          setTimeout(() => {
+            this.props.setAlert("");
+          }, 2000);
+          this.setState({
+            currentScore:
+              this.state.currentScore + this.props.curQuestion.points
+          });
+        } else {
+          this.props.setAlert("Failed!", "/error.png");
+          setTimeout(() => {
+            this.props.setAlert("");
+          }, 2000);
+        }
       })
       .catch(err => console.log(err));
   };
 
+  // submit button click handler
+
   submitCode = () => {
     this.runCode();
+
     //create document if it doesnt exist
 
     if (!this.state.docId) {
@@ -124,13 +140,15 @@ class AnswerTest extends Component {
           this.setState({ docId: docRef.id });
         });
     } else {
-      //update score
+      // update score while preventing double submisssions
 
       db.collection("codes")
         .doc(this.state.docId)
         .update({ score: this.state.currentScore });
     }
   };
+
+  // finish button click handler
 
   finishTest = () => {
     this.props.history.push("/dashboard");
@@ -160,6 +178,12 @@ class AnswerTest extends Component {
 
     return (
       <Fragment>
+        {this.props.alert.message ? (
+          <Alert
+            message={this.props.alert.message}
+            icon={this.props.alert.icon}
+          />
+        ) : null}
         <Header logout={logout} />
         <div className="content-wrapper content-overlay">
           <div className="test-header">
@@ -194,7 +218,6 @@ class AnswerTest extends Component {
               <br />
               <Button click={this.runCode}>Run</Button>
               <Button click={this.submitCode}>Submit</Button>
-              <div className="result">{this.state.result}</div>
             </div>
           </div>
         </div>
@@ -204,6 +227,7 @@ class AnswerTest extends Component {
 }
 
 const mapStateToProps = state => ({
+  alert: state.alert.alert,
   user: state.auth.userName,
   curTest: state.tests.currentTest,
   questionDetails: state.tests.questionDetails,
@@ -215,6 +239,6 @@ const mapStateToProps = state => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    { setCode }
+    { setCode, setAlert }
   )(AnswerTest)
 );
