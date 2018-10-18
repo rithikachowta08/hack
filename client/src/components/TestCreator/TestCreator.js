@@ -7,7 +7,6 @@ import ListItem from "../../layout/ListItem/ListItem";
 import { db } from "../../config/fire";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { addQuestions } from "../../actions/testActions";
 import "firebase/firestore";
 import "./TestCreator.css";
 
@@ -42,7 +41,6 @@ class TestCreator extends Component {
         totalPoints: this.state.points,
         questions: this.state.addedQuestions
       });
-    this.props.addQuestions(this.state.addedQuestions);
     this.props.history.push("/dashboard");
   };
 
@@ -114,6 +112,6 @@ const mapStateToProps = state => ({
 export default withRouter(
   connect(
     mapStateToProps,
-    { addQuestions }
+    null
   )(TestCreator)
 );

@@ -8,7 +8,7 @@ export const loginUser = (userId, userEmail) => {
   };
 };
 
-// Log user out by resetting redux store
+// Log user out by resetting redux state
 export const logoutUser = () => dispatch => {
   dispatch(loginUser({}));
 };

@@ -8,7 +8,7 @@ export const setCode = code => {
   };
 };
 
-// set wuestion being attempted currently
+// set uestion being attempted currently
 export const setCurQuestion = question => {
   return {
     type: actionTypes.SET_CURRENT_QUESTION,

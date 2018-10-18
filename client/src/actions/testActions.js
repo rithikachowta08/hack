@@ -37,7 +37,7 @@ export const addNewTest = (tName, tid) => {
   };
 };
 
-//update current test being answered
+// update current test being answered
 
 export const setCurTest = (tid, tName) => {
   return {
@@ -46,39 +46,7 @@ export const setCurTest = (tid, tName) => {
   };
 };
 
-// add questions of newly created test to store
-
-function asyncAction(questionItem) {
-  return new Promise(function(resolve, reject) {
-    db.collection("questions")
-      .doc(questionItem.id)
-      .get()
-      .then(querySnapshot => {
-        return resolve(querySnapshot.data());
-      })
-      .catch(err => reject(err));
-  });
-}
-
-export const addQuestions = arr => dispatch => {
-  let promises = [];
-  for (let i in arr) {
-    promises.push(asyncAction(arr[i]));
-  }
-
-  Promise.all(promises).then(
-    results => {
-      dispatch({
-        type: actionTypes.ADD_QUESTIONS,
-        payload: results
-      });
-      return "all okay";
-    },
-    error => {
-      console.log(error);
-    }
-  );
-};
+// add details of all questions to store
 
 export const fetchQuestionDetails = arr => {
   return {

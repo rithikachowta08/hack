@@ -97,11 +97,6 @@ input[type="submit"]:focus {
   outline: none;
 }
 
-@font-face {
-  font-family: "yml-font";
-  src: url("sailec.otf");
-}
-
 @media (max-width: 1200px) {
   h2 {
     font-size: 2em;
