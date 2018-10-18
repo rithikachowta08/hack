@@ -42,7 +42,7 @@ class Login extends Component {
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => {
         let user = fire.auth().currentUser;
-        this.props.loginUser(user.uid);
+        this.props.loginUser(user.uid, user.email);
       })
       .catch(error => {
         console.log(error);

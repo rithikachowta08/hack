@@ -13,22 +13,4 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use("/api", api);
 
-// python
-app.post("/execute", (req, res) => {
-  var fileContent = req.body.script;
-  var filepath = "user-script.py";
-
-  fs.writeFile(filepath, fileContent, err => {
-    if (err) throw err;
-    console.log("The file was succesfully saved!");
-    cmd.get("python user-script.py", function(err, data, stderr) {
-      if (!err) {
-        console.log("data from python script " + data);
-      } else {
-        console.log("python script cmd error: " + err);
-      }
-    });
-  });
-});
-
 app.listen(port, () => console.log(`Listening on port ${port}`));

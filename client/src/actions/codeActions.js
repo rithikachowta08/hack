@@ -1,5 +1,6 @@
 import * as actionTypes from "./types";
 
+// set currently written code in code editor
 export const setCode = code => {
   return {
     type: actionTypes.SET_CURRENT_CODE,
@@ -7,16 +8,10 @@ export const setCode = code => {
   };
 };
 
+// set wuestion being attempted currently
 export const setCurQuestion = question => {
   return {
     type: actionTypes.SET_CURRENT_QUESTION,
     payload: question
-  };
-};
-
-export const setCurCandidate = (name, email) => {
-  return {
-    type: actionTypes.SET_CURRENT_CANDIDATE,
-    payload: { name, email }
   };
 };

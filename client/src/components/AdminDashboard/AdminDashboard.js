@@ -14,11 +14,8 @@ import Button from "../../layout/Button/Button";
 import AdminElement from "../../layout/AdminElement";
 import PublicElement from "../../layout/PublicElement";
 import { logout } from "../../config/functions";
-import { ADMINID } from "../../config/constants";
-
 import Spinner from "../../layout/Spinner/Spinner";
 import CreateTestModal from "../../components/CreateTestModal/CreateTestModal";
-import CandidateDetails from "../CandidateDetails/CandidateDetails";
 
 class AdminDashboard extends Component {
   constructor(props) {
@@ -27,7 +24,6 @@ class AdminDashboard extends Component {
       tests: null,
       userid: false,
       displayCreateModal: false,
-      displayAnswerModal: false,
       redirect: false
     };
   }
@@ -44,7 +40,7 @@ class AdminDashboard extends Component {
 
   answerTest = e => {
     this.props.setCurTest(e.target.id, e.target.name);
-    this.displayModal("displayAnswerModal");
+    this.props.history.push("/test/answer");
   };
 
   // modal close button click handler
@@ -149,9 +145,6 @@ class AdminDashboard extends Component {
         ) : null}
         <Header logout={logout} />
         <div className="content-wrapper">
-          {this.state.displayAnswerModal ? (
-            <CandidateDetails closeFunc={this.removeModal} />
-          ) : null}
           <h2>Tests</h2>
           {testItems}
           <AdminElement userId={this.state.userid}>
@@ -179,7 +172,7 @@ class AdminDashboard extends Component {
 
 const mapStateToProps = state => ({
   testList: state.tests.testList,
-  userid: state.auth.user.userId
+  userid: state.auth.user
 });
 
 export default withRouter(

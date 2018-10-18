@@ -1,51 +1,6 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const request = require("request");
 const router = express.Router();
-
-// Extract jwt from auth field in header
-
-verifyToken = (req, res, next) => {
-  const bearerHeader = req.headers["authorization"];
-  if (typeof bearerHeader !== "undefined") {
-    const bearer = bearerHeader.split(" ");
-    const bearerToken = bearer[1];
-    req.token = bearerToken;
-    next();
-  } else {
-    res.sendStatus(403);
-  }
-};
-
-// login endpoint - grant jwt to client
-
-router.post("/login", (req, res) => {
-  console.log("login endpoint hit");
-  jwt.sign({ userId: req.body.userId }, "hacker-secret", (err, token) => {
-    res.json({ token });
-    if (err) {
-      res.send({ errorMsg: err });
-    }
-  });
-});
-
-// protected route to dashboard
-
-router.post("/dashboard", verifyToken, (req, res) => {
-  console.log("call to dashboard");
-  jwt.verify(req.token, "hacker-secret", (err, autoData) => {
-    if (err) {
-      res.sendStatus(403);
-      res.json({ msg: "forbidden" });
-    } else {
-      res.sendStatus(200);
-      res.json({
-        message: "authorized",
-        authData: autoData
-      });
-    }
-  });
-});
 
 // run user submitted code
 router.post("/run", (req, res) => {
@@ -74,6 +29,24 @@ router.post("/run", (req, res) => {
       }
     }
   );
+});
+
+// python execution
+router.post("/execute", (req, res) => {
+  var fileContent = req.body.script;
+  var filepath = "user-script.py";
+
+  fs.writeFile(filepath, fileContent, err => {
+    if (err) throw err;
+    console.log("The file was succesfully saved!");
+    cmd.get("python user-script.py", function(err, data, stderr) {
+      if (!err) {
+        console.log("data from python script " + data);
+      } else {
+        console.log("python script cmd error: " + err);
+      }
+    });
+  });
 });
 
 module.exports = router;

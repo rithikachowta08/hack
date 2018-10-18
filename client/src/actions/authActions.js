@@ -1,42 +1,14 @@
-import axios from "axios";
-import setAuthToken from "../config/authToken";
-import jwt_decode from "jwt-decode";
 import { SET_CURRENT_USER } from "./types";
 
-// Login - Get User Token
-export const loginUser = userId => dispatch => {
-  axios
-    .post("/api/login", { userId })
-    .then(res => {
-      // Save to localStorage
-      const { token } = res.data;
-      // Set token to ls
-      localStorage.setItem("jwtToken", token);
-      // Set token to Auth header
-      setAuthToken(token);
-      // Decode token to get user data
-      const decoded = jwt_decode(token);
-      console.log(decoded);
-      // Set current user
-      dispatch(setCurrentUser(decoded));
-    })
-    .catch(err => console.log(err));
-};
-
 // Set logged in user
-export const setCurrentUser = decoded => {
+export const loginUser = (userId, userEmail) => {
   return {
     type: SET_CURRENT_USER,
-    payload: decoded
+    payload: { userId, userEmail }
   };
 };
 
-// Log user out
+// Log user out by resetting redux store
 export const logoutUser = () => dispatch => {
-  // Remove token from localStorage
-  localStorage.removeItem("jwtToken");
-  // Remove auth header for future requests
-  setAuthToken(false);
-  // Set current user to {} which will set isAuthenticated to false
-  dispatch(setCurrentUser({}));
+  dispatch(loginUser({}));
 };

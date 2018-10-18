@@ -44,14 +44,12 @@ class Scores extends Component {
         <table className="table-header">
           <tbody>
             <tr>
-              <th>Name</th>
-              <th>Email</th>
+              <th>Candidate</th>
               <th>Score</th>
             </tr>
             {this.state.scores.map(score => (
               <tr key={`${score.id}`}>
-                <td>{score.candidateName}</td>
-                <td className="no-capitalize">{score.email}</td>
+                <td className="no-capitalize">{score.candidateName}</td>
                 <td>{score.score}</td>
               </tr>
             ))}

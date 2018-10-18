@@ -3,7 +3,8 @@ import isEmpty from "../config/isEmpty";
 
 const initialState = {
   isAuthenticated: false,
-  user: {}
+  user: null,
+  userName: null
 };
 
 export default function(state = initialState, action) {
@@ -12,7 +13,8 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
-        user: action.payload
+        user: action.payload.userId,
+        userName: action.payload.userEmail
       };
     default:
       return state;
