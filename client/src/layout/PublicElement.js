@@ -1,6 +1,8 @@
 import React, { Fragment } from "react";
 import { ADMINID } from "../config/constants";
 
+// element accessible by any logged in user
+
 const PublicElement = props => {
   let admin = ADMINID;
 

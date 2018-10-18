@@ -26,6 +26,7 @@ class Signup extends Component {
   // submit button click handler
   signup = e => {
     e.preventDefault();
+    // trigger submit on enter keystroke
     var code = e.keyCode || e.which;
     if (code && code !== 13) {
       return;
@@ -34,21 +35,16 @@ class Signup extends Component {
       fire
         .auth()
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
-        .then(u => {})
-        .then(u => {
-          fire
-            .auth()
-            .currentUser.getIdToken()
-            .then(userId => {
-              this.props.loginUser(userId);
-              this.props.history.push("/dashboard");
-            });
+        .then(() => {
+          let user = fire.auth().currentUser;
+          this.props.loginUser(user.uid, user.email);
+          this.props.history.push("/dashboard");
         })
         .catch(error => {
           console.log(error);
         });
     } else {
-      console.log("Passwords dont match");
+      alert("Passwords dont match");
       this.setState({
         password: "",
         confirmedPassword: ""
@@ -65,7 +61,7 @@ class Signup extends Component {
             Sign up
             <i
               className="fa fa-times-circle"
-              onClick={() => this.props.closeFunc("displayCreateModal")}
+              onClick={() => this.props.closeFunc("displaySignup")}
             />
           </h2>
           <Input

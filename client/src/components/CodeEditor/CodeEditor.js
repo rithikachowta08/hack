@@ -18,7 +18,6 @@ class CodeEditor extends Component {
 
   onChange = newValue => {
     let templateString = `${newValue}`;
-    console.log(templateString);
     this.props.setCode(templateString);
   };
 

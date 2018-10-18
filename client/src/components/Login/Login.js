@@ -57,7 +57,7 @@ class Login extends Component {
             Login
             <i
               className="fa fa-times-circle"
-              onClick={() => this.props.closeFunc("displayCreateModal")}
+              onClick={() => this.props.closeFunc("displayLogin")}
             />
           </h2>
           <Input

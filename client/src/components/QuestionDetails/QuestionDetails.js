@@ -7,6 +7,8 @@ import "./QuestionDetails.css";
 class QuestionDetails extends Component {
   state = { curQuestion: "", curQuestionInfo: null };
 
+  // update details of current question to state
+
   static getDerivedStateFromProps(nextProps, prevState) {
     var questionInfo;
     nextProps.questionDetails.map(question => {

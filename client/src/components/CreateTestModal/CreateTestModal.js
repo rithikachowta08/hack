@@ -18,7 +18,7 @@ class CreateTestModal extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  // redirect to editor
+  // redirect to editor and create entry in database
   submitForm = e => {
     e.preventDefault();
     let details = {};

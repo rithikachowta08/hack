@@ -12,8 +12,6 @@ import AnswerTest from "./components/AnswerTest/AnswerTest";
 import Scores from "./components/Scores/Scores";
 
 class App extends Component {
-  componentDidMount() {}
-
   render() {
     return (
       <Provider store={store}>

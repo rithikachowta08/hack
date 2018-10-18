@@ -16,11 +16,13 @@ class Scores extends Component {
     };
   }
 
+  // back button click handler
+
   redirect = () => {
     this.setState({ redirect: true });
   };
 
-  // update state with test details from database
+  // get scores for clicked test from db and update to state
 
   componentDidMount() {
     let scores = [];
@@ -35,8 +37,6 @@ class Scores extends Component {
       this.setState({ scores });
     });
   }
-
-  // render modal when displayCreateModal flag true and render spinner while getting test details
 
   render() {
     let scores =

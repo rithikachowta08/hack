@@ -28,7 +28,7 @@ class AdminDashboard extends Component {
     };
   }
 
-  // create new test button click handler
+  // create new test button click handler -- admin access
 
   displayModal = modalName => {
     this.setState({
@@ -36,20 +36,22 @@ class AdminDashboard extends Component {
     });
   };
 
-  // redirect to answertest page
+  // answer button click handler -- candidate access
 
   answerTest = e => {
     this.props.setCurTest(e.target.id, e.target.name);
     this.props.history.push("/test/answer");
   };
 
-  // modal close button click handler
+  // create modal close button click handler
 
   removeModal = modalName => {
     this.setState({
       [modalName]: false
     });
   };
+
+  // view scores button click handler -- admin access
 
   viewScores = testId => {
     this.setState({ redirect: true, testId });
@@ -82,7 +84,7 @@ class AdminDashboard extends Component {
       });
   }
 
-  // update tests to ui when it is received in props
+  // update list of tests in db to state when it is received in props
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (nextProps.testList !== prevState.testList) {
@@ -164,7 +166,7 @@ class AdminDashboard extends Component {
               testId: this.state.testId
             }}
           />
-        ) : null}{" "}
+        ) : null}
       </Fragment>
     );
   }

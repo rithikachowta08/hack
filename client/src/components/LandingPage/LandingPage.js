@@ -23,15 +23,8 @@ class LandingPage extends Component {
   };
 
   // handle modal hiding according to state
-  removeModal = () => {
-    let modalName;
-    if (this.state.displayLogin) {
-      modalName = "displayLogin";
-    }
 
-    if (this.state.displaySignup) {
-      modalName = "displaySignup";
-    }
+  removeModal = modalName => {
     this.setState({
       [modalName]: false
     });
@@ -78,9 +71,7 @@ class LandingPage extends Component {
         ) : null}
         {this.state.displaySignup ? (
           <Signup closeFunc={this.removeModal} />
-        ) : (
-          ""
-        )}
+        ) : null}
       </Fragment>
     );
   }
