@@ -55,19 +55,22 @@ class AnswerTest extends Component {
     }
   }
 
-  // change language
+  // dropdown selection handler
+
   setLanguage = e => {
     let index = e.target.selectedIndex;
     this.setState({ language: `${e.target[index].value}` });
   };
 
   // get question details
+
   getDetails = e => {
     this.props.setCode("");
     this.setState({ highlightedQuestion: e.target.innerText, result: "" });
   };
 
   // get language code to send to api
+
   getLanguageCode = language => {
     switch (language) {
       case "c_cpp":
@@ -79,6 +82,7 @@ class AnswerTest extends Component {
     }
   };
 
+  // run button click handler
   runCode = () => {
     let languageCode = this.getLanguageCode(this.state.language);
     let data = {
@@ -108,6 +112,7 @@ class AnswerTest extends Component {
   submitCode = () => {
     this.runCode();
     //create document if it doesnt exist
+
     if (!this.state.docId) {
       db.collection("codes")
         .add({
@@ -120,6 +125,7 @@ class AnswerTest extends Component {
         });
     } else {
       //update score
+
       db.collection("codes")
         .doc(this.state.docId)
         .update({ score: this.state.currentScore });
@@ -149,6 +155,7 @@ class AnswerTest extends Component {
         : null;
 
     // render current test name
+
     let testName = this.state.testName ? this.state.testName : null;
 
     return (
@@ -202,7 +209,6 @@ const mapStateToProps = state => ({
   questionDetails: state.tests.questionDetails,
   code: state.code.currentCode,
   curQuestion: state.code.curQuestionInfo,
-  // currentCandidate: state.code.curCandidate,
   testDetails: state.tests.testList
 });
 
