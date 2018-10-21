@@ -24,7 +24,7 @@ class AnswerTest extends Component {
       highlightedQuestion: "",
       currentScore: 0,
       minutes: 0,
-      submitted: false
+      noPassed: 0
     };
   }
 
@@ -71,7 +71,7 @@ class AnswerTest extends Component {
     this.props.setCode("");
     this.setState({
       highlightedQuestion: e.target.innerText,
-      submitted: false
+      noPassed: 0
     });
   };
 
@@ -91,35 +91,39 @@ class AnswerTest extends Component {
   // run button click handler
   runCode = () => {
     let languageCode = this.getLanguageCode(this.state.language);
-    let data = {
-      code: this.props.code,
-      language: languageCode,
-      sampleInput: this.props.curQuestion.sampleInput
-    };
     this.props.setAlert("Running code...");
-    axios
-      .post("/api/run", data)
-      .then(res => {
-        console.log(res.data.body.output);
-        let op = this.props.curQuestion.sampleOutput.replace(/\\n/g, "\n");
-        op = op.replace(/\"/g, "");
-        if (op === res.data.body.output) {
-          this.props.setAlert("Passed!", "/checked.png");
-          setTimeout(() => {
-            this.props.setAlert("");
-          }, 2000);
-          this.setState({
-            currentScore:
-              this.state.currentScore + this.props.curQuestion.points
-          });
-        } else {
-          this.props.setAlert("Failed!", "/error.png");
-          setTimeout(() => {
-            this.props.setAlert("");
-          }, 2000);
-        }
-      })
-      .catch(err => console.log(err));
+    for (let i = 0; i < 3; i++) {
+      let data = {
+        code: this.props.code,
+        language: languageCode,
+        sampleInput: this.props.curQuestion.sampleInput[i]
+      };
+      axios
+        .post("/api/run", data)
+        .then(res => {
+          let op = this.props.curQuestion.sampleOutput[i].replace(/\\n/g, "\n");
+          op = op.replace(/\"/g, "");
+          if (op === res.data.body.output) {
+            this.props.setAlert("Passed!", "/checked.png");
+            setTimeout(() => {
+              this.props.setAlert("");
+            }, 2000);
+            if (this.state.noPassed !== 3) {
+              this.setState({
+                currentScore:
+                  this.state.currentScore + this.props.curQuestion.points / 3,
+                noPassed: this.state.noPassed + 1
+              });
+            }
+          } else {
+            this.props.setAlert("Failed!", "/error.png");
+            setTimeout(() => {
+              this.props.setAlert("");
+            }, 2000);
+          }
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   // submit button click handler
@@ -134,7 +138,7 @@ class AnswerTest extends Component {
         .add({
           candidateName: this.props.user,
           testId: this.state.testId,
-          score: this.state.currentScore
+          score: Math.round(this.state.currentScore)
         })
         .then(docRef => {
           this.setState({ docId: docRef.id });
@@ -143,7 +147,7 @@ class AnswerTest extends Component {
       // update score
       db.collection("codes")
         .doc(this.state.docId)
-        .update({ score: this.state.currentScore });
+        .update({ score: Math.round(this.state.currentScore) });
     }
   };
 

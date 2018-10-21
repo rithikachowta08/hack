@@ -2,16 +2,16 @@
 
 # python sol
 
-t =  int(input())
+	t =  int(input())
 
-while t!=0:
-    n = int(input())
-    x=0
-    for i in range(1,n+1,2):
-    	l=n-i+1
-    	x=x+l*l
-    print(x)
-    t-=1
+	while t!=0:
+		n = int(input())
+		x=0
+		for i in range(1,n+1,2):
+			l=n-i+1
+			x=x+l*l
+		print(x)
+		t-=1
 		
 
 # c solution

@@ -30,6 +30,7 @@ class Login extends Component {
     if (nextProps.auth.isAuthenticated) {
       nextProps.history.push("/dashboard");
     }
+    return prevState;
   }
 
   // call fire.auth to validate email/password, call server.js endpoint to get jwt and get route to dashboard

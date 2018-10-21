@@ -49,7 +49,7 @@ class QuestionDetails extends Component {
 
         <h5>Sample input:</h5>
         <div className="sampleInput">
-          {this.state.curQuestionInfo.sampleInput
+          {this.state.curQuestionInfo.sampleInput[0]
             .replace(/\"/g, "")
             .split("\\n")
             .map(function(item, key) {
@@ -63,7 +63,7 @@ class QuestionDetails extends Component {
         </div>
         <h5>Sample output:</h5>
         <div className="sampleOutput">
-          {this.state.curQuestionInfo.sampleOutput
+          {this.state.curQuestionInfo.sampleOutput[0]
             .replace(/\"/g, "")
             .split("\\n")
             .map(function(item, key) {

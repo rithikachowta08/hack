@@ -8,6 +8,7 @@ class Timer extends React.Component {
       seconds: "00",
       isStarted: false
     };
+    this.mounted = false;
   }
 
   // countdown - go to dashboard when countdown finishes
@@ -23,19 +24,26 @@ class Timer extends React.Component {
       newSeconds = 59;
     }
 
-    if (newSeconds < 10) {
-      this.setState({ minutes: newMinutes, seconds: "0" + newSeconds });
-    } else {
-      this.setState({
-        minutes: newMinutes,
-        seconds: newSeconds
-      });
+    if (this.mounted) {
+      if (newSeconds < 10) {
+        this.setState({ minutes: newMinutes, seconds: "0" + newSeconds });
+      } else {
+        this.setState({
+          minutes: newMinutes,
+          seconds: newSeconds
+        });
+      }
     }
   };
 
   componentDidMount() {
     this.interval = setInterval(this.tick, 1000);
+    this.mounted = true;
     this.setState({ isStarted: true });
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   render() {
