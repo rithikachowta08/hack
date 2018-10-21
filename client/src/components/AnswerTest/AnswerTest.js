@@ -140,8 +140,7 @@ class AnswerTest extends Component {
           this.setState({ docId: docRef.id });
         });
     } else {
-      // update score while preventing double submisssions
-
+      // update score
       db.collection("codes")
         .doc(this.state.docId)
         .update({ score: this.state.currentScore });

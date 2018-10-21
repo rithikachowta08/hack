@@ -77,7 +77,11 @@ class AdminDashboard extends Component {
             input: data.input,
             output: data.output,
             sampleInput: data.sampleInput,
-            sampleOutput: data.sampleOutput
+            sampleOutput: data.sampleOutput,
+            sampleInput2: data.sampleInput2,
+            sampleOutput2: data.sampleOutput2,
+            sampleInput3: data.sampleInput3,
+            sampleOutput3: data.sampleOutput3
           });
         });
         this.props.fetchQuestionDetails(questions);

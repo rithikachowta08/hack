@@ -8,9 +8,10 @@ export const fetchTests = () => dispatch => {
   let arr = [];
   db.collection("tests")
     .get()
+
     .then(querySnapshot => {
       if (querySnapshot.docs.length === 0) arr = "nodata";
-      else {
+      {
         querySnapshot.forEach(doc => {
           let data = doc.data();
           arr.push({
