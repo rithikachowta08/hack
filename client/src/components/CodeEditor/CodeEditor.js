@@ -34,7 +34,7 @@ class CodeEditor extends Component {
           onChange={this.onChange}
           name="code-div"
           editorProps={{
-            $blockScrolling: false
+            $blockScrolling: Infinity
           }}
         />
       </Fragment>
