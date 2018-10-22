@@ -97,6 +97,11 @@ input[type="submit"]:focus {
   outline: none;
 }
 
+@font-face {
+  font-family: "avenir";
+  src: url("avenir.otf");
+}
+
 @media (max-width: 1200px) {
   h2 {
     font-size: 2em;

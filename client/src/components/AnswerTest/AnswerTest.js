@@ -23,8 +23,9 @@ class AnswerTest extends Component {
       language: "c_cpp",
       highlightedQuestion: "",
       currentScore: 0,
+      curIndex: 0,
       minutes: 0,
-      noPassed: 0
+      numPassed: []
     };
   }
 
@@ -47,6 +48,7 @@ class AnswerTest extends Component {
         testId: nextProps.curTest.id,
         minutes: time,
         questionDetails: nextProps.questionDetails,
+        numPassed: new Array(questionList.length).fill(0),
         highlightedQuestion: prevState.highlightedQuestion // was accidentally overwriting with data from props
           ? prevState.highlightedQuestion
           : questionList[0].name
@@ -69,9 +71,14 @@ class AnswerTest extends Component {
 
   getDetails = e => {
     this.props.setCode("");
+    let childs = e.target.parentNode.childNodes,
+      i;
+    for (i = 0; i < childs.length; i++) {
+      if (e.target == childs[i]) break;
+    }
     this.setState({
       highlightedQuestion: e.target.innerText,
-      noPassed: 0
+      curIndex: i
     });
   };
 
@@ -111,11 +118,14 @@ class AnswerTest extends Component {
             setTimeout(() => {
               this.props.setAlert("");
             }, 2000);
-            if (this.state.noPassed !== 3) {
+            if (this.state.numPassed[this.state.curIndex] !== 3) {
+              let numPassed = [...this.state.numPassed];
+              numPassed[this.state.curIndex] =
+                numPassed[this.state.curIndex] + 1;
               this.setState({
                 currentScore:
                   this.state.currentScore + this.props.curQuestion.points / 3,
-                noPassed: this.state.noPassed + 1
+                numPassed
               });
             }
           } else {
@@ -163,7 +173,7 @@ class AnswerTest extends Component {
   render() {
     let questions =
       this.state.questions.length !== 0
-        ? this.state.questions.map(item => {
+        ? this.state.questions.map((item, index) => {
             return (
               <li
                 className="question"
@@ -173,6 +183,18 @@ class AnswerTest extends Component {
                 }}
               >
                 {item.name}
+
+                {this.state.numPassed[index] === 3 ? (
+                  <img
+                    src="/checked.png"
+                    style={{
+                      marginLeft: "10px",
+                      width: "24px",
+                      height: "24px"
+                    }}
+                    alt="icon not found"
+                  />
+                ) : null}
               </li>
             );
           })
