@@ -44,9 +44,13 @@
 }
 
 .test-preview p {
-  width: 60%;
+  width: 100%;
   font-size: 2em;
-  text-align: center;
+  text-align: left;
+}
+
+.test-preview h5 {
+  text-align: left;
 }
 
 @media (max-width: 768px) {

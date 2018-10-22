@@ -11,7 +11,7 @@ export const fetchTests = () => dispatch => {
 
     .then(querySnapshot => {
       if (querySnapshot.docs.length === 0) arr = "nodata";
-      {
+      else {
         querySnapshot.forEach(doc => {
           let data = doc.data();
           arr.push({

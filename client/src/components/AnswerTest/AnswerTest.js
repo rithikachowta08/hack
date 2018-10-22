@@ -101,9 +101,12 @@ class AnswerTest extends Component {
       axios
         .post("/api/run", data)
         .then(res => {
-          let op = this.props.curQuestion.sampleOutput[i].replace(/\\n/g, "\n");
-          op = op.replace(/\"/g, "");
-          if (op === res.data.body.output) {
+          let expectedOutput = this.props.curQuestion.sampleOutput[i].replace(
+            /\\n/g,
+            "\n"
+          );
+          expectedOutput = expectedOutput.replace(/\"/g, "");
+          if (expectedOutput === res.data.body.output) {
             this.props.setAlert("Passed!", "/checked.png");
             setTimeout(() => {
               this.props.setAlert("");
