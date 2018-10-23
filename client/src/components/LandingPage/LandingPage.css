@@ -11,6 +11,10 @@
   font-weight: 500;
 }
 
+.inner-wrapper h1:first-child {
+  transform: translateY(-100px);
+}
+
 .slider {
   position: absolute;
   left: 50%;
