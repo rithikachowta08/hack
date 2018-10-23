@@ -125,3 +125,14 @@ input[type="submit"]:focus {
     width: 85%;
   }
 }
+
+@media (max-width: 360px) {
+  h1,
+  h2 {
+    font-size: 1em;
+  }
+
+  .modal {
+    height: 50%;
+  }
+}

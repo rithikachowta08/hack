@@ -1,5 +1,4 @@
 .content-wrapper.content-overlay {
-  position: relative;
   padding: 0;
   background: none;
   color: var(--light-grey);
@@ -14,7 +13,7 @@
   position: absolute;
   right: 0.5%;
   top: 50%;
-  transform: translateY(-60%);
+  transform: translateY(-50%);
 }
 
 .overlay {
@@ -22,7 +21,7 @@
   background: #444444;
   min-height: 700px;
   position: absolute;
-  top: 10%;
+  top: 6%;
   width: 100%;
 }
 
