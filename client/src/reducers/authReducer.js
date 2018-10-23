@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER } from "../actions/types";
+import * as actionTypes from "../actions/types";
 import { isEmpty } from "../config/functions";
 
 const initialState = {
@@ -9,12 +9,18 @@ const initialState = {
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case SET_CURRENT_USER:
+    case actionTypes.SET_CURRENT_USER:
       return {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
         user: action.payload.userId,
         userName: action.payload.userEmail
+      };
+    case actionTypes.RESET_STATE:
+      return {
+        isAuthenticated: false,
+        user: null,
+        userName: null
       };
     default:
       return state;

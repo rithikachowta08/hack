@@ -19,6 +19,11 @@ export default function(state = initialState, action) {
         curQuestionInfo: action.payload
       };
 
+    case actionTypes.RESET_STATE:
+      return {
+        currentCode: "",
+        curQuestionInfo: {}
+      };
     default:
       return state;
   }

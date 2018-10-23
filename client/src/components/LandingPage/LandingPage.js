@@ -45,34 +45,30 @@ class LandingPage extends Component {
         <Header />
         <div className="content-wrapper">
           <div className="inner-wrapper">
-            <h1>Welcome to YML Code Console</h1>
+            <h1>Welcome to YML CODE Console</h1>
+            <h1>Get started</h1>
+            <div className="slider">
+              <Button click={this.displayModal.bind(this, "displayLogin")}>
+                Login
+              </Button>
+              <Button click={this.displayModal.bind(this, "displaySignup")}>
+                Signup
+              </Button>
+            </div>
             <div className="features">
               <div className="flex-cell">
                 <img src="../../../assets/score.png" alt="score" />
                 Automated reliable scoring
               </div>
               <div className="flex-cell">
-                <img src="../../../assets/code.png" alt="score" />
-                Library of challenging programming questions
+                <img src="../../../assets/pgm.png" alt="score" />
+                Challenging programming questions
               </div>
               <div className="flex-cell">
-                <img src="../../../assets/people.png" alt="score" />
+                <img src="../../../assets/candidate.png" alt="score" />
                 Easy candidate management
               </div>
             </div>
-            <h2>Get started</h2>
-            <Button
-              class="slide"
-              click={this.displayModal.bind(this, "displayLogin")}
-            >
-              Login
-            </Button>
-            <Button
-              click={this.displayModal.bind(this, "displaySignup")}
-              class="slide"
-            >
-              Signup
-            </Button>
           </div>
         </div>
         {this.state.displayLogin ? (

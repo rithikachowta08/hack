@@ -11,6 +11,10 @@ export default function(state = initialState, action) {
         ...state,
         alert: action.payload
       };
+    case actionTypes.RESET_STATE:
+      return {
+        alert: {}
+      };
     default:
       return state;
   }

@@ -20,34 +20,6 @@ button:focus {
   outline: none;
 }
 
-.slide {
-  z-index: 0;
-  position: relative;
-  color: white;
-  background: transparent;
-  width: 10%;
-  transition: color 0.5s ease-in-out;
-}
-.slide::before {
-  z-index: -1;
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1px;
-  height: 100%;
-  background: var(--accent-color);
-  transition: width 0.5s ease-in-out;
-}
-.slide:hover {
-  background: transparent;
-  color: black;
-}
-
-.slide:hover::before {
-  width: 100%;
-}
-
 .float {
   font-weight: 800;
   position: fixed;

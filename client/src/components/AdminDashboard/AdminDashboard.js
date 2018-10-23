@@ -13,7 +13,6 @@ import {
 import Button from "../../layout/Button/Button";
 import AdminElement from "../../layout/AdminElement";
 import PublicElement from "../../layout/PublicElement";
-import { logout } from "../../config/functions";
 import Spinner from "../../layout/Spinner/Spinner";
 import CreateTestModal from "../../components/CreateTestModal/CreateTestModal";
 
@@ -152,7 +151,7 @@ class AdminDashboard extends Component {
         {this.state.displayCreateModal ? (
           <CreateTestModal closeFunc={this.removeModal} />
         ) : null}
-        <Header logout={logout} />
+        <Header />
         <div className="content-wrapper">
           <h2>Tests</h2>
           {testItems}

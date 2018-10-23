@@ -1,12 +1,3 @@
-import fire from "./fire";
-
-//logout button click handler
-
-export const logout = () => {
-  fire.auth().signOut();
-  window.location.assign("/");
-};
-
 export const isEmpty = value =>
   value === undefined ||
   value === null ||

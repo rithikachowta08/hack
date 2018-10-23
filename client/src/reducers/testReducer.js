@@ -30,6 +30,10 @@ export default function(state = initialState, action) {
         questionDetails: action.payload
       };
 
+    case actionTypes.RESET_STATE:
+      return {
+        testList: []
+      };
     default:
       return state;
   }

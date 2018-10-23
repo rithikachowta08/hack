@@ -82,7 +82,7 @@ class TestCreator extends Component {
 
     return (
       <Fragment>
-        <Header logout={logout} />
+        <Header />
         <div className="content-wrapper content-overlay">
           <div className="test-header">
             <p>{testName}</p>

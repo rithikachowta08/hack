@@ -4,7 +4,6 @@ import { setCode } from "../../actions/codeActions";
 import { setAlert } from "../../actions/alertActions";
 
 import Header from "../../layout/Header/Header";
-import { logout } from "../../config/functions";
 import Button from "../../layout/Button/Button";
 import Timer from "../../layout/Timer/Timer";
 import axios from "axios";
@@ -99,8 +98,9 @@ class AnswerTest extends Component {
   runCode = e => {
     let trigger = e.target.innerText;
     let languageCode = this.getLanguageCode(this.state.language);
-    if (trigger === "Run") this.props.setAlert("Running code...");
-    else this.props.setAlert("Submitting code...");
+    trigger === "Run"
+      ? this.props.setAlert("Running code...")
+      : this.props.setAlert("Submitting code...");
     for (let i = 0; i < 3; i++) {
       let data = {
         code: this.props.code,
@@ -217,7 +217,7 @@ class AnswerTest extends Component {
             icon={this.props.alert.icon}
           />
         ) : null}
-        <Header logout={logout} />
+        <Header />
         <div className="content-wrapper content-overlay">
           <div className="test-header">
             <p className="flex-item">{testName}</p>

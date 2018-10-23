@@ -4,7 +4,6 @@ import Header from "../../layout/Header/Header";
 import { db } from "../../config/fire";
 import "firebase/firestore";
 import { withRouter, Redirect } from "react-router-dom";
-import { logout } from "../../config/functions";
 import Spinner from "../../layout/Spinner/Spinner";
 
 class Scores extends Component {
@@ -68,7 +67,7 @@ class Scores extends Component {
 
     return (
       <Fragment>
-        <Header logout={logout} />
+        <Header />
         <div className="content-wrapper">
           <h2>Scores</h2>
           {scores}

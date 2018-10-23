@@ -4,7 +4,7 @@
 
 h1 {
   color: white;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   display: block;
   margin: 0;
 }
@@ -26,7 +26,7 @@ h2 {
   height: 100%;
   text-align: center;
   position: relative;
-  background: url("https://storage.googleapis.com/codeavengers.appspot.com/cloud/assets/landing-01.jpg");
+  background: url("bg.png");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
