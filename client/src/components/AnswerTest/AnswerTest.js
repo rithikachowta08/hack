@@ -96,9 +96,11 @@ class AnswerTest extends Component {
   };
 
   // run button click handler
-  runCode = () => {
+  runCode = e => {
+    let trigger = e.target.innerText;
     let languageCode = this.getLanguageCode(this.state.language);
-    this.props.setAlert("Running code...");
+    if (trigger === "Run") this.props.setAlert("Running code...");
+    else this.props.setAlert("Submitting code...");
     for (let i = 0; i < 3; i++) {
       let data = {
         code: this.props.code,
@@ -118,7 +120,10 @@ class AnswerTest extends Component {
             setTimeout(() => {
               this.props.setAlert("");
             }, 2000);
-            if (this.state.numPassed[this.state.curIndex] !== 3) {
+            if (
+              this.state.numPassed[this.state.curIndex] !== 3 &&
+              trigger === "Submit"
+            ) {
               let numPassed = [...this.state.numPassed];
               numPassed[this.state.curIndex] =
                 numPassed[this.state.curIndex] + 1;
@@ -141,8 +146,8 @@ class AnswerTest extends Component {
 
   // submit button click handler
 
-  submitCode = () => {
-    this.runCode();
+  submitCode = e => {
+    this.runCode(e);
 
     //create document if it doesnt exist
 

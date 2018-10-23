@@ -10,7 +10,7 @@ class QuestionDetails extends Component {
   // update details of current question to state
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    var questionInfo;
+    let questionInfo;
     nextProps.questionDetails.map(question => {
       if (question.name === nextProps.qname) {
         questionInfo = question;
