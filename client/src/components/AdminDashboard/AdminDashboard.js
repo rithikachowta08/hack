@@ -15,6 +15,7 @@ import AdminElement from "../../layout/AdminElement";
 import PublicElement from "../../layout/PublicElement";
 import Spinner from "../../layout/Spinner/Spinner";
 import CreateTestModal from "../../components/CreateTestModal/CreateTestModal";
+import { ADMINID } from "../../config/constants";
 
 class AdminDashboard extends Component {
   constructor(props) {
@@ -110,9 +111,12 @@ class AdminDashboard extends Component {
     if (this.state.tests === "nodata") {
       testItems = <p>Nothing to show!</p>;
     } else if (this.state.tests.length !== 0) {
-      let filteredTests = this.state.tests.filter(
-        test => test.profile === this.state.userProfile
-      );
+      let filteredTests = this.state.tests;
+      if (this.state.userid !== ADMINID) {
+        filteredTests = this.state.tests.filter(
+          test => test.profile === this.state.userProfile
+        );
+      }
       testItems = (
         <table className="table-header">
           <tbody>
