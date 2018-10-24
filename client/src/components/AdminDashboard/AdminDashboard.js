@@ -20,7 +20,7 @@ class AdminDashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tests: null,
+      tests: [],
       userid: false,
       displayCreateModal: false,
       redirect: false
@@ -76,22 +76,30 @@ class AdminDashboard extends Component {
             input: data.input,
             output: data.output,
             sampleInput: data.sampleInput,
-            sampleOutput: data.sampleOutput,
-            sampleInput2: data.sampleInput2,
-            sampleOutput2: data.sampleOutput2,
-            sampleInput3: data.sampleInput3,
-            sampleOutput3: data.sampleOutput3
+            sampleOutput: data.sampleOutput
           });
         });
         this.props.fetchQuestionDetails(questions);
       });
   }
 
+  componentDidUpdate() {}
+
   // update list of tests in db to state when it is received in props
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.testList !== prevState.testList) {
-      return { tests: nextProps.testList, userid: nextProps.userid };
+    if (
+      JSON.stringify(nextProps.testList) !== JSON.stringify(prevState.tests)
+    ) {
+      let sortedTests = nextProps.testList.sort(
+        (a, b) => parseFloat(a.date) + parseFloat(b.date)
+      );
+
+      return {
+        tests: sortedTests,
+        userid: nextProps.userid,
+        userProfile: nextProps.userProf
+      };
     } else return null;
   }
 
@@ -102,19 +110,24 @@ class AdminDashboard extends Component {
     if (this.state.tests === "nodata") {
       testItems = <p>Nothing to show!</p>;
     } else if (this.state.tests.length !== 0) {
+      let filteredTests = this.state.tests.filter(
+        test => test.profile === this.state.userProfile
+      );
       testItems = (
         <table className="table-header">
           <tbody>
             <tr>
               <th>Name</th>
               <th>Date created</th>
+              <th>Status</th>
               <th>Profile</th>
               <th>Actions</th>
             </tr>
-            {this.state.tests.map(test => (
+            {filteredTests.map(test => (
               <tr key={`${test.id}`}>
                 <td>{test.name}</td>
                 <td>{test.date}</td>
+                <td>{test.status}</td>
                 <td>{test.profile}</td>
                 <td>
                   <PublicElement userId={this.state.userid}>
@@ -180,7 +193,8 @@ class AdminDashboard extends Component {
 
 const mapStateToProps = state => ({
   testList: state.tests.testList,
-  userid: state.auth.user
+  userid: state.auth.user,
+  userProf: state.auth.userProfile
 });
 
 export default withRouter(

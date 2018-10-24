@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import { setAlert } from "../../actions/alertActions";
-
+import { db } from "../../config/fire";
 import fire from "../../config/fire";
 import "firebase/auth";
 import "../Login/Login.css";
@@ -15,6 +15,7 @@ class Signup extends Component {
     super(props);
     this.state = {
       email: "",
+      profile: "",
       password: "",
       confirmedPassword: ""
     };
@@ -34,13 +35,17 @@ class Signup extends Component {
       return;
     }
     if (this.state.password === this.state.confirmedPassword) {
-      this.props.setAlert("Signing you up...", null);
+      this.props.setAlert("Signing up...", null);
       fire
         .auth()
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then(() => {
           let user = fire.auth().currentUser;
-          this.props.loginUser(user.uid, user.email);
+          db.collection("users").add({
+            userId: user.uid,
+            profile: this.state.profile
+          });
+          this.props.loginUser(user.uid, user.email, this.state.profile);
           this.props.setAlert("", null);
           this.props.history.push("/dashboard");
         })
@@ -81,7 +86,13 @@ class Signup extends Component {
             change={this.handleChange}
             placeholder="Email"
           />
-
+          <Input
+            name="profile"
+            type="profile"
+            value={this.state.profile}
+            change={this.handleChange}
+            placeholder="Desired profile"
+          />
           <Input
             name="password"
             type="password"

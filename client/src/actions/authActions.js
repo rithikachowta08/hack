@@ -1,17 +1,12 @@
 import * as actionTypes from "./types";
 
 // Set logged in user
-export const loginUser = (userId, userEmail) => {
+export const loginUser = (userId, userEmail, userProfile) => {
   return {
     type: actionTypes.SET_CURRENT_USER,
-    payload: { userId, userEmail }
+    payload: { userId, userEmail, userProfile }
   };
 };
-
-// Log user out by resetting redux state
-// export const logoutUser = () => dispatch => {
-//   dispatch(loginUser({}));
-// };
 
 // reset redux state on logout
 export const resetState = () => {

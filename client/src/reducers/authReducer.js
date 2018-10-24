@@ -14,7 +14,8 @@ export default function(state = initialState, action) {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
         user: action.payload.userId,
-        userName: action.payload.userEmail
+        userName: action.payload.userEmail,
+        userProfile: action.payload.userProfile
       };
     case actionTypes.RESET_STATE:
       return {

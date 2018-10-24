@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import { setAlert } from "../../actions/alertActions";
 import fire from "../../config/fire";
+import { db } from "../../config/fire";
 import "firebase/auth";
 import { withRouter } from "react-router-dom";
 import "./Login.css";
@@ -41,14 +42,23 @@ class Login extends Component {
     if (code && code !== 13) {
       return;
     }
-    this.props.setAlert("Logging you in...", null);
+    this.props.setAlert("Logging in...", null);
     fire
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => {
         let user = fire.auth().currentUser;
-        this.props.loginUser(user.uid, user.email);
-        this.props.setAlert("");
+        db.collection("users")
+          .where("userId", "==", user.uid)
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              let data = doc.data();
+              let userProfile = data.profile;
+              this.props.loginUser(user.uid, user.email, userProfile);
+              this.props.setAlert("");
+            });
+          });
       })
       .catch(error => {
         console.log(error);
