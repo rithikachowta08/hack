@@ -33,7 +33,7 @@ class CreateTestModal extends Component {
       details[e.target[i].name] = e.target[i].value;
     }
     db.collection("tests")
-      .add({ ...details, date: today })
+      .add({ ...details, date: today, status: "active" })
       .then(docRef => {
         details.docID = docRef.id;
         this.props.addNewTest(details.name, details.docID);

@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import { logout } from "../../config/functions";
 import Header from "../../layout/Header/Header";
 import Button from "../../layout/Button/Button";
 import Spinner from "../../layout/Spinner/Spinner";

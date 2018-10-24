@@ -73,7 +73,7 @@ class AnswerTest extends Component {
     let childs = e.target.parentNode.childNodes,
       i;
     for (i = 0; i < childs.length; i++) {
-      if (e.target == childs[i]) break;
+      if (e.target === childs[i]) break;
     }
     this.setState({
       highlightedQuestion: e.target.innerText,
@@ -127,11 +127,14 @@ class AnswerTest extends Component {
               let numPassed = [...this.state.numPassed];
               numPassed[this.state.curIndex] =
                 numPassed[this.state.curIndex] + 1;
-              this.setState({
-                currentScore:
-                  this.state.currentScore + this.props.curQuestion.points / 3,
-                numPassed
-              });
+              this.setState(
+                {
+                  numPassed,
+                  currentScore:
+                    this.state.currentScore + this.props.curQuestion.points / 3
+                },
+                this.updateScore
+              );
             }
           } else {
             this.props.setAlert("Failed!", "/error.png");
@@ -144,13 +147,8 @@ class AnswerTest extends Component {
     }
   };
 
-  // submit button click handler
-
-  submitCode = e => {
-    this.runCode(e);
-
+  updateScore = () => {
     //create document if it doesnt exist
-
     if (!this.state.docId) {
       db.collection("codes")
         .add({
@@ -163,6 +161,7 @@ class AnswerTest extends Component {
         });
     } else {
       // update score
+
       db.collection("codes")
         .doc(this.state.docId)
         .update({ score: Math.round(this.state.currentScore) });
@@ -172,6 +171,11 @@ class AnswerTest extends Component {
   // finish button click handler
 
   finishTest = () => {
+    db.collection("tests")
+      .doc(this.state.testId)
+      .update({
+        status: "complete"
+      });
     this.props.history.push("/dashboard");
   };
 
@@ -250,7 +254,7 @@ class AnswerTest extends Component {
               <CodeEditor language={this.state.language} />
               <br />
               <Button click={this.runCode}>Run</Button>
-              <Button click={this.submitCode}>Submit</Button>
+              <Button click={this.runCode}>Submit</Button>
             </div>
           </div>
         </div>
