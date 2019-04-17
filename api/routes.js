@@ -1,7 +1,5 @@
 const express = require("express");
 const request = require("request");
-const cmd = require("node-cmd");
-const fs = require("fs");
 const router = express.Router();
 
 // run user submitted code
@@ -30,24 +28,6 @@ router.post("/run", (req, res) => {
       }
     }
   );
-});
-
-// python execution
-router.post("/execute", (req, res) => {
-  let fileContent = req.body.script;
-  let filepath = "user-script.py";
-
-  fs.writeFile(filepath, fileContent, err => {
-    if (err) throw err;
-    console.log("The file was succesfully saved!");
-    cmd.get("python user-script.py", function(err, data, stderr) {
-      if (!err) {
-        console.log("data from python script " + data);
-      } else {
-        console.log("python script cmd error: " + err);
-      }
-    });
-  });
 });
 
 module.exports = router;
